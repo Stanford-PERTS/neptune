@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>PERTS : Participate</title>
+
+  <!--
+    $location in HTML5 mode requires a <base> tag to be present
+    https://docs.angularjs.org/error/$location/nobase
+  -->
+  <base href="/participate/">
+
+  <link rel="shortcut icon" href="static/favicon.ico">
+
+  <script>
+    // Namespace for global environment variables.
+    var PERTS = {};  // N.B. Webpack hasn't bootstrapped, so ES5 here.
+    window.PERTS = PERTS;
+
+    // Place variable injections below. To allow for server replace via
+    // jinja, we first try to assign using `{{ variable_name }}` syntax.
+    // Then, for local development, we check if the replacement happened, and
+    // if not, we set up our defaults.
+
+    // Jinja doesn't run on localhost because the front end (webpack dev
+    // server) is on :8888 and the back end (app engine sdk) is on :8080.
+
+    // Sentry Error Logging
+    PERTS.SENTRY_URL = '{{ sentry_url }}';
+    // N.B. Don't use String.prototype.includes here b/c it's not supported by
+    // IE and the polyfills haven't run yet.
+    if (PERTS.SENTRY_URL.indexOf('sentry_url') !== -1) {
+      PERTS.SENTRY_URL = false;
+    }
+
+    // Google Browser API Key
+    PERTS.BROWSER_API_KEY = '{{ browser_api_key }}';
+    if (PERTS.BROWSER_API_KEY.indexOf('browser_api_key') !== -1) {
+      PERTS.BROWSER_API_KEY = 'AIzaSyCJMqfce0WDD1rW9ZleUwDUwasXzQVIwGo';
+    }
+
+    // Set to server time, if available, or local development time (ISO format)
+    PERTS.SERVER_TIME = '{{ server_time.isoformat() }}Z';
+    if (PERTS.SERVER_TIME.indexOf('server_time') !== -1) {
+      PERTS.SERVER_TIME = new Date().toISOString();
+    }
+
+    // Neptune Protocol & Domain
+    PERTS.HOSTING_PROTOCOL = '{{ hosting_protocol }}';
+    if (PERTS.HOSTING_PROTOCOL.indexOf('hosting_protocol') !== -1) {
+      PERTS.HOSTING_PROTOCOL = 'http';
+    }
+
+    PERTS.HOSTING_DOMAIN = '{{ hosting_domain }}';
+    if (
+      PERTS.HOSTING_DOMAIN.indexOf('hosting_domain') !== -1
+      // Server sets hosting_domain based on branch, but we don't want that if
+      // we're testing locally, so force this to localhost.
+      || location.hostname === 'localhost'
+    ) {
+      PERTS.HOSTING_DOMAIN = 'localhost:8080';
+    }
+
+    // Triton
+    PERTS.TRITON_DOMAIN = '{{ triton_domain }}';
+    if (PERTS.TRITON_DOMAIN.indexOf('triton_domain') !== -1) {
+      PERTS.TRITON_DOMAIN = 'localhost:10080';
+    }
+
+    // Yellowstone Protocol & Domain
+    PERTS.YELLOWSTONE_PROTOCOL = '{{ yellowstone_protocol }}';
+    if (PERTS.YELLOWSTONE_PROTOCOL.indexOf('yellowstone_protocol') !== -1) {
+      PERTS.YELLOWSTONE_PROTOCOL = 'http';
+    }
+
+    PERTS.YELLOWSTONE_DOMAIN = '{{ yellowstone_domain }}';
+    if (PERTS.YELLOWSTONE_DOMAIN.indexOf('yellowstone_domain') !== -1) {
+      PERTS.YELLOWSTONE_DOMAIN = 'localhost:9080';
+    }
+  </script>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-35079862-3"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    // Important to minimize collection of personal data or profiling.
+    // Laws like the GDPR relate to "monitoring of the behaviour" of users,
+    // and we prefer not to be subject to such laws in the first place.
+    // https://gdpr-info.eu/recitals/no-24/
+    // https://developers.google.com/analytics/devguides/collection/gtagjs/ip-anonymization
+    gtag('config', 'UA-35079862-3', { 'anonymize_ip': true });
+  </script>
+</head>
+
+<body ng-app="app">
+
+  <!-- Our angular module appParticipate puts all content here. -->
+  <app></app>
+
+  <!-- Sentry Error Logging -->
+  <script src="https://cdn.ravenjs.com/3.23.1/raven.min.js" crossorigin="anonymous"></script>
+  <script defer>PERTS.SENTRY_URL && Raven.config(PERTS.SENTRY_URL).install();</script>
+  <script defer>
+    // Set referrer tags for filtering within Sentry.
+    if (Raven && document.referrer) {
+      // Extract hostname without regular expressions
+      // https://stackoverflow.com/a/8498668
+      var el = document.createElement ('a');
+      el.href = document.referrer;
+
+      Raven.setTagsContext({
+        // Full URL
+        referrer: document.referrer,
+        // Hostname, to allow for filtering based on domains (like univ.edu)
+        referrerHost: el.hostname,
+      });
+    }
+  </script>
+
+  <!-- All scripts below this line have the defer attribute to ensure -->
+  <!-- they load _after_ the webpack file, which they depend on. -->
+
+  <!-- (no scripts depend on appParticipate... yet) -->
+
+  <!-- Webpack will insert a script tag here, just before /body, -->
+  <!-- with all minified js. -->
+</body>
+</html>

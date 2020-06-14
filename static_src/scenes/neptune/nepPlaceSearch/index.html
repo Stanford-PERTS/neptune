@@ -1,0 +1,21 @@
+<div class="input-field">
+  <i class="material-icons prefix">search</i>
+  <!-- Why an empty placeholder? Otherwise the google maps javascript
+       tries to write "Enter a query" in there, which overlaps with
+       where Materialize places the label. -->
+  <input id="place-map-input"
+         type="text" placeholder="">
+  <label for="place-map-input">Search for your organization</label>
+</div>
+
+<div class="map-wrapper z-depth-1">
+  <!-- Google Map -->
+  <!-- Must have a visible area _before_ turned into a google
+       map. Mostly that means it has to have an explicit
+       height. See place_search.scss.
+  -->
+  <div id="place-map"></div>
+  <div class="map-busy" ng-show="mapLoading">
+    <i class="fa fa-spinner fa-spin fa-2x"></i>
+  </div>
+</div>

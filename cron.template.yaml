@@ -1,0 +1,160 @@
+###############################################################################
+##                                                                           ##
+##                    !!  EDIT ONLY IN TEMPLATE  !!                          ##
+##                                                                           ##
+##  Only edit the following if this is the cron.yaml.template file. Specific ##
+##  cron jobs can be enabled or disabled via the branch_environment.json     ##
+##  file. Then generate cron.yaml by running                                 ##
+##  `python gae_server/branch_environment.py` at the command line.           ##
+##                                                                           ##
+###############################################################################
+cron:
+
+  # Neptune core functions
+- description: send any emails that are due according to the queue
+  url: /cron/send_pending_email
+  target: ${APP_ENGINE_VERSION}
+  schedule: every 1 minutes
+
+  # Error emails can contain sensitive data. Experimenting with not using them.
+# - description: check for errors and email us
+#   url: /cron/check_for_errors
+#   target: ${APP_ENGINE_VERSION}
+#   schedule: every 1 minutes
+
+- description: re-cache dashboards
+  url: /cron/cache_dashboards
+  target: ${APP_ENGINE_VERSION}
+  schedule: every 15 minutes
+
+# Helpful automatic emails to users to prompt them through the process.
+- description: automatic prompting emails
+  url: /cron/auto_prompt_emails
+  target: ${APP_ENGINE_VERSION}
+  # 5 am pacific daylight
+  schedule: every day 12:00
+
+  # Instruct RServe to process reports
+- description: CG reports
+  url: /cron/rserve/cg_reports
+  target: ${APP_ENGINE_VERSION}
+  # Midnight pacific
+  schedule: 28 of month 08:00
+- description: miscellaneous daily scripts
+  url: /cron/rserve/daily
+  target: ${APP_ENGINE_VERSION}
+  # Midnight pacific
+  schedule: every day 08:00
+
+  # Export slow query log to BigQuery and clear the table.
+- description: Export slow query log
+  url: /cron/export_slow_query_log
+  target: ${APP_ENGINE_VERSION}
+  # Midnight pacific
+  schedule: every day 08:00
+
+# Datastore kinds to back up:
+# AccountManager
+# Liaisonship
+# Organization
+# Project
+# ProjectCohort
+# Survey
+# SurveyLink
+# Task
+# TaskReminder
+# Unique
+# User
+#
+# Data Wizard kinds that we might want to start backing up later:
+# DataRequest
+# DataTable
+#
+# Datastore kinds that are temporary/easy-to-replace, and not backed up:
+# AuthToken
+# Email
+# ErrorChecker
+# Notification
+# SecretValue
+#
+# MySQL models/tables not relevant datastore backup:
+# SqlModel
+# Checkpoint
+# Participant
+# ParticipantData
+#
+# Python models that don't use any database and can't be backed up:
+# Program
+# Tasklist
+#
+# Classes that are abstract and should never be instantiated or backed up:
+# Model
+# StorageObject
+
+# Scheduled Backups with Cron documentation:
+# https://cloud.google.com/appengine/articles/scheduled_backups
+
+# Daily 1 set
+- description: daily backup 1
+  url: /cron/backup?bucket=neptune-backup-daily-1&kind=Dataset&kind=Organization&kind=Project&kind=ProjectCohort&kind=Survey&kind=SurveyLink&kind=Task&kind=Unique&kind=User
+  target: ${APP_ENGINE_VERSION}
+  schedule: every mon,wed,fri,sun 09:00
+- description: clean out neptune-backup-daily-1
+  url: /cron/clean_gcs_bucket/neptune-backup-daily-1
+  target: ${APP_ENGINE_VERSION}
+  schedule: every mon,wed,fri,sun 08:45
+# Daily 2 set
+- description: daily backup 2
+  url: /cron/backup?bucket=neptune-backup-daily-2&kind=Dataset&kind=Organization&kind=Project&kind=ProjectCohort&kind=Survey&kind=SurveyLink&kind=Task&kind=Unique&kind=User
+  target: ${APP_ENGINE_VERSION}
+  schedule: every tue,thu,sat 09:00
+- description: clean out neptune-backup-daily-2
+  url: /cron/clean_gcs_bucket/neptune-backup-daily-2
+  target: ${APP_ENGINE_VERSION}
+  schedule: every tue,thu,sat 08:45
+# Weekly 1 set
+- description: weekly backup 1
+  url: /cron/backup?bucket=neptune-backup-weekly-1&kind=Dataset&kind=Organization&kind=Project&kind=ProjectCohort&kind=Survey&kind=SurveyLink&kind=Task&kind=Unique&kind=User
+  target: ${APP_ENGINE_VERSION}
+  schedule: 1,15 of month 09:00
+- description: clean out neptune-backup-weekly-1
+  url: /cron/clean_gcs_bucket/neptune-backup-weekly-1
+  target: ${APP_ENGINE_VERSION}
+  schedule: 1,15 of month 08:45
+# Weekly 2 set
+- description: weekly backup 2
+  url: /cron/backup?bucket=neptune-backup-weekly-2&kind=Dataset&kind=Organization&kind=Project&kind=ProjectCohort&kind=Survey&kind=SurveyLink&kind=Task&kind=Unique&kind=User
+  target: ${APP_ENGINE_VERSION}
+  schedule: 8,22 of month 09:00
+- description: clean out neptune-backup-weekly-2
+  url: /cron/clean_gcs_bucket/neptune-backup-weekly-2
+  target: ${APP_ENGINE_VERSION}
+  schedule: 8,22 of month 08:45
+# Monthly 1 set
+- description: monthly datastore backup 1
+  url: /cron/backup?bucket=neptune-backup-monthly-1&kind=Dataset&kind=Organization&kind=Project&kind=ProjectCohort&kind=Survey&kind=SurveyLink&kind=Task&kind=Unique&kind=User
+  target: ${APP_ENGINE_VERSION}
+  schedule: 1 of jan,mar,may,jul,sep,nov 09:00
+  # N.B. SQL backup in monthly set only, b/c the Cloud SQL instance itself
+  # runs daily backups for previous 7 days.
+- description: monthly cloud sql backup 1
+  url: /cron/sql_backup/production-01/neptune/neptune-backup-monthly-1
+  target: ${APP_ENGINE_VERSION}
+  schedule: 1 of jan,mar,may,jul,sep,nov 09:00
+- description: clean out neptune-backup-monthly-1
+  url: /cron/clean_gcs_bucket/neptune-backup-monthly-1
+  target: ${APP_ENGINE_VERSION}
+  schedule: 1 of jan,mar,may,jul,sep,nov 08:45
+# Monthly 2 set
+- description: monthly datastore backup 2
+  url: /cron/backup?bucket=neptune-backup-monthly-2&kind=Dataset&kind=Organization&kind=Project&kind=ProjectCohort&kind=Survey&kind=SurveyLink&kind=Task&kind=Unique&kind=User
+  target: ${APP_ENGINE_VERSION}
+  schedule: 1 of feb,apr,jun,aug,oct,dec 09:00
+- description: monthly cloud sql backup 2
+  url: /cron/sql_backup/production-01/neptune/neptune-backup-monthly-2
+  target: ${APP_ENGINE_VERSION}
+  schedule: 1 of feb,apr,jun,aug,oct,dec 09:00
+- description: clean out neptune-backup-monthly-2
+  url: /cron/clean_gcs_bucket/neptune-backup-monthly-2
+  target: ${APP_ENGINE_VERSION}
+  schedule: 1 of feb,apr,jun,aug,oct,dec 08:45

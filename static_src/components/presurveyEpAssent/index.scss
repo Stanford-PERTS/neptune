@@ -1,0 +1,32 @@
+.EpAssent {
+  .btn {
+    margin-left: 0;
+  }
+
+  .EpAssentConsentText {
+    width: 800px;
+    height: 250px;
+
+    margin-bottom: 1em;
+    padding: 1em;
+
+    p {
+      margin: 0 0 1em 0;
+    }
+
+    overflow: auto;
+    border: 1px solid #000000;
+  }
+
+  .EpAssentReject {
+    /* to match other text on page */
+    font-size: 21px;
+    margin-top: 20px;
+
+    input[type="checkbox"] {
+      position: relative;
+      top: -3px;
+    }
+  }
+
+}

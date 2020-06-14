@@ -1,0 +1,17 @@
+ui-filter-options .CardOptions .Card {
+  padding: 8px;
+}
+
+.FilterOptions {
+  display: flex;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.FilterOptionsName {
+  flex-grow: 1;
+}
+
+.FilterOptionsOption.active {
+  background: $nep-highlight-light;
+}

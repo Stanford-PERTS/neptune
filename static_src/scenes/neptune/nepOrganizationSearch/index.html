@@ -1,0 +1,31 @@
+<div nep-place-search map-loading="mapLoading"
+     on-place-change="selectPlaceAsOrg(place)">
+</div>
+
+<!-- Org Search Results -->
+<div class="org-details-wrapper row center-align valign-wrapper">
+  <div class="col s12 valign">
+    <div ng-hide="selectedOrganization">
+      <p class="valign">Nothing selected. Find your organization using the search field above.</p>
+    </div>
+    <table ng-show="selectedOrganization" class="bordered">
+      <tbody>
+        <tr>
+          <td><strong>Organization Name</strong></td>
+          <td>{[ selectedOrganization.name ]}</td>
+        </tr>
+        <tr>
+          <td><strong>Address</strong></td>
+          <td>{[ selectedOrganization.mailing_address  || "--" ]}</td>
+        </tr>
+        <tr>
+          <td><strong>Phone</strong></td>
+          <td>{[ selectedOrganization.phone_number || "--" ]}</td>
+        </tr>
+        <tr>
+          <td><strong>Website</strong></td>
+          <td>{[ selectedOrganization.website_url || "--" ]}</td>
+        </tr>
+    </table>
+  </div>
+</div>

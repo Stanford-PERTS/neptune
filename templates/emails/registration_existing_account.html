@@ -1,0 +1,35 @@
+{% extends 'base_email.html' %}
+
+{% block content %}
+
+<p>
+  Thank you for
+  {% if program_label %}
+    your interest in {{ program_name }}!
+  {% else %}
+    registering with PERTS!
+  {% endif %}
+  However, an account with this email address ({{to_address}}) already exists.
+</p>
+
+{# autoescaping is on; turn it off for ampersands in this href #}
+<p>You may want to <a href="{{domain}}/login{{query_string|safe}}">log in</a>.</p>
+
+<pre>{{domain}}/login{{query_string}}</pre> {# ampersands autoescaped for display #}
+
+<p>You may also <a href="{{domain}}/reset_password">reset your password</a>.</p>
+
+<pre>{{domain}}/reset_password</pre>
+
+<p>
+    If you did not attempt to register this email address with PERTS, please
+    contact us right away at
+    <a href="mailto:{{ contact_email_address }}">{{ contact_email_address }}</a>.
+</p>
+
+<p>
+    Yours Truly,<br>
+    The PERTS Team
+</p>
+
+{% endblock %}

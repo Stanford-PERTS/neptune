@@ -1,0 +1,986 @@
+{% extends 'print_base.html' %}
+
+{% set title = "Facilitator Instructions: Social-Belonging for College Students" %}
+
+{% block content %}
+
+<div class="no-print message-box">
+  This document is meant to be printed to paper or pdf.
+  <a href="javascript:window.print();" class="perts-button">Print</a>
+</div>
+
+
+
+<h1>{{ "" if project_cohort else "Example" }} Facilitator Instructions {{cohort_name}}</h1>
+
+{% if not project_cohort %}
+
+<p style="color: red;">
+  *** Please note that these are example instructions and NOT the instructions
+      you will use for participation. Once your school has selected the
+      administration setting and sign in method, you will receive personalized
+      school-specific instructions on the website ***
+</p>
+
+{% endif %}
+
+<p class="letter-greeting">Dear Facilitator,</p>
+<p>
+Thank you so much for partnering with us to bring {{ program_name }} to
+students at your college! It will only take 30 minutes to deliver to your
+students and uses the latest evidence-based methods to positively affect
+students&rsquo; attitudes about college. To learn more about
+the program, you can visit
+<a href="http://perts.net/social-belonging"
+   target="_blank">perts.net/social-belonging</a>.
+</p>
+<p>
+Instructions on how to deliver this program are written below. On the day of
+the program, questions may come up, so we&rsquo;ve also included handy
+troubleshooting and FAQ sections to address students&rsquo; concerns or computer
+woes. We created these instructions with the goal of making program delivery as
+ easy as possible, so we hope you&rsquo;ll take some time to carefully review these
+ instructions. <strong>For additional support, your College liaison is
+ {{ liaison.name if liaison else "[Liaison Name]" }},
+ {{ liaison.email if liaison else "[Liaison Email]"}}</strong>.
+</p>
+<p>
+  This document contains two sets of instructions:
+</p>
+<ul>
+  <li>
+    If you plan to deliver the program to students over the summer for
+    independent completion, before they arrive on campus, please refer to
+    <a href="#independent-completion">Independent Completion</a>.
+  </li>
+  <li>
+    If you plan to deliver the program to students in supervised sessions
+    during new student orientation, while they are on campus, please refer to
+    <a href="#supervised-completion">Supervised Completion</a>.
+  </li>
+</ul>
+<p>
+  Thank you again for working with us to bridge the gap between research and
+  practice by translating research findings into practical solutions! Together
+  we can support more students to thrive in college and achieve their true
+  potential.
+</p>
+<p>
+  - The PERTS and CTC teams
+</p>
+
+
+<div class="page-break"></div>
+
+
+<h2>Important Notes</h2>
+
+<p>
+  In this document we provide instructions and sample language to use as you
+  invite students to participate in this program. In addition, please keep the
+  following considerations in mind as you interact with participating students
+  to ensure this program is best able to support students:
+</p>
+
+<h3> Access Information for {{cohort_name}}</h3>
+
+{% if participation_open_date and participation_close_date %}
+<p>
+  Please note that the provided student urls below will only work from
+  {{ participation_open_date.strftime('%B %-d, %Y') }} to
+  {{ participation_close_date.strftime('%B %-d, %Y') }}. If you are using
+  these instructions after this timeframe, please reach out to your
+  liaison for the new code.
+</p>
+{% endif %}
+
+<h3>
+  When talking with students, DON&rsquo;T emphasize that this program is meant
+  to help them.
+</h3>
+<p>
+  WHY? Doing so can actually interfere with the program&rsquo;s ability to help
+  students. Sometimes people get defensive when they are told something is
+  meant to help them. They may feel insulted if they think others think they
+  need help. They could become unduly skeptical, which could prevent them from
+  taking in the key ideas of the program. For this reason, please
+  <strong>do not</strong> refer to the program as
+  &ldquo;{{ program_name }}&rdquo; when speaking with students. Instead, you
+  can describe the program as a welcome activity to better understand how
+  students learn and what colleges can do to make the transition better for
+  future students.
+</p>
+<p>
+  Suggested language: &ldquo;This activity gives students the opportunity to
+  learn more about students&rsquo; experiences coming to college and to share
+  their own perspective on the transition. We hope to use your insights to help
+  improve the transition for future students.&rdquo;
+</p>
+
+<h3>
+  If students ask why they should complete the writing activity, DO emphasize
+  that they are being asked to complete it because your school wants to hear
+  their feedback and know about them.
+</h3>
+<p>
+  Suggested language: &ldquo;As students currently in the transition to
+  college, you know first-hand about the challenges you&rsquo;re facing. We
+  want to learn more from you and your classmates about what the transition to
+  our campus is like. We hope to share your experiences with future students to
+  help them with their transition to college. In addition, most students who
+  have completed this activity in the past have told us that they enjoyed
+  reading stories from students who have gone through the transition, and that
+  they learned something from doing so.&rdquo;
+</p>
+
+
+<div class="page-break"></div>
+
+
+<h2 class="anchor" id="independent-completion">
+  Instructions for Independent Completion Over Summer
+</h2>
+
+<p>
+  <em>Please review these instructions if your school plans to deliver the
+  program to students over the summer to complete on their own, before they
+  arrive on campus.</em>
+</p>
+
+<h3>Instructions</h3>
+<p>
+  At a high level, implementation will look as follows. This document will go
+  in-depth about your options for each step.
+</p>
+<ol>
+  <li>
+    Decide how you&rsquo;ll want to invite students to participate. There are a
+    number of options available, and we encourage you to use a combination of
+    invitation methods to increase the likelihood that students complete the
+    module.
+  </li>
+  <li>
+    Decide when you&rsquo;ll begin inviting students to participate and what
+    deadlines you&rsquo;ll set. Typically we recommend schools begin reaching
+    out to students at least a month before they&rsquo;ll arrive on campus and
+    set an initial deadline for participation at least two weeks prior to
+    arrival. That way you can extend the deadline as needed, if response rates
+    are lower than desired.
+  </li>
+  <li>
+    Invite students to participate! Depending on what you chose in Step 1, this
+    could mean sending email invitations, distributing a new student checklist
+    that includes an invitation link, adding an invitation link to a routine
+    online portal used by your students, and/or other methods used at your
+    school. Most schools find that using a combination of multiple invitation
+    methods results in the highest participation rates from students.
+  </li>
+  <li>
+    Send reminder emails as needed until your school&rsquo;s final deadline.
+    Please coordinate with your college liaison for this program if
+    you&rsquo;re not sure when that date is. After that date, the program will
+    no longer be accessible by anyone.
+  </li>
+</ol>
+
+<h3>Invitation Methods</h3>
+<p>
+  There are many ways schools have invited students to the Social-Belonging
+  program in prior implementations. The following list is not mutually
+  exclusive, and we have found in prior implementations that <strong>schools
+  see the highest participation rates when using a combination of these
+  methods</strong> to invite students:
+</p>
+<ul>
+  <li>
+    <strong>New student orientation checklists</strong>: Many schools already
+    provide their students a checklist of suggested or required activities as
+    part of new student orientation; this may be delivered in emails, in print,
+    in an online portal (e.g., Blackboard, Moodle), or some combination of
+    these channels. We highly suggest schools include this program in checklist
+    documents or portals/dashboards whenever possible. Schools that have done
+    so in the past typically saw significantly higher response rates.
+  </li>
+  <li>
+    <strong>Web portals and dashboards</strong>: Many schools have online
+    portals or dashboards (e.g., Blackboard, Moodle) where students routinely
+    log in to view forms, calendars, and information on other requirements. The
+    program can be included as a module in this location. As noted above, if
+    your school hosts a new student orientation checklist through one of these
+    portals/dashboards, we recommend the program be included on that checklist.
+  </li>
+  <li>
+    <strong>Direct invitation emails</strong>: We highly suggest sending emails
+    specifically inviting students to the program, using your
+    institution&rsquo;s standard mail merge procedures. You can find suggested
+    language and invitation timelines in the Facilitator Instructions section.
+  </li>
+  <li>
+    <strong>Newsletters and other aggregated communications</strong>: Some
+    schools send regular emails to their incoming students, such as weekly
+    newsletters. You can find suggested language to include in this document.
+  </li>
+  <li>
+    <strong>Other strategies as appropriate for your school</strong>: Your
+    school may have other resources available to invite students, and we
+    encourage you to consider what other methods may be effective at your
+    school. For example, some schools have used phone banks to successfully
+    increase student participation in the past.
+  </li>
+</ul>
+
+<h3>Invitation Timeline</h3>
+<p>
+  We recommend initiating communication to students at least a month before
+  they arrive on campus&mdash;either for orientation or the first day of
+  classes&mdash;and setting the initial deadline for at least 2 weeks before
+  they arrive on campus. A suggested schedule of invitation milestones can be
+  found below in Table 1. This suggested schedule is designed to have students
+  participate in the program before they step foot on campus for fall term.
+</p>
+<table class="table table-bordered">
+  <caption>Table 1. Suggested invitation timeline.</caption>
+  <thead>
+    <tr>
+      <th>Milestone</th>
+      <th>Relative Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td colspan="2">
+        If your school plans to include the program as part of a new student
+        orientation checklist, dashboard, or other orientation document, please
+        include links to the program in these platforms as soon as possible,
+        ideally at the same time as when they are normally distributed.
+      </td>
+    </tr>
+    <tr>
+      <td>Send first email invitation to students</td>
+      <td>At least 1 month before students arrive on campus</td>
+    </tr>
+    <tr>
+      <td>
+        Send email reminder to all students who have not yet completed the
+        program
+      </td>
+      <td>1 week before initial deadline</td>
+    </tr>
+    <tr>
+      <td>Initial deadline communicated to students</td>
+      <td>
+        At least 2 weeks before students arrive on campus (1 week before final
+        deadline)
+      </td>
+    </tr>
+    <tr>
+      <td>
+        If needed: Extend deadline, send email reminder to all students who
+        have not yet completed
+      </td>
+      <td>1 week before final deadline</td>
+    </tr>
+    <tr>
+      <td>
+        If needed: Last chance to complete, send email notification to all
+        students who have not yet completed
+      </td>
+      <td>2-3 days before final deadline</td>
+    </tr>
+    <tr>
+      <td>Final deadline</td>
+      <td>At least 1 week before students arrive on campus</td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <em>Students arrive on campus for new student orientation or first week
+        of class.</em>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<h3>
+  Language and Tips: Embedded Invitation (e.g. Checklist, Online Dashboards,
+  Printed Materials)
+</h3>
+<p>
+  In previous implementations, schools have invited students to the program
+  through orientation checklists for new students (either online or in print),
+  in dashboards students routinely access (e.g., Blackboard, Moodle), in email
+  newsletters to students, and in printed materials mailed to students over the
+  summer. Generally, including the program in as many orientation materials as
+  possible as a required or encouraged activity increases student
+  participation.
+</p>
+<p>
+  If your school plans to embed the link to the Social-Belonging Program in an
+  orientation checklist, an online portal, or other student-facing materials,
+  we recommend:
+</p>
+<ul>
+  <li>
+    Including the program alongside other mandatory, important items
+  </li>
+  <li>
+    Listing the program near the top or middle of the page or list
+  </li>
+  <li>
+    Describing the program in a way that seems inviting and not excessively
+    time-consuming
+  </li>
+</ul>
+<table class="table table-bordered">
+  <caption>Table 2. Sample invitation language for embedded invitations.</caption>
+  <thead>
+    <tr>
+      <th>For Printed Materials</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <p>
+          What is it like coming to {{ organization.name }}?
+        </p>
+        <p>
+          Coming to college is a major transition. See how current and former
+          students describe their experience. Then share your thoughts and
+          feelings about becoming a [NICKNAME FOR STUDENTS AT SCHOOL]. Your
+          thoughts will help give future students a better idea of what to
+          expect, helping to improve their transition!
+        </p>
+        <p>
+          Please complete the activity at
+          <a href="http://www.comingtocollege.org">comingtocollege.org</a> using the
+          participation code <strong>{{ project_cohort.code if project_cohort else "[PARTICIPATION CODE]"  }}</strong>.
+        </p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>
+        For Digital Materials (e.g. Checklist, Student Dashboard, or Email Newsletters)
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <p>
+          What is it like coming to {{ organization.name }}?
+        </p>
+        <p>
+          See how current and former students describe their experience coming
+          to college. Then share your thoughts and feelings about becoming a
+          [NICKNAME FOR STUDENTS AT SCHOOL]. Your thoughts will help give
+          future students a better idea of what to expect, helping to improve
+          their transition! Please set aside 30 minutes to do this.
+        </p>
+        <p>
+          Please follow the link below to complete the activity:
+        </p>
+        <p>
+          <a href="http://www.comingtocollege.org/{{ project_cohort.code | replace(' ', '-') }}">
+            comingtocollege.org/{{ project_cohort.code | replace(' ', '-') }}
+          </a>
+        </p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
+<h3>
+  Language and Tips: Email Invitation
+</h3>
+<p>
+  In addition to other invitation methods (e.g., checklists, dashboards,
+  printed materials), we highly suggest sending students email invitations
+  using the mail merge methods your institution uses most commonly. Emails are
+  most effective when:
+</p>
+<ul>
+  <li>
+    They address students by name in the salutation.
+  </li>
+  <li>
+    There are 2-5 email reminders sent. Too few usually results in few students
+    doing the activity. More than five emails tends not to produce more
+    response from students, but may make them feel inundated with emails.
+  </li>
+  <li>
+    Emails come from either someone with authority, indicating the importance
+    of the activity (i.e. vice provost, dean) OR someone students may know
+    personally, indicating relevance to their life (i.e. resident advisor,
+    professor, student life administrator) OR both.
+  </li>
+  <li>
+    Emails are concise and prominently display the link to the activity.
+  </li>
+  <li>
+    Emails are sent to students&rsquo; personal email addresses rather than
+    their college email addresses, as many students do not start using their
+    college addresses before arriving on campus.
+  </li>
+</ul>
+<p>
+  Email invitations should originate from the relevant office at your school
+  (i.e., the office you specified in customizing the program materials in your
+  Dashboard). Please refer to the Invitation Timeline section of this document
+  for a suggested email timeline.
+</p>
+<p>
+  Here are some sample email invitations you can use. These include both the
+  initial email invitation as well as subsequent follow-up reminders as needed.
+  Please customize as needed for your school context, but make sure not to
+  deviate from how the activity is described. <strong>The activity should be
+  described to participating students as a way to learn more about coming to
+  college, as an opportunity to share their thoughts and feelings about the
+  transition to college, and as an opportunity to help future students. The
+  activity should NOT be described as an attempt to help, intervene, or
+  experiment upon the participating students.</strong>
+</p>
+
+
+<table class="table table-bordered">
+  <caption>
+    Table 3. Sample invitation language for email invitations.
+  </caption>
+  <thead>
+    <tr>
+      <th>
+        Initial Email Invite
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <p>
+          Subject: What is it like coming to {{ organization.name }}? activity
+        </p>
+        <p>
+          Dear &lt;&lt;Name&gt;&gt;,
+        </p>
+        <p>
+          Congratulations and welcome to {{ organization.name }}!  You probably
+          have lots of questions about what to expect.
+        </p>
+        <p>
+          What is it like to come to {{ organization.name }}? is an online
+          activity where you&rsquo;ll see stories from current and former
+          students from a variety of colleges about their experiences coming to
+          college. Then you&rsquo;ll get to share your thoughts and feelings
+          about becoming a [NICKNAME FOR STUDENTS AT YOUR SCHOOL]. Your
+          thoughts will help give future students a better idea of what to
+          expect and improve their transition to college!
+        </p>
+        <p>
+          <a href="http://www.comingtocollege.org/{{ project_cohort.code | replace(' ', '-') }}">
+            Click here to start the activity!
+          </a>
+        </p>
+        <p>
+          We encourage you to complete the activity as soon as possible. The
+          deadline is [INITIAL DEADLINE]. Please set aside about 30 minutes for
+          completing the activity. We look forward to hearing from you.
+        </p>
+        <p>
+          Sincerely,
+          <br>
+          &lt;&lt;Name&gt;&gt;
+          <br>
+          &lt;&lt;Title&gt;&gt;
+        </p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>
+        First Reminder Email – Sent to only to non-responders
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <p>
+          Subject: What is it like coming to {{ organization.name }}? activity
+        </p>
+        <p>
+          Dear &lt;&lt;Name&gt;&gt;,
+        </p>
+        <p>
+          Learn more about what to expect as you start at {{ organization.name
+          }}! <strong>What is it like to come to {{ organization.name
+          }}?</strong> is an online activity in which you see stories from
+          current and former students from a variety of colleges about their
+          experiences coming to college. You will also be asked about your
+          thoughts and feelings about coming to {{ organization.name }} to help
+          improve the transition for future students.
+        </p>
+        <p>
+          <a href="http://www.comingtocollege.org/{{ project_cohort.code | replace(' ', '-') }}">
+            Click here to start the activity!
+          </a>
+        </p>
+        <p>
+          Only [ONE WEEK] left! Please set aside <em>30 minutes</em> to
+          complete the activity.
+        </p>
+        <p>
+          Sincerely,
+          <br>
+          &lt;&lt;Name&gt;&gt;
+          <br>
+          &lt;&lt;Title&gt;&gt;
+        </p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>
+        Deadline extended – Sent to only to non-responders
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <p>
+          Subject: DEADLINE EXTENDED: What is it like coming to {{
+          organization.name }}? activity
+        </p>
+        <p>
+          Dear &lt;&lt;Name&gt;&gt;,
+        </p>
+        <p>
+          Recently you were invited to complete the online activity
+          <strong>What is it like to come to {{ organization.name }}?</strong>
+          This activity shares stories from current and former students from a
+          variety of colleges about their transition to college.
+        </p>
+        <p>
+          Today is the original deadline to complete the activity, and we
+          haven&rsquo;t heard from you yet. Because students have found this
+          activity useful and because the thoughts you share will help us
+          improve the transition for future generations of [NICKNAME FOR
+          STUDENTS AT YOUR SCHOOL], we have extended the deadline to [DATE OF
+          EXTENSION].
+        </p>
+        <p>
+          Please set aside <em>30 minutes</em> to complete the activity.
+        </p>
+        <p>
+          <a href="http://www.comingtocollege.org/{{ project_cohort.code | replace(' ', '-') }}">
+            Click here to start the activity!
+          </a>
+        </p>
+        <p>
+          Your participation in this activity is very important to us, and we
+          look forward to hearing from you.
+        </p>
+        <p>
+          Sincerely,
+          <br>
+          &lt;&lt;Name&gt;&gt;
+          <br>
+          &lt;&lt;Title&gt;&gt;
+        </p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>
+        Last chance  – Sent to only to non-responders
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+         <p>
+          Subject: LAST CHANCE: What is it like coming to {{
+          organization.name }}? activity
+        </p>
+        <p>
+          Dear &lt;&lt;Name&gt;&gt;,
+        </p>
+        <p>
+          Today is your last chance to complete the <strong>What is it like to
+          come to {{ organization.name }}?</strong> activity. On average, the
+          activity has been taking your classmates less than half an hour. We
+          hope you can make a little bit of time today to complete the activity
+          and share your thoughts about coming to {{ organization.name }}.
+        </p>
+        <p>
+          <a href="http://www.comingtocollege.org/{{ project_cohort.code | replace(' ', '-') }}">
+            What is it like to come to {{ organization.name }}?
+          </a>
+        </p>
+        <p>
+          We hope to hear from you by the end of the day.
+        </p>
+        <p>
+          Sincerely,
+          <br>
+          &lt;&lt;Name&gt;&gt;
+          <br>
+          &lt;&lt;Title&gt;&gt;
+        </p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<h3>Response Rate Strategies</h3>
+<p>
+  Your PERTS Dashboard includes real-time tracking of how many students are
+  participating in the program. While response rates are a helpful indicator of
+  how effective your invitation methods are, they also vary based on other
+  factors. For instance, we find that smaller schools often find it easier to
+  reach a larger proportion of their students than larger schools. It may be
+  helpful to use typical response rates to campus-wide initiatives at your
+  school as a reference point for determining if your response rate is high,
+  low, or what you would expect.
+</p>
+<h4>Response Rate Too Low</h4>
+<p>
+  If you notice your response rates are significantly lower than you expect
+  relative to how long the program has been available to students, you may
+  consider adding additional invitation methods or increasing the degree of
+  importance you communicate in your invitations (e.g., &ldquo;Your
+  participation in this activity is very important to us&rdquo;).
+</p>
+<h4>Extended Deadline and Last Chance Emails</h4>
+<p>
+  We recommend setting the initial deadline communicated to students at least
+  15 days prior to students arrival on campus (see Table 1. Suggested
+  invitation timeline). When you reach that initial deadline, you can review
+  your current completion rate and choose to extend the deadline by an extra
+  week if you feel your response rates are low. We have found that
+  &ldquo;deadline extended&rdquo; and &ldquo;last chance&rdquo; emails can be
+  effective in boosting participation rates.
+</p>
+
+
+
+<div class="page-break"></div>
+
+
+<h2 class="anchor" id="supervised-completion">
+  Instructions for Supervised Completion During Orientation Week
+</h2>
+
+<p>
+  <em>Please review these instructions if your school plans to deliver the
+  program during in-person, supervised sessions during new student
+  orientation, while students are on campus.</em>
+</p>
+
+<h3>Instructions</h3>
+<h4>Step 1</h4>
+<p>
+  Please schedule a time to give students access to computers with an Internet
+  connection&mdash;either by bringing them to a computer lab or by requesting a
+  laptop cart.
+</p>
+<p>
+  Please keep in mind that the program takes 30 minutes for students to
+  complete.
+</p>
+<h4>Step 2</h4>
+<p>
+  Obtain a student roster with student IDs. Students will need to enter their
+  ID numbers during the activity, and some may not remember them. Please verify
+  that each student has their ID number, and look up IDs with your roster if
+  needed.
+</p>
+<h4>Step 3</h4>
+<p>
+  Please read the following script to students before they begin.
+</p>
+<blockquote>
+    <p>
+        &ldquo;As a part of [SCHOOL TITLE FOR NEW STUDENT ORIENTATION], we
+        would like you to complete the &lsquo;What is it like coming to
+        {{ organization.name }}?&rsquo; online activity. This is an activity
+        that all incoming first-year students at {{ organization.name }} are
+        being asked to complete before they start classes in the fall. Because
+        we think that this is a really useful activity for students to
+        complete, we are offering it as a part of your orientation.
+    </p>
+    <p>
+        &ldquo;The activity will share stories from current and former college
+        students describing what their experience coming to college was like.
+        You will have a chance to share your own thoughts and experiences about
+        coming to {{ organization.name }} to help improve the transition to
+        college for future students.
+    </p>
+    <p>
+        &ldquo;It will take about 30 minutes to complete the activity. Please
+        read the instructions carefully and do your best to answer all of the
+        questions to the best of your ability. It is very important that you
+        not talk to each other or look at each other&rsquo;s answers, as that
+        would be a violation of other students&rsquo; privacy.
+    </p>
+    <p>
+
+        &ldquo;You will be answering survey questions, reading some short
+        passages, and answering questions about what you read. Your responses
+        will be kept confidential. They will only be used to help our college
+        learn about things we can do to make the transition to
+        college better for future students. You can learn more at
+      <a href="https://perts.net/privacy">perts.net/privacy</a>.
+    </p>
+</blockquote>
+<h4>Step 4</h4>
+<p>
+  Write the website address and the participation code where all your students
+  can see it. If this is not possible, you may want to make cards with this
+  information on it to hand out to your students. It is important to not let
+  students see the website address and participation code until you read the
+  script above so that they pay attention while you are introducing the
+  program.
+</p>
+<p>
+  Please read the following:
+</p>
+<blockquote>
+  <p>
+    &ldquo;Now open your browser and please go to
+    <strong>comingtocollege.org</strong>. Then enter the phrase
+    <strong>{{ project_cohort.code }}</strong>, and follow the on-screen
+    instructions. Please be aware that as you move through the program, you may
+    want to go back to a previous question. If so, do not use the back arrow on
+    the browser. Instead, use the &lsquo;Go Back&rsquo; link in the upper left
+    corner, just above the questions. Please begin.
+  </p>
+</blockquote>
+<h4>Step 5</h4>
+<p>
+  Ten minutes before students need to finish, tell them how much time is
+  remaining and that it is okay if they do not have the time to finish
+  everything.
+</p>
+<blockquote>
+  <p>
+    &ldquo;We have about ten minutes remaining for the activity. Please
+    continue with the activity, but do not rush. It is okay if you do not have
+    time to finish everything.
+  </p>
+</blockquote>
+<h4>Step 6</h4>
+<p>
+  At the end of the activity, ask your students to log out by closing their
+  browser window.
+</p>
+<blockquote>
+  <p>
+    &ldquo;We have reached the end of the session. It&rsquo;s okay if you are
+    not totally done with the activity, just close the browser. You can
+    complete the activity in your own time. To complete the activity later,
+    please go to <strong>comingtocollege.org</strong>, enter the code
+    <strong>{{ project_cohort.code }}</strong>, and type in your student ID.
+    The website should bring you back to the page you left off at. Please take
+    note of the website and code now. Thank you. The information you have
+    provided may be used to improve students&rsquo; experiences here and at
+    other schools as well.
+  </p>
+</blockquote>
+
+
+
+
+<div class="page-break"></div>
+
+
+<h2>Troubleshooting</h2>
+
+<a class="anchor" id="troubleshooting"></a>
+<p>
+  We work hard to minimize the technical problems, but sometimes issues come
+  up. Here are some problems students have experienced in the past and the best
+  ways to solve them.
+</p>
+<h3>Error Message: Confirm Form Resubmission</h3>
+<p>
+  <strong>Problem</strong>: A student clicked the back button on the browser.
+  <br>
+  <strong>Solution</strong>: Click the &ldquo;reload&rdquo; or
+  &ldquo;refresh&rdquo; button. You may also need to click
+  &ldquo;confirm&rdquo; or &ldquo;continue.&rdquo;
+  <br>
+</p>
+<h3>Closed Page</h3>
+<p>
+  <strong>Problem</strong>: A student closed the browser window.
+  <br>
+  <strong>Solution</strong>: Tell the student to go to the website and sign in
+  again, just like they did the first time. The program will continue where the
+  student left off.
+  <br>
+</p>
+<h3>Warning Message or Connection Expired Message</h3>
+<p>
+  <strong>Problem</strong>: A student's screen says that the connection
+  expired or a similar warning. <br>
+  <strong>Solution</strong>: Click the &ldquo;reload&rdquo; or
+  &ldquo;refresh&rdquo; button.<br>
+</p>
+
+<h3>Lost Location</h3>
+<p>
+  <strong>Problem</strong>: The survey restarted from the beginning.
+  <br>
+  <strong>Solution</strong>: Tell the student to skip up to the part where they
+  left off. The answers the student previously provided have been saved, but
+  the server lost the page they were on for network reasons.
+</p>
+<p>
+  <i>Note</i>: Some pages may not allow students to advance until a certain amount of time (about 5 seconds) has passed.
+</p>
+
+
+
+
+<div class="page-break"></div>
+
+
+<h2>Frequently Asked Student Questions and Responses</h2>
+
+<ul class="faq">
+  <li>
+    <strong>Do I have to do this?</strong>
+    <br>
+    Your opinions are important and help us better understand what the
+    transition to college is like so we can work to improve the experience for
+    other students in the future. This activity is not required, but we hope
+    you&rsquo;ll do your best to complete it.
+
+  </li>
+  <li>
+    <strong>Why is this activity important?</strong>
+    <br>
+    This activity is important because it allows us to better understand what
+    the transition to college is like so we can work to improve the experience
+    for other students in the future. Your perspective is very important to us
+    as we try to understand our students and help future students.
+  </li>
+  <li>
+    <strong>Will I get a grade on this?</strong>
+    <br>
+    No, the activity is not graded. Your honest answers will help us improve
+    the transition to college for other students in the future.
+  </li>
+  <li>
+    <strong>Does spelling and grammar matter?</strong>
+    <br>
+    No, just concentrate on getting your ideas across.
+  </li>
+  <li>
+    <strong>How long ago did the survey that these stories are from happen</strong>
+    <br>
+    The student stories were collected and updated over the past couple of years.
+  </li>
+ <li>
+    <strong>Will I be asked to share my story (what I wrote) during orientation?</strong>
+    <br>
+    No, this is just an independent activity to allow you to read other
+    students&rsquo; stories and to reflect on your own experience. We will not
+    be discussing the activity during orientation.
+  </li>
+ <li>
+    <strong>Were my responses submitted?</strong>
+    <br>
+    Your responses are saved as you go. If you complete the activity and the
+    internet cuts out or you try to submit and it doesn&rsquo;t look like it
+    worked, your responses are already saved in the system and you do not need
+    to re-submit.
+  </li>
+  <li>
+    <strong>
+      I started the activity but didn&rsquo;t have time to finish. Can I keep
+      going where I left off
+    </strong>
+    <br>
+    The activity saves your response. If you click on the link to sign in
+    again, you should be able to resume from the place where you stopped. All
+    of your previous responses were saved.
+  </li>
+  <li>
+    <strong>The next button isn&rsquo;t working!</strong>
+  <br>
+    On some pages, there is a delay with the next button in order to give
+    students time to read the information on the page without feeling rushed.
+    It will appear at the bottom of the page after a short delay.
+  </li>
+  <li>
+    <strong>Why isn&rsquo;t there a back button?</strong>
+  <br>
+    We don&rsquo;t include a back button because we want to encourage students
+    to respond to the questions in the moment rather than going back and
+    changing them. If you accidentally clicked the next button or want to
+    change your previous responses you will not be able to, but that is okay.
+  </li>
+  <li>
+    <strong>Do I have to share my personal information (name, student ID,
+  etc.)?</strong>
+  <br>
+    Yes, it is necessary in order to participate. Be assured, your personal
+    information will be kept secure and confidential in accordance with the
+    <a href="https://perts.net/privacy">Privacy Policy</a>.
+  </li>
+  <li>
+    <strong>Why do you ask for demographic information?</strong>
+  <br>
+  We ask for demographic information so that we can understand more about our
+  student population and the students participating in the activity. Your
+  responses to these questions will be kept secure.
+  </li>
+  <li>
+    <strong>I am visually impaired. Will this activity work with my text reader?</strong>
+  <br>
+  Yes.
+  </li>
+  <li>
+    <strong>I am hearing impaired. Is there audio in the activity that I am missing?</strong>
+  <br>
+  This activity does not include any audio.
+  </li>
+</ul>
+<p>
+  If you have a question that is not answered here, please reach out to the
+  appropriate contact below.
+</p>
+<ul>
+  <li>
+    For all school-related issues, please contact your College&rsquo;s liaison,
+    {{ liaison.name if liaison else "[Liaison Name]" }},
+    {% if liaison %}
+      <a href="mailto:{{ liaison.email }}">{{ liaison.email }}</a>.
+    {% else %}
+      [Liason Email].
+    {% endif %}
+  </li>
+  <li>
+    For non-urgent questions, please email
+    <a href="mailto:support@perts.net">support@perts.net</a>.
+  </li>
+</ul>
+
+
+{% endblock %}

@@ -1,0 +1,28 @@
+// Bootstrap Brand Colors
+$bs-brand-primary: #337ab7;
+$bs-brand-success: #5cb85c;
+$bs-brand-info: #5bc0de;
+$bs-brand-warning: #f0ad4e;
+$bs-brand-danger: #d9534f;
+
+// Neptune Grays
+$nep-dark: #121317;
+$nep-dark-gray: #4a4a4a;
+$nep-med-gray: #b7bbc0;
+$nep-light-gray: #f1f1f2;
+
+// Neptune Highlights
+$nep-highlight: #1dadea;
+$nep-highlight-light: #e5f6fd;
+$nep-blue: #0a5794;
+
+$nep-green: #00d097;
+$nep-red: #eb5454;
+
+$nep-highlight-hover: $nep-blue;
+$nep-green-hover: darken($nep-green, 10%);
+$nep-red-hover: darken($nep-red, 25%);
+
+// Neptune Specifics
+$nep-task-incomplete: #e0e0e0;
+$nep-footer: $nep-highlight;

@@ -1,0 +1,148 @@
+<div class="card horizontal" ng-if="$ctrl.program">
+  <div class="card-stacked">
+    <div id="post-report" class="card-content">
+      <div class="card-title">
+        Upload Reports
+      </div>
+    </div>
+  </div>
+</div>
+<div class="card horizontal" ng-if="$ctrl.program">
+  <div class="card-stacked">
+    <div class="card-content">
+
+
+
+<div class="row">
+  <div class="col s12">
+    <p>
+      Uploaded file names must end with the last eight characters of a project
+      cohort id, and then the file extension.
+    </p>
+    <p>
+      Examples:
+    </p>
+    <ul>
+      <li><code>Final Report ABCD1234.pdf</code></li>
+      <li><code>Final Report ProjectCohort_ABCD1234.pdf</code></li>
+    </ul>
+  </div>
+  <div class="col s12">
+    <div class="error-message">
+      {{ $ctrl.errorMsg }}
+    </div>
+    <form>
+      <div class="row">
+        <div class="input-field col s6">
+          <label class="browser-default">
+            Cohort
+            <select
+              ng-model="$ctrl.cohortLabel"
+              ng-options="label as cohort.name
+                          for (label, cohort) in $ctrl.program.cohorts"
+              class="browser-default"
+            >
+            </select>
+          </label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s6">
+          <label class="browser-default">
+            Checkpoint
+            <select
+              ng-model="$ctrl.selectedCkptLabel"
+              ng-options="c.label as c.name
+                          for c in $ctrl.checkpointTemplates"
+              ng-change="$ctrl.checkpointLabelChange($ctrl.selectedCkptLabel)"
+              ng-disabled="!$ctrl.cohortLabel"
+              class="browser-default"
+            >
+            </select>
+          </label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s6">
+          <label class="browser-default">
+            Task
+            <select
+              ng-model="$ctrl.selectedTaskLabel"
+              ng-options="t.label as t.name
+                          for t in $ctrl.taskTemplates
+                          | filter:{data_type: 'file'}"
+              ng-disabled="!$ctrl.selectedCkptLabel"
+              class="browser-default"
+            >
+            </select>
+          </label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="file-field input-field col s8">
+          <div class="btn">
+            <span>Upload</span>
+            <input type="file" multiple accept="pdf/*"
+                   ngf-select="$ctrl.upload(
+                     $files, $invalidFiles, $ctrl.selectedCkptLabel,
+                     $ctrl.selectedTaskLabel)"
+                   ng-disabled="!$ctrl.selectedCkptLabel ||
+                                !$ctrl.selectedTaskLabel ||
+                                !$ctrl.checkpointsLoaded"
+            >
+          </div>
+          <div class="file-path-wrapper">
+            <input class="file-path-validate"
+                   type="text"
+                   placeholder="upload reports">
+           </div>
+        </div>
+        <div class="col s4">
+          <div ng-show="$ctrl.busy" class="center-align">
+            <div class="preloader-wrapper small active">
+              <div class="spinner-layer spinner-blue-only">
+                <div class="circle-clipper left">
+                  <div class="circle"></div>
+                </div><div class="gap-patch">
+                  <div class="circle"></div>
+                </div><div class="circle-clipper right">
+                  <div class="circle"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col s12">
+          <p ng-show="$ctrl.reportFiles.length">
+            Successfully uploaded:
+          </p>
+          <ul>
+            <li ng-repeat="file in $ctrl.reportFiles">
+              {{file.name}} {{file.$errorParam}}
+              <span class="progress" ng-show="file.progress >= 0">
+                <div style="width:{{file.progress}}%"
+                     ng-bind="file.progress + '%'"></div>
+              </span>
+            </li>
+          </ul>
+          <p ng-show="$ctrl.errFiles.length">
+            Not uploaded:
+          </p>
+          <ul>
+            <li ng-repeat="file in $ctrl.errFiles">
+              {{file.name}} {{file.$error}} {{file.$errorParam}}
+            </li>
+          </ul>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+
+    </div>
+  </div>
+</div>

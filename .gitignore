@@ -1,0 +1,57 @@
+# GCloud App Engine SDK
+# When you use the --storage_path flag with dev_appserver.py, it creates these
+# SQLite files and logs.
+/.gae_sdk
+
+# When you mock GCS or Blobstore, it creates these
+/blobs
+
+# App Engine
+# We dynamically produce these files during builds, they don't belong in
+# version control.
+app.yaml
+app.deploy.yaml
+app.codeship.yaml
+cron.yaml
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.python-version
+
+# Python dev-only libraries
+lib/pympler
+
+# Sublime
+*.sublime-workspace
+*.sublime-project
+
+# OS X
+.DS_Store
+
+# SASS
+.sass-cache
+.sass-cache/*
+**/.sass-cache/*
+**/.sass-cache
+
+# NodeJS
+node_modules/
+npm-debug.log
+
+# App Static Production Files
+/templates/dist/
+/static/
+
+# Cypress testing
+# videos from GUI runner
+cypress/videos
+cypress/screenshots
+# SDK and Webpack run in the background with stdout send to nohup.out
+nohup.out
+
+# Miscellaneous
+.tmp
+
+system_notes.md

@@ -1,0 +1,34 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th>
+        User Name
+      </th>
+      <th>
+        Email
+      </th>
+      <th>
+        Phone Number
+      </th>
+      <th>
+        Role
+      </th>
+      <th>
+        Action(s)
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="user in users">
+      <td>{[ user.name ]}</td>
+      <td>{[ user.email ]}</td>
+      <td>{[ user.phone_number ]}</td>
+      <td>College Admin</td>
+      <td>
+        <button>
+          Delete
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>

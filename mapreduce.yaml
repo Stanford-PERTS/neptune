@@ -1,0 +1,19 @@
+mapreduce:
+
+# - name: Delete all SurveyLink entities
+#   mapper:
+#     input_reader: mapreduce.input_readers.DatastoreInputReader
+#     handler: map_handlers.delete_all_survey_links
+#     params:
+#     - name: entity_kind
+#       default: model.SurveyLink
+
+- name: Delete Projects (w/ tasks), or ProjectCohorts (w/ codes), or Surveys (w/ tasks), for any program.
+  mapper:
+    input_reader: mapreduce.input_readers.DatastoreInputReader
+    handler: map_handlers.delete_for_program
+    params:
+    # Both of these must be specified in the UI at /mapreduce
+    - name: entity_kind
+    - name: program_label
+      default: triton

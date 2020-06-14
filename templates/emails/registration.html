@@ -1,0 +1,79 @@
+{% extends 'base_email.html' %}
+
+{% block content %}
+
+<p>
+  Thank you for your interest in
+  {% if program_label %}
+    {{ program_name }}!
+  {% else %}
+    PERTS!
+  {% endif %}
+</p>
+
+{% if program_label %}
+
+<p>
+  First things first,
+  <a href="{{domain}}/static/programs/{{program_label}}/information_packet.pdf">
+  Download the Information Packet</a> and read all about {{ program_name }}.
+</p>
+<div class="button-wrapper">
+  <a class="cta"
+     href="{{domain}}/static/programs/{{program_label}}/information_packet.pdf">
+    1. Download the Information Packet
+  </a>
+</div>
+
+<p>
+  Then get your organization set up.
+</p>
+
+<p>
+  {# autoescaping is on; turn it off for ampersands in this href #}
+  <a class="cta" href="{{link}}{{query_string|safe}}">
+    2. Get Your Organization Set Up
+  </a>
+</p>
+
+{% else %}
+
+<p>
+  To get your organization set up, click the button below.
+</p>
+
+<p>
+  {# autoescaping is on; turn it off for ampersands in this href #}
+  <a class="cta" href="{{link}}{{query_string|safe}}">
+    Set Up Your Organization
+  </a>
+</p>
+
+{% endif %}
+
+<p>
+  If you have any trouble with the links above, please use this URL:
+</p>
+
+<pre>
+  {{link}}{{query_string}}  {# ampersands autoescaped for display #}
+</pre>
+
+<p>
+  Please note that <strong>your link will expire in 48 hours</strong>, so
+  let&rsquo;s get you set up right away! (But don&rsquo;t worry, you can always
+  get a new invitation at
+  <a href="https://www.perts.net/programs">perts.net/programs</a>).
+</p>
+
+<p>
+  If you did not request this email from PERTS, please contact us right away at
+  <a href="mailto:{{ contact_email_address }}">{{ contact_email_address }}</a>.
+</p>
+
+<p>
+  Yours Truly,<br>
+  The PERTS Team
+</p>
+
+{% endblock %}

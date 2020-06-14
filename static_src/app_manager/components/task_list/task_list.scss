@@ -1,0 +1,60 @@
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// CheckpointTaskBody
+.checkpoint-body {
+  padding: 10px;
+  border-top: 1px solid $nep-light-gray;
+  background: #ffffff;
+}
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// TaskList
+.task-list {
+  // override materialize
+  .collapsible.popout {
+    >li {
+      // expanded & collapsed tasks same width
+      margin-left: 0;
+      margin-right: 0;
+    }
+  }
+
+  .collapsible-body {
+    padding: 2em;
+
+    p {
+      padding: 0 0 1rem 0;
+    }
+
+    blockquote {
+      margin: 0 0 20px -30px;
+    }
+
+    form {
+      p:first-child {
+        padding-top: 0;
+        padding-left: 0;
+      }
+
+      p {
+        padding-left: 0;
+      }
+    }
+
+  }
+  // ^^ override materialize
+
+  &.program-registration {
+    .project-cohorts {
+      ul {
+        padding-left: 20px;
+      }
+      li {
+        box-shadow: none;
+      }
+    }
+
+    a.btn i {
+      margin-left: 10px;
+    }
+  }
+}

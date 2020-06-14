@@ -1,0 +1,54 @@
+<!-- Batch Controls -->
+<ui-card class="CardOptions">
+  <div class="DashboardBatchControls">
+    <div class="DashboardBatchStats">
+      <div class="ProjectCohortsMatches">
+        Matches:
+        {{ $ctrl.options.cardsMatching.length }}
+      </div>
+      <div class="ProjectCohortsSelected">
+        Selected:
+        {{ $ctrl.options.cardsSelected }}
+      </div>
+    </div>
+    <div class="DashboardBatchButtons">
+      <div class="DashboardBatchButtonsItem">
+        <ui-action-button
+          ng-click="$ctrl.selectAllVisible()"
+        >
+          Select Visible
+          <i class="fa fa-check-square-o"></i>
+        </ui-action-button>
+      </div>
+
+      <div class="DashboardBatchButtonsItem">
+        <ui-action-button
+          ng-click="$ctrl.deselectAllVisible()"
+        >
+          Deselect Visible
+          <i class="fa fa-square-o"></i>
+        </ui-action-button>
+      </div>
+
+      <div class="DashboardBatchButtonsItem">
+        <ui-action-button
+          disabled="$ctrl.options.cardsSelected === 0"
+          ng-click="$ctrl.approveParticipation()"
+        >
+          Approve Participation
+          <i class="fa fa-thumbs-o-up"></i>
+        </ui-action-button>
+      </div>
+
+      <div class="DashboardBatchButtonsItem">
+        <ui-action-button
+          disabled="$ctrl.options.cardsSelected === 0"
+          ng-click="$ctrl.openEmailModal()"
+        >
+          Send Email
+          <i class="fa fa-envelope-o"></i>
+        </ui-action-button>
+      </div>
+    </div>
+  </div>
+</ui-card>

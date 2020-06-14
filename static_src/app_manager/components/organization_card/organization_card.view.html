@@ -1,0 +1,31 @@
+<ui-card loading="$ctrl.loading">
+  <ui-organization-name>
+    <i class="fa fa-building-o"></i>
+    {{ $ctrl.organization.name }}
+  </ui-organization-name>
+
+  <div class="OrganizationActionButtons">
+    <ui-action-button
+      ui-sref="organizations.details({ organizationId: $ctrl.organization.short_uid })"
+      ui-sref-active-eq="active"
+    >
+      <i class="fa fa-building-o"></i>
+      <span>Details</span>
+    </ui-action-button>
+
+    <ui-action-button
+      ui-sref="organizations.details.users({ organizationId: $ctrl.organization.short_uid })"
+      ui-sref-active-eq="active"
+    >
+      <i class="fa fa-users"></i>
+      <span>Users</span>
+    </ui-action-button>
+
+    <ui-action-button
+      ui-sref="dashboard.query({ organization_id: $ctrl.organization.uid })"
+    >
+      <i class="fa fa-files-o"></i>
+      <span>Programs</span>
+    </ui-action-button>
+  </div>
+</ui-card>

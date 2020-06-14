@@ -1,0 +1,534 @@
+{#
+
+  IMPORTANT: potential XSS vulnerability; understand this before coding in
+  this file.
+
+  Any place where data is included here with the "safe" filter will PERMIT
+  dangerous code to be displayed to the user. It labels the data as "trusted".
+  This filter should only be used when the data is hard-coded by PERTS **and**
+  when it must contain html for display.
+
+  When data need not contain html for display, do not use the safe filter.
+
+  When data might come from users, for example when displaying responses from
+  survey participants, do not use the safe filter.
+
+  In other words these are okay:
+
+    This is template code with {{ trusted_html_string | safe }}.
+
+    This is a user's {{ unsafe_response_containing_evil_code }} but it will be
+    escaped so it's okay.
+
+  This is BAD and will burn your house down:
+
+    Displaying {{ unsafe_response_containing_evil_code | safe }} is NOT SAFE.
+
+#}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="generator" content="pandoc">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>{{ page_title }}</title>
+    <link rel="stylesheet" href="https://neptune.perts.net/static/css/jurassic.css" />
+    <link rel="stylesheet" href="https://neptune.perts.net/static/css/ep.css" />
+    <script src="/static/js/jquery-3.4.1.min.js"></script>
+    <script>
+      var MAX_RESPONSES_COLLAPSED = 4;
+      var EXPAND_BUTTON_TEXT = "See More";
+      var COLLAPSE_BUTTON_TEXT = "See Fewer";
+
+      function expand(button) {
+        jQuery('li', button.parent()).removeClass('hidden');
+        button.text(COLLAPSE_BUTTON_TEXT);
+      }
+
+      function collapse(button) {
+        jQuery('li', button.parent()).each((liIndex, li) => {
+          if (liIndex >= MAX_RESPONSES_COLLAPSED) {
+            jQuery(li).addClass('hidden');
+          }
+        });
+        button.text(EXPAND_BUTTON_TEXT);
+      }
+
+      function toggle(event) {
+        var button = jQuery(event.target);
+
+        if (jQuery('li.hidden', button.parent()).length) {
+          expand(button);
+        } else {
+          collapse(button);
+        }
+      }
+
+      function hideExtraResponses() {
+        jQuery('ul.responses').each((ulIndex, ul) => {
+          if (jQuery('li', ul).length > MAX_RESPONSES_COLLAPSED) {
+            var button = jQuery('<button class="expand-toggle">')
+              .click(toggle)
+              .insertAfter(ul);
+            collapse(button);
+          }
+        });
+      }
+
+      // On page load, loop through open_responses_list and place content for each!
+      jQuery(function () {
+        hideExtraResponses();
+      });
+
+    </script>
+  </head>
+  <body>
+    <div id="header">
+      <div id="angled-bar"></div>
+      <img
+        src="https://www.perts.net/static/images/pertslogo.png"
+        class="perts-logo"
+      >
+    </div>
+    <!-- gives a nice white background to the logo when over content -->
+    <div id="header-lower-layer"></div>
+    <div class="main-container">
+      <div style="text-align: center">
+        <h1 class="super title">
+          Copilot
+          {% if classroom_name != "" %}
+            Team &amp; Class
+          {% else %}
+            Team
+          {% endif %}
+          Report
+        </h1>
+        <h1 class="title">
+          {% if classroom_name != "" %}
+            {{ team_name }} <br> {{ classroom_name }}
+          {% else %}
+            {{ team_name }}
+          {% endif %}
+        <h1 class="sub title">{{ report_date }}</h1>
+      </div>
+
+      <h2>
+        {% if fidelity_tuq < 80 or fidelity_honest < 80 %}
+          Communication Warning!
+        {% else %}
+          Communication Summary
+        {% endif %}
+      </h2>
+
+      <p>
+        Students are much more likely to give accurate responses and experience
+        improved engagement when they understand the purpose of the survey and
+        feel comfortable answering honestly.
+      </p>
+
+      <table class="display-table" id="communications-summary-table">
+        <tbody>
+          <tr class="stat-row">
+            {% if fidelity_tuq is not number %}
+              <td>
+                <strong>Not enough data:</strong>
+              </td>
+              <td>
+                Fewer than five students answered the question about whether they
+                understood the purpose of the survey.
+              </td>
+            {% elif fidelity_tuq < 80 %}
+              <td>
+                <span class="bad-stat">{{ fidelity_tuq }}%</span>
+              </td>
+              <td>
+                of surveyed students understood that their answers will be used
+                to make class better for them.
+              </td>
+            {% elif fidelity_tuq >= 80 %}
+              <td>
+                <span class="good-stat">{{ fidelity_tuq }}%</span>
+              </td>
+              <td>
+                of surveyed students understood that their answers will be used
+                to make class better for them.
+              </td>
+            {% endif %}
+          </tr>
+          <tr class="stat-row">
+            {% if fidelity_honest is not number %}
+              <td>
+                <strong>Not enough data:</strong>
+              </td>
+              <td>
+                Fewer than five students answered the question about whether
+                they were comfortable answering the questions honestly.
+              </td>
+            {% elif fidelity_honest < 80 %}
+              <td>
+                <span class="bad-stat">{{ fidelity_honest }}%</span>
+              </td>
+              <td>
+                of surveyed students felt comfortable answering the questions
+                honestly.
+              </td>
+            {% elif fidelity_honest >= 80 %}
+              <td>
+                <span class="good-stat">{{ fidelity_honest }}%</span>
+              </td>
+              <td>
+                of surveyed students felt comfortable answering the questions
+                honestly.
+              </td>
+            {% endif %}
+          </tr>
+        </tbody>
+      </table>
+
+      <p>
+        For more information about how to authentically engage your students
+        with the survey, check out <a
+        href="https://perts.net/communication">perts.net/communication</a>.
+      </p>
+
+      <h2>Participation Summary</h2>
+
+      {% if classroom_name %}
+        <p>
+          The table shows the number of participants in the team and class in
+          each time period. Participation percentages assume <em>{{ classroom_name }}</em> has
+          {{ ru_expected_n }} students. You can update the expected number of
+          students for this class at the class detail page on
+          <a href="https://copilot.perts.net/teams/{{ team_id }}/classrooms/{{ classroom_id_url }}">
+          copilot.perts.net</a>.
+        </p>
+      {% else %}
+        <p>
+          The table below shows the number of participants in the team during
+          each time period.
+        </p>
+      {% endif %}
+
+      {% if zero_length_table %}
+        <p>
+          <em>No participation table can be displayed because no new data is
+          available for the last {{ max_cycles_missing }} cycles.</em>
+        </p>
+      {% else %}
+        <table id="participation-table" class="display-table text-table">
+          <thead>
+            <tr>
+              {% for col in participation_table_columns %}
+              <th>{{ col }}</th>
+              {% endfor %}
+            </tr>
+          </thead>
+          <tbody>
+            {% for row in participation_table_data %}
+            <tr>
+              {% for cell in row %}
+              <td>{{ cell }}</td>
+              {% endfor %}
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      {% endif %}
+
+      {% if no_cycles_defined  %}
+
+          <p>
+          <b><font color="red">Warning:</font></b> Your team has not defined any cycles, so your reports cannot show changes over time. Ask your team captain to visit <a href="https://copilot.perts.net">copilot.perts.net</a> to set up cycles for your team.
+          <p>
+      {% endif %}
+
+      {% if date_of_earliest_uncycled_data  %}
+
+          <p>
+          <b><font color="red">Warning:</font></b> Your team has one or more student survey responses as far back as {{ date_of_earliest_uncycled_data }}. Since you have not defined any cycles that go back that far, your reports cannot include these early responses. If you want to include these responses, ask your team captain to visit <a href="https://copilot.perts.net">copilot.perts.net</a> and add cycles extending back to {{ date_of_earliest_uncycled_data }}.
+          <p>
+      {% endif %}
+
+      <div class="page-break"></div>
+
+      <h2 id="about-your-report">About Your Report</h2>
+
+      <p>This report helps educators work in teams to:</p>
+      <ol>
+        <li>Identify the learning conditions most relevant to their students.</li>
+        <li>Learn and share best practices for increasing engagement.</li>
+        <li>Track progress towards higher engagement.</li>
+      </ol>
+      <p>
+        The graphs below show the percentage of students who responded in the
+        ideal zone to the question to the right of the graph. For more
+        information see <a href="#interpreting-the-graphs">Interpreting The
+        Graphs</a>.
+      </p>
+      <p>
+        For more context and FAQs, visit
+        <a href="http://www.perts.net/engage">perts.net/engage</a>.
+      </p>
+      {% if target_msg %}
+        <h3>Target Group Information</h3>
+        <p>
+          {#
+            IMPORTANT! See the warning at the top of this file
+            regarding the "safe" filter.
+          #}
+          {{ target_msg | safe }}
+        </p>
+      {% endif %}
+
+
+      <h2 id="learning-conditions">Learning Conditions</h2>
+
+      <p>
+        Your team assessed the following learning conditions:
+      </p>
+
+      <div class="learning-conditions-assessed">
+        {% for lc in learning_conditions %}
+          {% if lc.active %}
+            {% set lc_config = config['learning_conditions'][lc.label] %}
+            <div>
+              <a
+                href="#{{ lc_config['label'] }}"
+                class="learning-condition-link"
+              >
+                <img
+                  src="{{ lc_config['img_url'] }}"
+                  class="learning-condition-graphic"
+                >
+                <span class="learning-condition-title">
+                  {{ lc_config['name'] }}
+                </span>
+              </a>
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+
+      <div class="page-break"></div>
+
+      {% for lc in learning_conditions %}
+
+        {% if lc.active %}
+
+          {% set lc_config = config['learning_conditions'][lc.label] %}
+
+          <div class="learning-condition-section">
+
+            <div class="vertical-center">
+              <div style="text-align: center">
+                <img
+                  src="{{ lc_config['img_url'] }}"
+                  class="learning-condition-graphic"
+                >
+                <a
+                  href="https://www.perts.net/conditions-{{ lc_config['label'] }}"
+                  class="learning-condition-recommendations"
+                >
+                  <button>See<br>Recommendations</button>
+                </a>
+              </div>
+              <div>
+                <h3 id="{{ lc.label }}">Learning Condition: {{ lc_config['name'] }}</h3>
+                {% if lc_config['description'] %}
+                  {#
+                    IMPORTANT! See the warning at the top of this file
+                    regarding the "safe" filter.
+                  #}
+                  {{ lc_config['description'] | safe }}
+                  }
+                {% endif %}
+              </div>
+            </div> <!-- end .vertical-center -->
+
+            <div class="vertical-center"> <!-- pct-improve information -->
+              {% if lc.pct_improve_string_list %}
+                <div class="percent-improved">
+                  <p>
+                    <span class="good-stat">
+                      +{{ lc.pct_improve_string_list[0] }}%
+                    </span>
+                    on average since starting:
+                    <span class="encourage-message">
+                      {{ lc.pct_improve_string_list[1] }}
+                    </span>
+                    Overall, {{ lc.pct_improve_string_list[2] }}{{ lc.pct_improve_string_list[3] }}
+                  </p>
+                </div>
+              {% endif %}
+            </div> <!-- end .vertical-center -->
+
+
+
+            {% if lc.timeline_active and lc.timeline_chart_64 %}
+              <figure class="ggplot">
+                <figcaption>{{ lc_config['name'] }} over time</figcaption>
+                <img src="data:image/png;base64,{{ lc.timeline_chart_64 }}">
+              </figure>
+            {% endif %}
+
+            <figure class="ggplot">
+              <figcaption>
+                {{ lc_config['name'] }} by Subpopulation<br>(most recent measures)
+              </figcaption>
+              <img src="data:image/png;base64,{{ lc.bar_chart_64 }}">
+              <figcaption class="interpreting-link">
+                <a href="#interpreting-the-graphs">See here for more information about graphs.</a>
+              </figcaption>
+            </figure>
+
+            <!-- LC-specific open responses -->
+
+            <h3 style="margin-top: 0">Recent Responses</h3>
+
+            <!-- I will use array instead of the boolean because I need global scope https://stackoverflow.com/questions/4870346/can-a-jinja-variables-scope-extend-beyond-in-an-inner-block -->
+            {% set any_lc_responses = [] %}
+
+            {% for q_id in lc_config['open_response_q_ids'] %}
+              {% set q_config = config['open_response_questions'][q_id] %}
+              {% set responses = open_responses[q_id] %}
+
+              {% if responses | length %}
+                {% if any_lc_responses.append('1') %} {%endif%}
+                <div id="{{ q_id }}" class="responses-wrapper">
+                  {#
+                    IMPORTANT! See the warning at the top of this file
+                    regarding the "safe" filter.
+                  #}
+                  <p><em>{{ q_config['intro_text'] | safe }}</em></p>
+                  <ul class="responses">
+                    {% for r in responses %}
+                    <li>{{ r | truncate(10000, true) }}</li>
+                    {% endfor %}
+                  </ul>
+                </div>
+              {% endif %} {# end display only if responses exist #}
+
+            {% endfor %} {# end loop of open response questions for this lc #}
+
+            {% if not any_lc_responses %}
+              <p><em>No responses to display.</em></p>
+            {% endif %}
+
+          </div> <!-- end .learning-condition-section -->
+
+        {% endif %} {# end display only if lc is active #}
+
+        {{ sep }}
+      {% endfor %} {# end loop of learning conditions #}
+
+      <h2>Overall Recent Responses</h2>
+
+      {% set any_overall_repsonses = [] %}
+      {% for q_id in config['general_open_response_q_ids'] %}
+
+        {% set q_config = config['open_response_questions'][q_id] %}
+        {% set responses = open_responses[q_id] %}
+
+        {% if responses | length %}
+          {% if any_overall_repsonses.append('1') %} {%endif%}
+          <div id="{{ q_id }}" class="responses-wrapper">
+
+            {#
+              IMPORTANT! See the warning at the top of this file
+              regarding the "safe" filter.
+            #}
+            <p><em>{{ q_config['intro_text'] | safe }}</em></p>
+
+            <ul class="responses">
+              {% for r in responses %}
+              <li>{{ r | truncate(10000, true) }}</li>
+              {% endfor %}
+            </ul>
+
+          </div>
+        {% endif %} {# end display only if responses exist #}
+
+      {% endfor %} {# end loop of general open response questions #}
+
+      {% if not any_overall_repsonses %}
+        <p><em>No responses to display.</em></p>
+      {% endif %}
+
+      <div class="page-break"></div>
+
+
+      <h2 id="interpreting-the-graphs">Interpreting The Graphs</h2>
+
+      <ul>
+        <li>
+          <p>
+            Missing values: The gray bars marked with an “n/a” sign indicate that
+            there were fewer than five students in a gender or ethnicity category
+            for that response. We do not display disaggregated results when this
+            happens so that individual student responses remain anonymous.
+          </p>
+        </li>
+        <li>
+          <p>
+            The size of the dots in the time graphs reflects the proportion of
+            responses that were present that cycle, with larger dots representing
+            a larger proportion of responses collected that cycle.
+          </p>
+        </li>
+        <li>
+          <p>
+            Races are grouped together to increase the likelihood that enough
+            data are present to report.
+          </p>
+        </li>
+        <li>
+          <p>
+            To help teachers see and address inequalities in their classrooms,
+            this report groups student results into races that tend to be
+            structurally advantaged (White and/or Asian American) or disadvantaged
+            (Black, Latinx, and/or Native American) in the US education system
+            at the national level. For more information, please see our
+            <a href="https://www.perts.net/engage/faq#race-grouping">FAQ</a>.
+            And if you want to define your own custom groups, you can define a
+            "target group" for your team
+            <a href="https://www.perts.net/engage/faq#what-is-target-group">here</a>.
+          </p>
+        </li>
+        <li>
+          <p>
+            The y-axis of the graphs shows the percent of students who selected
+            either “Agree” or “Strongly agree”. (Other response options were
+            “Strongly disagree”, “Disagree” and “Neither agree nor disagree”.)
+          </p>
+        </li>
+        <li>
+          <p>
+            If the demographic categories contain missing values, the overall
+            mean in the bar graphs could differ from the combined means for the
+            separate levels.
+          </p>
+        </li>
+        <li>
+          <p>
+            If a classroom has fewer than 5 participants, only team-level results
+            are shown.
+          </p>
+        </li>
+        <li>
+          <p>
+            Statistical significance in the bar graphs is marked with asterisks
+            (* p &lt; .05, ** p &lt; .01, *** p &lt; .001).
+          </p>
+        </li>
+        <li>
+          <p>
+            This report can be shared by forwarding the URL of this page. Links
+            that you share will expire after 30 days.
+          </p>
+        </li>
+      </ul>
+
+    </div>
+
+  </body>
+</html>

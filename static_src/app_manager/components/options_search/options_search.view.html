@@ -1,0 +1,49 @@
+<!-- Organization Search | All -->
+<div ng-if="$ctrl.showSearchAll()">
+  <ui-card
+    class="CardOptions"
+    loading="$ctrl.loading"
+  >
+    <angucomplete-alt id="org-search"
+      placeholder="Search organizations (all)"
+      pause="300"
+      selected-object="$ctrl.searchAllSelected"
+      local-data="$ctrl.organizations"
+      local-search="$ctrl.searchAll"
+      title-field="name"
+      clear-selected="true"
+      minlength="1"
+      input-class="form-control form-control-small">
+    </angucomplete-alt>
+  </ui-card>
+
+  <ui-card class="CardOptions" ng-show="$ctrl.showSearchAllClear()">
+    <p class="center-align">
+      <a href ng-click="$ctrl.searchAllClear()">Back to Dashboard</a>
+    </p>
+  </ui-card>
+</div>
+
+<!-- Organization Search | Program Limited -->
+<div ng-if="!$ctrl.showSearchAll()">
+  <ui-card class="CardOptions">
+    <angucomplete-alt id="org-search"
+      placeholder="Search organizations (program)"
+      pause="300"
+      input-changed="$ctrl.inputChanged"
+      selected-object="$ctrl.searchProgramSelected"
+      local-data="$ctrl.cardRows"
+      local-search="$ctrl.searchProgram"
+      title-field="project.organization_name"
+      clear-selected="true"
+      minlength="1"
+      input-class="form-control form-control-small">
+    </angucomplete-alt>
+  </ui-card>
+
+  <ui-card class="CardOptions" ng-show="$ctrl.showSearchProgramClear()">
+    <p class="center-align">
+      <a href ng-click="$ctrl.searchProgramClear()">Clear Organization</a>
+    </p>
+  </ui-card>
+</div>

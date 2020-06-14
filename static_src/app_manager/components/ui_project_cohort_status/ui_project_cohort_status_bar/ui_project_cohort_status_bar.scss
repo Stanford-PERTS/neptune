@@ -1,0 +1,68 @@
+ui-project-cohort-status-bar {
+  flex-grow: 1;
+
+  height: 10px;
+
+  margin-right: 10px;
+
+  background: #D8D8D8;
+  border-radius: 5px;
+
+  /*
+    Clip child progress bar parts to this parent ProjectCohortStatusBar so that
+    they respect the border-radius.
+   */
+  overflow: hidden;
+}
+
+ui-project-cohort-status-bar-org {
+  height: inherit;
+}
+
+ui-project-cohort-status-bar-complete {
+  height: inherit;
+}
+
+ui-project-cohort-status-bar-complete div {
+  height: inherit;
+  background: #00D097;
+}
+
+ /*
+   Hide the text version of the progress bar so that it's accessible by screen
+   readers but not visually.
+  */
+ui-project-cohort-status-bar-complete div span {
+  position: absolute;
+  left: -10000px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+ui-project-cohort-status-bar-admin {
+  height: inherit;
+  display: flex;
+}
+
+.ProjectCohortStatusBarCheckpoint {
+  height: inherit;
+  cursor: pointer;
+}
+
+.ProjectCohortStatusBarCheckpoint:not(:last-child) {
+  /*
+    Place a border between checkpoints so that we can delineate when checkpoints
+    are have the same state and therefore the same color.
+  */
+  border-right: 4px solid #4A4A4A;
+}
+
+.ProjectCohortStatusBarCheckpoint.complete {
+  background: #00D097;
+}
+
+.ProjectCohortStatusBarCheckpoint.waiting {
+  background: #1DADEA;
+}

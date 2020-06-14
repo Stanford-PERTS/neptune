@@ -1,0 +1,346 @@
+<div class="set-password-page">
+
+
+  <div
+    class="container"
+    data-test="set-password"
+    ng-show="mode == 'set_password'"
+  >
+    <div class="row">
+      <div class="col s12">
+        <div class="card">
+          <div class="card-stacked">
+            <div class="card-content center-align">
+              <span ng-if="program" class="card-title">
+                You&rsquo;re registering for {[ program.name ]}
+              </span>
+              <span ng-if="cohort" class="card-title">
+                ({[ program.cohorts[cohort].name ]})
+              </span>
+              <p ng-if="program">
+                <em>{[ program.description ]}</em>
+              </p>
+              <span ng-if="!program" class="card-title">
+                {[ message ]}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col s12">
+        <div class="card">
+          <div class="card-stacked">
+            <div class="card-content">
+              <form class="valid-form" ng-submit="submit()"
+                    name="setPasswordForm" novalidate>
+                <h5>Set your name and password</h5>
+                <div ng-show="userIsNew === true" class="row">
+                  <div class="input-field col s8">
+                    <input type="text" value="{[user.email]}" disabled readonly
+                           class="validate">
+                  </div>
+                </div>
+                <div ng-show="userIsNew === true" class="row">
+                  <div class="input-field col s8">
+                    <input type="text" ng-model="name" id="name" required class="touched-only">
+                    <label for="name" data-error="required">Full name</label>
+                  </div>
+                </div>
+                <div ng-show="userIsNew === true" class="row">
+                  <div class="input-field col s8">
+                    <input type="tel" ng-model="phoneNumber" id="tel" required
+                           pattern=".*\d{3}.*\d{3}.*\d{4}" class="touched-only">
+                    <label for="tel" data-error="Please include area code">Phone number</label>
+                  </div>
+                </div>
+
+                <p>
+                  Your password protects student information, which we take very
+                  seriously. Please use a strong password. We'll make suggestions
+                  if you need help.
+                </p>
+                <div class="row">
+                  <div class="input-field col s8">
+                    <input type="password" name="password" ng-model="password"
+                           id="password" zxcvbn="passwordStrength" required
+                           zx-extras="weakWords" zx-min-score="3">
+                    <label for="password" data-error="Please use a more secure password">Password</label>
+                  </div>
+                  <ul class="invalid-message col s4">
+                    <li ng-show="passwordStrength.feedback.warning">
+                      {[ passwordStrength.feedback.warning ]}
+                    </li>
+                    <li ng-repeat="s in passwordStrength.feedback.suggestions">{[s]}</li>
+                  </ul>
+                </div>
+                <div class="row">
+                  <div class="input-field col s8">
+                    <input type="password" required ng-model="repeatPassword"
+                           name="repeatPassword"
+                           id="repeat-password" compare-to="password">
+                    <label for="repeat-password"
+                           data-error="Passwords do not match or password is not secure">
+                      Repeat password
+                    </label>
+                  </div>
+                </div>
+                <input type="hidden" ng-model="name" />
+                <input type="hidden" ng-model="phoneNumber" />
+                <div class="row">
+                  <div class="col s12">
+                    <button type="submit" class="waves-effect waves-light btn"
+                            ng-show="userIsNew === true"
+                            ng-disabled="setPasswordForm.$invalid">
+                      {[ message ]}
+                    </button>
+                    <button type="submit" class="waves-effect waves-light btn"
+                            ng-show="userIsNew === false"
+                            ng-disabled="setPasswordForm.password.$invalid ||
+                                         setPasswordForm.repeatPassword.$invalid">
+                      {[ message ]}
+                    </button>
+
+                    <div class="preloader-wrapper inline small active" ng-show="busy">
+                      <div class="spinner-layer spinner-blue-only">
+                        <div class="circle-clipper left">
+                          <div class="circle"></div>
+                        </div><div class="gap-patch">
+                          <div class="circle"></div>
+                        </div><div class="circle-clipper right">
+                          <div class="circle"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col s12">
+                    <p ng-show="userIsNew === true" class="alternate-action">
+                      Didn't expect this to be a new account? You may have an account
+                      using a different email address.
+                      Try <a href="/login?program={[ program.label ]}">logging in</a>
+                      again.
+                    </p>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <div
+    class="container"
+    data-test="submission-successful"
+    ng-show="mode == 'submission_successful'"
+  >
+    <div class="row">
+      <div class="col s12">
+        <div class="card">
+          <div class="card-stacked">
+            <div class="card-content center-align">
+              <span class="card-title">{[ message ]}</span>
+             </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col s12">
+        <div class="card">
+          <div class="card-stacked">
+            <div class="card-content">
+              <p>Password saved.</p>
+              <p>You may now <a href="/login">login</a> with your password.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <div
+    class="container"
+    data-test="invalid-token"
+    ng-show="mode === 'invalid_token'"
+  >
+    <div class="row">
+      <div class="col s12">
+        <div class="card">
+
+          <div
+            class="card-stacked"
+            ng-if="errorMode.includes('not found')"
+            data-test="not-found"
+          >
+            <div class="card-content center-align">
+              <p>
+                <span class="card-title">
+                  Invitation Not Found
+                </span>
+              </p>
+              <p>
+                We couldn&rsquo;t find the code used in this invitation link.
+                It&rsquo;s possible it was mistyped. Please check your
+                invitation email and try again.
+              </p>
+            </div>
+          </div>
+
+          <div
+            class="card-stacked"
+            ng-if="'reset:expired' === errorMode"
+            data-test="reset-expired"
+          >
+            <div class="card-content center-align">
+              <!-- request another reset link -->
+              <p><span class="card-title">
+                This Link Has Expired
+              </span></p>
+              <p>
+                Darn! It&rsquo;s been more than 48 hours since you requested
+                that your password be reset. We want to make sure your account
+                stays secure, so let&rsquo;s start fresh.
+              </p>
+            </div>
+            <div class="card-action center-align">
+              <a ui-sref="reset_password">Reset your password</a>
+            </div>
+          </div>
+
+          <div
+            class="card-stacked"
+            ng-if="'registration:expired' === errorMode"
+            data-test="registration-expired"
+          >
+            <div class="card-content center-align">
+              <!-- get yourself another registration link -->
+              <p><span class="card-title">
+                This Invitation Has Expired
+              </span></p>
+              <p>
+                Darn! It&rsquo;s been more than 48 hours since you tried to
+                register for {[ program.name ]}. We want to make sure your
+                account stays secure, so let&rsquo;s start fresh.
+              </p>
+            </div>
+            <div class="card-action center-align">
+              <a ng-href="//{[yellowstoneDomain]}/orientation/{[program.label]}#get-started">
+                Register for {[ program.name ]}
+              </a>
+            </div>
+          </div>
+
+          <div
+            class="card-stacked"
+            ng-if="'invitation:expired' === errorMode"
+            data-test="invitation-expired"
+          >
+            <div class="card-content center-align">
+              <!-- ask colleague for another invitation -->
+              <p><span class="card-title">
+                This Invitation Has Expired
+              </span></p>
+              <p>
+                Darn! It&rsquo;s been more than 48 hours since you were invited
+                to create your account. You&rsquo;ll need to ask your colleague
+                or contact with the program to send you another invitation.
+              </p>
+            </div>
+          </div>
+
+          <div
+            class="card-stacked"
+            ng-if="':expired' === errorMode"
+            data-test="expired"
+          >
+            <div class="card-content center-align">
+              <!-- don't know what to do -->
+              <p><span class="card-title">
+                This Link Has Expired
+              </span></p>
+              <p>
+                You may want to explore our open
+                <a ng-href="//{[yellowstoneDomain]}/programs">programs</a>.
+              </p>
+            </div>
+          </div>
+
+
+          <div
+            class="card-stacked"
+            ng-if="'reset:used' === errorMode"
+            data-test="reset-used"
+          >
+            <div class="card-content center-align">
+              <!-- request another reset link or wait for it to arrive -->
+              <p><span class="card-title">
+                This Link Has Already Been Used
+              </span></p>
+              <p>
+                Oops! You already used this link to reset your password.
+              </p>
+              <p>
+                If your password was successfully reset, simply
+                <a ui-sref="login">log in</a>.
+              </p>
+              <p>
+                If were expecting to receive a new password reset link, please
+                wait a minute and check your email again.
+              </p>
+              <p>
+                If you need another reset link,
+                <a ui-sref="reset_password">click here</a>.
+              </p>
+            </div>
+            <div class="card-action center-align">
+                <a ui-sref="login">Log in</a>
+                <a ui-sref="reset_password">Reset password</a>
+            </div>
+          </div>
+
+          <div
+            class="card-stacked"
+            ng-if="[
+                'registration:used',
+                'invitation:used',
+                ':used'
+              ].includes(errorMode)"
+            data-test="used"
+          >
+            <div class="card-content center-align">
+              <!-- account ready, log in -->
+              <p><span class="card-title">
+                This Invitation Has Already Been Used
+              </span></p>
+              <p>
+                Oops! You used this invitation already. Please simply
+                <a ui-sref="login">log in</a>.
+              </p>
+              <p>
+                If were expecting to receive a new invitation, please wait a
+                minute and check your email again.
+              </p>
+            </div>
+            <div class="card-action center-align">
+              <a ui-sref="login">Log in</a>
+            </div>
+          </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+</div>

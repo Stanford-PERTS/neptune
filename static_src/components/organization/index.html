@@ -1,0 +1,178 @@
+<ui-card-panel loading="$ctrl.loading" error="$ctrl.error">
+  <form name="form">
+
+    <div ng-show="$ctrl.organization.status !== 'rejected'">
+      <ui-button
+        danger="true"
+        full-width="true"
+        ng-click="$ctrl.openDupeModal()"
+        loading="$ctrl.updating"
+        ng-if="$ctrl.isSuperAdmin"
+      >
+        Reject as Duplicate
+      </ui-button>
+      <hr />
+    </div>
+
+    <div
+      ng-if="$ctrl.organization.status === 'rejected'"
+      style="padding-top: 8px"
+    >
+      <ui-input-error>
+        This organization doesn&rsquo;t qualify for PERTS programs.
+      </ui-input-error>
+    </div>
+
+    <div ng-if="$ctrl.isSuperAdmin">
+      <ui-input-select
+        label="Organization Approved?"
+        model="$ctrl.organization.status"
+        disabled="!$ctrl.isSuperAdmin"
+      >
+        <option value="unapproved">Unapproved</option>
+        <option value="approved">Approved</option>
+        <option value="rejected">Rejected</option>
+      </ui-input-select>
+
+      <ui-input-text
+        label="NCES District ID"
+        model="$ctrl.organization.nces_district_id"
+        disabled="!$ctrl.isSuperAdmin"
+      ></ui-input-text>
+
+      <ui-input-error
+        type="form"
+        ng-show="$ctrl.ncesDistrictIdDuplicateId($ctrl.organization.nces_district_id)"
+      >
+        <span>
+          ID not unique!
+          <a ui-sref="organizations.details({ organizationId: $ctrl.ncesDistrictIdDuplicateId($ctrl.organization.nces_district_id) })">
+            (View duplicate)
+          </a>
+        </span>
+      </ui-input-error>
+    </div>
+
+    <div ng-if="$ctrl.isSuperAdmin">
+      <ui-input-text
+        label="NCES School ID"
+        model="$ctrl.organization.nces_school_id"
+        disabled="!$ctrl.isSuperAdmin"
+      ></ui-input-text>
+
+      <ui-input-error
+        type="form"
+        ng-show="$ctrl.ncesSchoolIdDuplicateId($ctrl.organization.nces_school_id)"
+      >
+        <span>
+          ID not unique!
+          <a ui-sref="organizations.details({ organizationId: $ctrl.ncesSchoolIdDuplicateId($ctrl.organization.nces_school_id) })">
+            (View duplicate)
+          </a>
+        </span>
+      </ui-input-error>
+    </div>
+
+    <div ng-if="$ctrl.isSuperAdmin">
+      <ui-input-text
+        label="IPEDS ID"
+        model="$ctrl.organization.ipeds_id"
+        disabled="!$ctrl.isSuperAdmin"
+      ></ui-input-text>
+
+      <ui-input-error
+        type="form"
+        ng-show="$ctrl.ipedsIdDuplicateId($ctrl.organization.ipeds_id)"
+      >
+        <span>
+          ID not unique!
+          <a ui-sref="organizations.details({ organizationId: $ctrl.ipedsIdDuplicateId($ctrl.organization.ipeds_id) })">
+            (View duplicate)
+          </a>
+        </span>
+      </ui-input-error>
+    </div>
+
+    <div ng-if="$ctrl.isSuperAdmin">
+      <ui-input-text
+        label="OPE ID"
+        model="$ctrl.organization.ope_id"
+        disabled="!$ctrl.isSuperAdmin"
+      ></ui-input-text>
+
+      <ui-input-error
+        type="form"
+        ng-show="$ctrl.opeIdDuplicateId($ctrl.organization.ope_id)"
+      >
+        <span>
+          ID not unique!
+          <a ui-sref="organizations.details({ organizationId: $ctrl.opeIdDuplicateId($ctrl.organization.ope_id) })">
+            (View duplicate)
+          </a>
+        </span>
+      </ui-input-error>
+
+      <ui-input-textarea
+        label="Notes"
+        model="$ctrl.organization.notes"
+        disabled="!$ctrl.isSuperAdmin"
+      ></ui-input-textarea>
+    </div>
+
+    <ui-input-text
+      label="Organization Name"
+      model="$ctrl.organization.name"
+      disabled="!$ctrl.isSuperAdmin"
+    ></ui-input-text>
+
+    <ui-input-textarea
+      label="Mailing Address"
+      model="$ctrl.organization.mailing_address"
+      disabled="!$ctrl.isSuperAdmin"
+    ></ui-input-textarea>
+
+    <ui-input-text
+      label="State"
+      model="$ctrl.organization.state"
+      disabled="!$ctrl.isSuperAdmin"
+    ></ui-input-text>
+
+    <ui-input-text
+      label="Postal Code"
+      model="$ctrl.organization.postal_code"
+      disabled="!$ctrl.isSuperAdmin"
+    ></ui-input-text>
+
+    <ui-input-text
+      label="Country"
+      model="$ctrl.organization.country"
+      disabled="!$ctrl.isSuperAdmin"
+    ></ui-input-text>
+
+    <ui-input-text
+      label="Phone Number"
+      model="$ctrl.organization.phone_number"
+      disabled="!$ctrl.isSuperAdmin"
+    ></ui-input-text>
+
+    <ui-input-text
+      label="Website"
+      model="$ctrl.organization.website_url"
+      disabled="!$ctrl.isSuperAdmin"
+    ></ui-input-text>
+
+    <ui-button
+      full-width="true"
+      ng-click="$ctrl.update()"
+      loading="$ctrl.updating"
+      ng-if="$ctrl.isSuperAdmin"
+    >
+      Update Organization
+    </ui-button>
+
+    <ui-input-error type="form" ng-show="$ctrl.error">
+      {{ $ctrl.error }}
+    </ui-input-error>
+    <ui-input-success type="form" message="$ctrl.success"></ui-input-success>
+  </form>
+</ui-card-panel>

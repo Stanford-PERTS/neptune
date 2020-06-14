@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>{{ organization_name }}</title>
+    <link rel="stylesheet" href="https://neptune.perts.net/static/css/jurassic.css" />
+    <link rel="stylesheet" href="https://neptune.perts.net/static/css/ep.css" />
+
+    <style>
+      .truncate {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 200px;
+      }
+
+      @media print {
+        body {
+          font-size: 10pt;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="header">
+      <div id="angled-bar"></div>
+      <img
+        src="https://www.perts.net/static/images/pertslogo.png"
+        class="perts-logo"
+      >
+    </div>
+    <!-- gives a nice white background to the logo when over content -->
+    <div id="header-lower-layer"></div>
+    <div class="main-container">
+      <div style="text-align: center">
+        <h1 class="super title">
+          Copilot Collection Report
+        </h1>
+        <h1 class="title">
+          {{ organization_name }}
+        <h1 class="sub title">{{ report_date }}</h1>
+      </div>
+
+      <p>
+        This report is designed to help you understand and compare how students
+        reacted to the artifacts in the collection
+        <em>{{organization_name}}</em>.
+      </p>
+
+      <ul>
+        <li>
+          The <a href="https://perts.net/messageit/measures-summary">measure
+          summary</a> explains what was measured and why it matters.
+        </li>
+        <li>Error bars in graphs are standard errors of the mean.</li>
+        <li>
+          To protect confidentiality, data are only displayed when there are at
+          least 5 responses belonging to an artifact, or to each group within a
+          demographic contrast (e.g., at least 5 structurally disadvantaged and
+          5 structurally advantaged students).
+        </li>
+      </ul>
+
+      <h2>Sample Size</h2>
+
+      <p>
+        How many students responded to questions about each of the artifacts?
+      </p>
+
+      <table id="sample-size-table" class="display-table" style="width: 100%">
+        <thead>
+          <tr>
+            <th rowspan="2">Artifact</th>
+            <th rowspan="2">All</th>
+            <th colspan="2">Structr&rsquo;ly Disadvantaged</th>
+            <th rowspan="2">High Financial Stress</th>
+          </tr>
+          <tr>
+            <th>Gender</th>
+            <th>Race</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for row in sample_size_table %}
+            <tr>
+              <td class="truncate">
+                <a
+                  href="https://copilot.perts.net/teams/{{row['artifact_short_uid']}}"
+                >{{row['artifact_name']}}</a>
+              </td>
+              <td>{{row['all']}}</td>
+              <td>{{row['gender_disadv']}}</td>
+              <td>{{row['race_disadv']}}</td>
+              <td>{{row['fin_stress_disadv']}}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+      {% for lc in learning_conditions %}
+        {% set label = lc['label'].replace('_', '-') %}
+        {% set lc_name = config['learning_conditions'][label]['name'] %}
+
+
+        <div class="page-break"></div>
+        <div class="learning-condition-section">
+
+          <h3>{{ lc_name }}</h3>
+
+          <p>
+            The graph below shows what percent of students overall rated each
+            artifact <a href="#appendix">positively</a> for its impact on
+            <em>{{ lc_name }}</em>.
+          </p>
+
+          <figure class="ggplot">
+            <img src="data:image/png;base64,{{ lc['rate_positively_plot_64'] }}">
+          </figure>
+
+          <div class="page-break"></div>
+          <p>
+            The table below shows what percent of students by subgroup rated
+            each artifact <a href="#appendix">positively</a> for its impact on
+            <em>{{lc_name}}</em>. See the <a href="#appendix">appendix</a> for
+            details on terminology.
+          </p>
+
+          <table class="display-table lc-table" style="width: 100%">
+            <thead>
+              <tr>
+                <th rowspan="2">Artifact</th>
+                <th rowspan="2">All<br /><small>(standard error)</small></th>
+                <th colspan="2">Structr&rsquo;ly Disadvantaged</th>
+                <th rowspan="2">High Financial Stress</th>
+              </tr>
+              <tr>
+                <th>Gender</th>
+                <th>Race</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for row in lc['rate_positively_table'] %}
+                <tr>
+                  <td class="truncate">
+                    <a
+                      href="https://copilot.perts.net/teams/{{row['artifact_short_uid']}}"
+                    >{{row['artifact_name']}}</a>
+                  </td>
+                  <td>{{row['all']}} <small>({{row['all_se']}})</small></td>
+                  <td>{{row['gender_disadv']}}</td>
+                  <td>{{row['race_disadv']}}</td>
+                  <td>{{row['fin_stress_disadv']}}</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+
+        </div>
+      {% endfor %}
+
+      <h2 id="appendix">Appendix</h2>
+      <ul>
+        <li>
+          <strong>Positive rating</strong>: An overall experience is considered
+          positive if students&rsquo; responses to associated questions are, on
+          average, in the &ldquo;agree&rdquo; or &ldquo;strongly agree&rdquo;
+          range for positively worded questions or the &ldquo;disagree&rdquo;
+          or &ldquo;strongly disagree&rdquo; range for negatively worded
+          questions.
+        </li>
+        <li>
+          <strong>Structurally disadvantaged disaggregations</strong>: To help
+          you recognize and address disparities in student experience, this
+          report disaggregates results according to structural opportunity.
+          <ul>
+            <li>
+              For race, structurally advantaged includes White or Asian and
+              structurally disadvantaged includes Black, Latinx, and Native
+              American. Students can select multiple race and ethnic
+              identities. A student is considered structurally disadvantaged if
+              they belong to any race or ethnic group that is structurally
+              disadvantaged.
+            </li>
+            <li>For gender, [will fill in]</li>
+          </ul>
+        </li>
+        <li>
+          <strong>Standard error</strong>: [will fill in]
+        </li>
+      </ul>
+    </div> <!-- end .main-container -->
+  </body>
+</html>

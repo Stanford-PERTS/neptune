@@ -1,0 +1,31 @@
+<!-- Sidebar / Content Options | Org Admins -->
+<div class="ContentOptions" ng-if="!$ctrl.isSuperAdmin && $ctrl.$state.params.projectCohortId">
+  <ui-project-cohort-closed></ui-project-cohort-closed>
+</div>
+
+<!-- Sidebar / Content Options | Super Admins -->
+<div class="ContentOptions" ng-if="$ctrl.isSuperAdmin">
+  <nep-options-search
+    card-rows="$ctrl.cardRows"
+    options="$ctrl.options"
+    reset-dashboard="$ctrl.resetDashboard()"
+  ></nep-options-search>
+
+  <!-- Program Select -->
+  <nep-options-select-program
+    ng-show="$ctrl.$state.is('dashboard') || $ctrl.$state.is('dashboard.query')"
+    card-rows="$ctrl.cardRows"
+    options="$ctrl.options"
+    select-all-visible="$ctrl.selectAllVisible()"
+    deselect-all-visible="$ctrl.deselectAllVisible()"
+  >
+    <!-- contains cohort select  -->
+    <!-- contains view select  -->
+    <!-- contains sort select -->
+    <!-- contains filter select -->
+  </nep-options-select-program>
+
+  <ui-card>
+    <a ui-sref="reports.returning">Returning Organizations Report</a>
+  </ui-card>
+</div>

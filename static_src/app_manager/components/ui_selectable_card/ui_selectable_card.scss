@@ -1,0 +1,25 @@
+.CardSelect {
+  position: absolute;
+  top: -30px;
+  right: -30px;
+  height: 60px;
+  width: 60px;
+  background: $nep-dark-gray;
+
+  transform: rotate(45deg);
+
+  cursor: pointer;
+}
+
+.CardSelect i {
+  position: relative;
+  top: 36px;
+  left: 20px;
+  color: #FFFFFF;
+
+  transform: rotate(-45deg);
+}
+
+.closed .CardSelect {
+  background: $nep-red;
+}

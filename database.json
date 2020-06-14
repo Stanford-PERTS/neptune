@@ -1,0 +1,13 @@
+{
+  "_comment": "This file is used by db-migrate.",
+  "defaultEnv": { "ENV": "NODE_ENV" },
+  "test": {
+    "driver": "mysql",
+    "host": "localhost",
+    "database": "neptune",
+    "user": "neptune",
+    "password": "neptune",
+    "sql-file": true,
+    "multipleStatements": true
+  }
+}

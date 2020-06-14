@@ -1,0 +1,14 @@
+<div class="organization-invitation">
+  <form name="invitationForm" novalidate onsubmit="return false;">
+    <label>
+      Send invitation to:
+      <input type="email" ng-model="email" required
+             placeholder="Enter colleague's email address">
+      <button class="btn btn-task" ng-click="invite(email)"
+              ng-disabled="invitationForm.$invalid">
+        Send Invitation
+      </button>
+    </label>
+    <span class="btn-instructions" ng-show="sent">Invitation Sent!</span>
+  </form>
+</div>

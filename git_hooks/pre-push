@@ -1,0 +1,44 @@
+#!/bin/bash
+
+# Run before every `git push`.
+# Goal is to alert devs of any problems so they can fix them before pushing.
+
+printf "Neptune pre-push hook running...\n"
+
+set -e
+
+if [ "$SKIP_TEST" != "true" ]
+then
+  # Cypress requires the development server to be active for end-to-end tests.
+  printf "Running Cypress against SDK with production build.\n"
+
+  mkdir -p .gae_sdk
+
+  npm run build
+
+  NEPTUNE_SDK_PORT="8080"
+  NEPTUNE_SDK_ADMIN_PORT="8008"
+  SDK_PID=0
+
+  if [[ $(lsof -i :${NEPTUNE_SDK_PORT}) ]]
+  then
+      printf "Server already running on port ${NEPTUNE_SDK_PORT}."
+  else
+      printf "Starting server on port ${NEPTUNE_SDK_PORT}."
+      dev_appserver.py . -A=neptune-dev --port=${NEPTUNE_SDK_PORT} \
+        --admin_port=${NEPTUNE_SDK_ADMIN_PORT} \
+        --storage_path=.gae_sdk --enable_console=true \
+        --enable_host_checking=false --support_datastore_emulator=true \
+        --skip_sdk_update_check=true > .gae_sdk/sdk_logs 2>&1 &
+      SDK_PID=$!
+  fi
+
+  npm run test:pre-push
+
+  if [[ "$SDK_PID" -ne 0 ]]
+  then
+    kill ${SDK_PID}
+  fi
+fi
+
+exit 0

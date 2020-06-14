@@ -1,0 +1,19 @@
+// BEGIN sticky footer
+body, app {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+main {
+  flex: 1 0 auto;
+}
+// END sticky footer
+
+footer {
+  &.page-footer {
+    padding-top: 0;
+    border-top: 2px solid $nep-med-gray;
+    background-color: $nep-dark;
+  }
+}

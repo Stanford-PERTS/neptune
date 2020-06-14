@@ -1,0 +1,74 @@
+<div class="program-registration-view container">
+  <div class="col s12">
+
+    <div class="card card-horizontal">
+      <div class="card-stacked">
+        <div class="card-content">
+
+          <div class="card-title">
+            Open Programs
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div ng-repeat="program in $ctrl.programs">
+      <div
+        ng-repeat="cohort in program.registrableCohorts()"
+        class="card card-horizontal"
+      >
+        <div class="card-stacked">
+
+          <div class="card-content">
+            <div class="card-title">
+              {{ program.name }} ({{ cohort.name }})
+            </div>
+            <p>{{ program.description }}</p>
+          </div>
+
+          <div class="card-action">
+            <a
+              class="btn"
+              ng-href="//{{$ctrl.yellowstoneDomain}}/orientation/{{program.label}}"
+            >
+              Learn More
+            </a>
+            <a
+              class="btn"
+              ui-sref=".chooseOrg({
+                programLabel: program.label,
+                cohortLabel: cohort.label,
+              })"
+            >
+              Add Program
+            </a>
+          </div>
+
+        </div>
+      </div>
+      <div
+        ng-if="$ctrl.programs.length === 1 &&
+               program.registrableCohorts().length === 0"
+        class="card card-horizontal"
+      >
+        <div class="card-stacked">
+          <div class="card-content center-align">
+            Registration for {{program.name}} is currently closed.
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      ng-if="$ctrl.programs.length === 0"
+      class="card card-horizontal"
+    >
+      <div class="card-stacked">
+        <div class="card-content center-align">
+          We&rsquo;re sorry, but we can&rsquo;t find that program.
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

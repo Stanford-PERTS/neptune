@@ -1,0 +1,154 @@
+{% extends 'print_base.html' %}
+<!-- SEO tags -->
+
+{% set title = "Student Handout: Welcome Activity" %}
+{% set desc = "todo" %}
+
+{% block content %}
+
+<div class="no-print message-box">
+  This document is meant to be printed to paper or pdf.
+  <a href="javascript:window.print();" class="perts-button">Print</a>
+</div>
+
+<h1>{{ "" if project_cohort else "Example" }} Student Welcome Activity {{cohort_name}}</h1>
+
+{% if not project_cohort %}
+
+<p style="color: red;">
+  *** Please note that these are example instructions and NOT the instructions
+      you will use for participation. Once your school has selected the
+      administration setting and sign in method, you will receive personalized
+      school-specific instructions on the website ***
+</p>
+
+{% endif %}
+
+<h2>Instructions</h2>
+<p>
+  Participation is simple and will only take about 30 minutes. Please plan
+  enough time so you can complete the activity in one sitting.
+
+  <ol>
+    <li>
+      Have your student ID number handy. You may be asked to enter it during
+      the activity. Using your browser go to <strong>comingtocollege.org</strong>
+      and follow the prompts.
+    </li>
+    <li> Your participation code is:
+        {% if project_cohort %}
+        &lsquo;<strong>{{ project_cohort.code }}</strong>&rsquo;.
+        {% else %}
+        &lsquo;<strong>[Participation Code]</strong>&rsquo;.
+        {% endif %}
+
+        You will be asked to enter this when you first sign on.
+
+        {% if participation_open_date and participation_close_date %}
+        Please note that this participation code will only work from
+        {{ participation_open_date.strftime('%B %-d, %Y') }} to
+        {{ participation_close_date.strftime('%B %-d, %Y') }}. If you are using
+        these instructions after this timeframe, please reach out to your
+        facilitator for the new code before proceeding.
+        {% endif %}
+      </li>
+    <li>
+      Complete the assignment by yourself, not in a group with your
+      classmates. This respects everyone's privacy.
+    </li>
+    <li>
+      Write down your completion code on the line at the bottom of this
+      handout. This completion code is your way of verifying that you have
+      completed the assignment to your facilitator. Turn in your completion
+      code according to the instructions given by your facilitator.
+    </li>
+    </ol>
+
+    If you experience any difficulties, consult the troubleshooting guide
+    below. If the issue still isn't resolved, please contact your facilitator
+    as soon as possible to let them know.
+</p>
+
+ <h2> Important points</h2>
+    <ul>
+      <li>
+        Go to a quiet, private location when you complete this activity so
+        you are not distracted.
+      </li>
+      <li>
+        Remember we will use what we learn to improve students' experiences
+        here and at other schools. Please read the instructions on the website
+        carefully and answer all of the questions to the best of your ability.
+      </li>
+    </ul>
+
+<div class="page-break"></div>
+<h2>Troubleshooting</h2>
+<a class="anchor" id="troubleshooting"></a>
+<p>
+  We work hard to minimize the technical problems, but sometimes issues come
+  up. Here are some problems students have experienced in the past and the best
+  ways to solve them.
+</p>
+
+<h3>Closed Page</h3>
+<p>
+  <strong>Problem</strong>: You accidentally closed the browser window.
+  <br>
+  <strong>Solution</strong>: Go to the website and sign in
+  again, just like you did the first time. The program will continue where you
+  left off.
+  <br>
+</p>
+<h3>Warning Message or Connection Expired Message</h3>
+<p>
+  <strong>Problem</strong>: Your screen says that the connection
+  expired or a similar warning. <br>
+  <strong>Solution</strong>: Click the &ldquo;reload&rdquo; or
+  &ldquo;refresh&rdquo; button.<br>
+</p>
+
+<h3>Lost Location</h3>
+<p>
+  <strong>Problem</strong>: The program restarted from the beginning.
+  <br>
+  <strong>Solution</strong>: Skip up to the part where you
+  left off. The answers you previously provided have been saved, but
+  the server lost the page you were on for network reasons.
+</p>
+<p>
+  <i>Note</i>: Some pages may not allow you to advance until a certain amount
+  of time (about 5 seconds) has passed.
+</p>
+
+<h3>Cannot Connect to Website</h3>
+  <strong>Problem</strong>: You cannot access the page when you go to
+  comingtocollege.org.
+  <br>
+  <strong>Solution</strong>: Check if you can access another website, like
+  google.com. If not, there is a problem with your Internet connection. If you
+  can connect to google.com, but you cannot connect to comingtocollege.org,
+  wait for a few minutes and try again. You can also try using a different
+  browser (for example, if you are using Firefox, try Chrome or Safari
+  instead). If the connection still does not work, try again later and let your
+  facilitator know what error message you received.
+</p>
+
+<h3>Images Don't Load</h3>
+  <strong>Problem</strong>: You don't see some of the images or an article you
+  are directed to read.
+  <br>
+  <strong>Solution</strong>: Try signing out and signing in using a different
+  browser.
+</p>
+
+<p>
+If your issue is still not resolved using one of the solutions above, please
+promptly inform your facilitator.
+</p>
+
+<h3><strong>Name</strong> __________________________________________</h3>
+<h3> <strong>Completion Code</strong> _________________________________</h3>
+
+
+{% endblock %}

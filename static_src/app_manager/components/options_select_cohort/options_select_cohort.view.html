@@ -1,0 +1,15 @@
+<!-- Cohort Select -->
+<ui-card
+  class="CardOptions"
+>
+  <select
+    ng-model="$ctrl.selected"
+    ng-options="
+      cohort.options_text
+      for cohort in $ctrl.cohorts
+      track by cohort.label"
+    ng-change="$ctrl.changeCohort()"
+  >
+    <option value="">Select a Cohort</option>
+  </select>
+</ui-card>

@@ -1,0 +1,34 @@
+<div class="Dashboard Organizations">
+  <div class="ContentWrapper">
+    <div class="ContentMain">
+
+      <ui-loading-card ng-show="$ctrl.loading"></ui-loading-card>
+
+      <!-- Associated Organizations (those the user has requested access to) -->
+      <div ng-show="$ctrl.assc_organizations.length">
+        <h1>Organizations (Requested)</h1>
+
+        <ui-card
+          ng-show="$ctrl.assc_organizations.length"
+          ng-repeat="organization in $ctrl.assc_organizations | orderBy: 'name'"
+        >
+          <ui-organization-name>{{ organization.name }}</ui-organization-name>
+        </ui-card>
+      </div>
+
+      <!-- Owned Organizations (those the user has access to) -->
+      <div ng-show="$ctrl.owned_organizations.length">
+        <h1>Organizations</h1>
+
+        <nep-organization-card
+          ng-repeat="
+            organization in $ctrl.owned_organizations
+            | orderBy: 'name'
+          "
+          organization="organization"
+        ></nep-organization-card>
+      </div>
+
+    </div>
+  </div>
+</div>

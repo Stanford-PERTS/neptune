@@ -1,0 +1,623 @@
+{% extends 'print_base.html' %}
+<!-- SEO tags -->
+
+{% set title = "Facilitator Instructions: Growth Mindset for College Students" %}
+
+{% block content %}
+
+<div class="no-print message-box">
+  This document is meant to be printed to paper or pdf.
+  <a href="javascript:window.print();" class="perts-button">Print</a>
+</div>
+
+<h1>{{ "" if project_cohort else "Example" }} Facilitator Instructions {{cohort_name}}</h1>
+
+{% if not project_cohort %}
+
+<p style="color: red;">
+  *** Please note that these are example instructions and NOT the instructions
+      you will use for participation. Once your school has selected the
+      administration setting and sign in method, you will receive personalized
+      school-specific instructions on the website ***
+</p>
+
+{% endif %}
+
+
+<p class="letter-greeting">
+  Dear Facilitator,
+</p>
+<p>
+  Thank you so much for partnering with us to bring Growth Mindset for College
+  Students (GMCS) to students at your college! GMCS will only take 30 minutes to
+  deliver to your students and uses the latest evidence-based methods to
+  positively affect students’ attitudes about college. To learn more about the
+  program, you can visit <a href = "//perts.net/college-mindset" target = "_blank">
+  perts.net/college-mindset</a>.
+</p>
+
+<p>
+  This document contains two sets of instructions:
+</p>
+<ul>
+  <li>
+    Please refer to <a href="#independent-completion">Independent
+    Completion</a> if your students will participate on their own in an
+    unsupervised setting.
+  </li>
+  <li>
+    Please refer to <a href="#supervised-completion">Supervised Completion</a>
+    if your students will participate during a facilitated in-person session.
+  </li>
+</ul>
+
+<p>
+  On the day of the program, questions may come up, so we’ve also included handy
+  <a href="#Troubleshooting">Troubleshooting</a> and
+  <a href="#Frequently-Asked-Student-Questions-and-Responses">FAQ</a>
+  sections to address students’ concerns or computer woes. We created these
+  instructions with the goal of making program delivery as easy as possible, so
+  we hope you’ll take some time to carefully review these instructions. For
+  additional support, your College Liaison is
+  {{ liaison.name if liaison else "[Liaison Name]" }},
+  {% if liaison %}
+    <a href="mailto:{{ liaison.email }}">{{ liaison.email }}</a>.
+  {% else %}
+    [Liason Email].
+  {% endif %}
+<p>
+
+<p>
+  Thank you again for working with us to bridge the gap between research and
+  practice by translating research findings into practical solutions! Together,
+  let’s unmask students’ true potential.
+</p>
+
+<p>
+  Thank you for your support!
+</p>
+<p>
+  - The PERTS team
+</p>
+
+<div class="page-break"></div>
+
+<h2>
+  General Information
+</h2>
+
+<h3>
+  Access Information for {{cohort_name}}
+</h3>
+
+  <blockquote>
+   <p>
+      Website: <strong>perts.me</strong><br>
+      Participation Code:
+      {% if project_cohort %}
+      <strong>{{ project_cohort.code }}</strong>
+      {% else %}
+      <strong>[Participation Code]</strong>
+      {% endif %}
+  </p>
+  </blockquote>
+  <p> Please note that this participation code will only work from
+    {{ participation_open_date.strftime('%B %-d, %Y') if participation_open_date else '[Start Date]'}} to
+    {{ participation_close_date.strftime('%B %-d, %Y') if participation_close_date else '[End Date]' }}. If you are using
+    these instructions after this timeframe, please reach out to your College
+    liaison for the current participation code before proceeding.
+  </p>
+
+<h3>
+  How to Describe the Program to Students
+</h3>
+
+  <p>
+    We have provided specific instructions about how to describe the program to
+    students in the next sections. It is important to follow them closely because
+    mindset programs become less effective if they are described as interventions
+    intended to help students (see Yeager et al., 2016b). For example, describing
+    the program as an intervention intended to help students can cause students
+    to become defensive and to view participation as stigmatizing. This prevents
+    the internalization that is critical for the program’s success. For this
+    reason, please <strong>do not</strong> refer to the program as {{
+    program_name }} when speaking with students. Instead, you can describe the
+    program as a welcome activity to better understand how students learn and
+    what schools can do to make school a better place for them.
+  </p>
+
+{% if project_cohort.portal_type != 'custom' %}
+<h3>
+  If Necessary, Obtain Student IDs
+</h3>
+
+  <p>
+    Students may be asked to sign into the program using their student name or
+    email, your college’s authentication network, or their student IDs. We
+    recommend verifying that each student has their student ID information. We
+    also suggest obtaining a roster of IDs in advance to help students look up
+    their information if needed. This step is especially important for students
+    who will be completing the program on their own, because they will not be
+    able to ask you for help finding their ID while they are completing the
+    program.
+  </p>
+{% endif %}
+
+<div class="page-break"></div>
+
+<h2 class="anchor" id="independent-completion">
+  Independent Completion
+</h2>
+
+  <p>
+    Please review these instructions if your college plans to deliver the program
+    to students to complete on their own.
+  </p>
+
+  <h3>
+    Step 1: Choose Your Invitation Method
+  </h3>
+
+    <p>
+      You will need to decide how your college will invite students to Growth
+      Mindset for College Students. You have several options available and we
+      encourage you to use a combination of invitation methods to increase the
+      likelihood that students complete the program.
+    </p>
+
+      <ul>
+        <li>
+          <strong>
+            Direct invitation emails:
+          </strong>
+          You may send emails specifically inviting students to the program.
+          This can be accomplished in several ways. You may have instructors for
+          first year courses send their students email or you may use your
+          institution’s standard mail merge procedures. You can find suggested
+          language below.
+        </li>
+        <li>
+          <strong>
+            Web portals and course management systems:
+          </strong>
+          Many schools have online portals or course management systems (e.g.,
+          Blackboard, Moodle) where students routinely log in to view forms,
+          calendars, information on other requirements, or complete assignments
+          for their classes. You may invite students on a general first-year
+          webpage if you're implementing the program as part of new student
+          orientation or you can invite them on specific course webpages for
+          first-year or developmental classes.
+        </li>
+        <li>
+          <strong>
+            Embedded in a student checklist:
+          </strong>
+          Some colleges provide students a checklist of suggested or required
+          activities as part of new student orientation or as part of syllabus
+          week for a course. You may invite students to participate by embedding
+          the Access Information in student-facing materials.
+        </li>
+        <li>
+          <strong>
+            Newsletters and other aggregated communications:
+          </strong>
+          You may send regular emails to their incoming students, such as weekly
+          newsletters. You can find suggested language to include in this document.
+        </li>
+        <li>
+          <strong>
+            Other strategies as appropriate for your college:
+          </strong>
+          Your college may have other resources available to invite students, and
+          we encourage you to consider which methods may be effective on your campus.
+          For example, some colleges have used phone banks or reserved computer
+          lab space for students to complete the program to successfully increase
+          student participation in the past.
+        </li>
+      </ul>
+
+<h3>
+  Step 2: Create an Invitation Timeline
+</h3>
+
+<p>
+  You will need to decide when you’ll begin inviting students to participate.
+</p>
+
+<p>
+  <strong>
+    For orientation-based implementation:
+  </strong>
+  We recommend colleges begin reaching out to students a month before they arrive
+  on campus. We also suggest setting an internal deadline for participation at
+  least two weeks prior to arrival so that you can extend the deadline, as needed,
+  if response rates are lower than desired.
+</p>
+
+<p>
+  <strong>
+    For course-based implementation:
+  </strong>
+    We recommend you set a deadline based on your normal procedures. We provide
+    the
+      <a href="https://neptune.perts.net/student_handout/cg17">
+      Student Handout
+      </a>
+    to facilitate delivering the program as an assignment. You
+    may want to ask students to turn in the handout or their completion code for
+    participation credit.
+</p>
+
+
+<h3>
+  Step 3: Choose Your Invitation Method
+</h3>
+
+  <p>
+    Please copy and paste the script onto your designated invitation method
+    (e.g. email, Blackboard, or orientation checklist).
+  </p>
+
+  <p>
+  <i>Note</i>:
+  It is important to update these instructions with your college’s due date
+  and participation code.
+  </p>
+
+  <blockquote>
+    <p>
+      &ldquo;Our college is working on a special program with Stanford University.
+      The program will help instructors and administrators at our college
+      better understand how to make college a better place for all students.
+    </p>
+
+    <p>
+      The activities are designed to help us understand more about the
+      way you think and the way you learn. You will be answering survey
+      questions, reading some short passages, and answering questions about
+      what you read. Your responses will be kept confidential. They will only
+      be used to help our college learn what students experience and how those
+      experiences can be improved. You can learn more at
+      <a href="https://perts.net/privacy">perts.net/privacy</a>.
+    </p>
+    <p>
+      Remember: We will use what we learn to improve students'
+      experience here and at other colleges as well. So, please read the
+      instructions carefully and do your best to answer all of the questions
+      to the best of your ability.
+    </p>
+    <p>
+      Instructions for this assignment are simple. Using your browser,
+      please go to <strong>perts.me</strong>. Then enter the participation code
+
+      {% if project_cohort %}
+        &lsquo;<strong>{{ project_cohort.code }}</strong>&rsquo;,
+      {% else %}
+        &lsquo;<strong>[Participation Code]</strong>&rsquo;,
+      {% endif %}
+
+      and follow the on-screen instructions.
+    </p>
+
+    <p>
+      Participating should only take about 30 minutes. You will have until
+      (DUE DATE) to complete the assignment.&rdquo;
+    </p>
+  </blockquote>
+
+<h3>
+  Step 4: Invite Your Students
+</h3>
+
+  <p>
+    You are now ready to invite your students to participate in the program. We
+    suggest sending reminders as needed until your deadline.
+  </p>
+
+
+<div class="page-break"></div>
+
+<h2 class="anchor" id="supervised-completion">
+  Supervised Completion
+</h2>
+
+  <p>
+    Please review these instructions if your college plans to deliver the program
+    to students during in-person, supervised sessions.
+  </p>
+
+<h3>
+  Step 1: Reserve Resources
+</h3>
+
+  <p>
+    Please schedule a time to give students access to computers with an Internet
+    connection&mdash;either by bringing them to a computer lab or by requesting
+    a laptop cart for your classroom. Please keep in mind that the program takes
+    30 minutes for students to complete.
+  </p>
+
+<h3>
+  Step 2: Read Script Before Student Participation
+</h3>
+
+  <p>
+    Read the following script to students before they begin. If students are
+    participating as a take home assignment, please copy and paste the script
+    into an email or the course management system (e.g. Blackboard or Moodle).
+  </p>
+
+  <p>
+    <i>Note</i>:
+    It is important to update these instructions with your due date and
+    participation code.
+  </p>
+
+  <blockquote>
+    <p>
+      &ldquo;Our college is working on a special program with Stanford University.
+      The program will help instructors and administrators at our college
+      better understand how to make college a better place for all students.
+    </p>
+    <p>
+      &ldquo;The activities are designed to help us understand more about the
+      way you think and the way you learn. You will be answering survey
+      questions, reading some short passages, and answering questions about
+      what you read. Your responses will be kept confidential. They will only
+      be used to help our college learn what students experience and how those
+      experiences can be improved. You can learn more at
+      <a href="https://perts.net/privacy">perts.net/privacy</a>.
+    </p>
+    <p>
+      &ldquo;Remember: We will use what we learn to improve students'
+      experience here and at other colleges as well. So, please read the
+      instructions carefully and do your best to answer all of the questions
+      to the best of your ability.
+    </p>
+    <p>
+      &ldquo;Instructions for this assignment are simple. Participating
+      should only take about 30 minutes. You will have until (DUE DATE) to
+      complete the assignment.
+    </p>
+    <p>
+      &ldquo;Finally, it is very important that you not talk to each other or
+      look at each other’s answers. That would be a violation of privacy,
+      which will not be allowed.&rdquo;
+    </p>
+  </blockquote>
+
+<h3>
+  Step 3: Read Instructions for Participation
+</h3>
+
+  <p>
+    Write the website address and the participation code where all your students
+    can see it.
+  </p>
+
+  <blockquote>
+   <p>
+      Website: <strong>perts.me</strong><br>
+      Participation Code:
+      {% if project_cohort %}
+      <strong>{{ project_cohort.code }}</strong>
+      {% else %}
+      <strong>[Participation Code]</strong>
+      {% endif %}
+  </p>
+  </blockquote>
+
+  <p>
+    If this is not possible, you may want to make cards with this information
+    to hand out to your students. It is important to not let students see the
+    website address and participation code until you read the script above so that
+    they pay attention while you are introducing the program.
+  </p>
+
+  <p>
+    Please read the following:
+  </p>
+
+  <blockquote>
+    <p>
+      &ldquo;Now open your browser and please go to perts.me. Then enter the
+      phrase
+
+      {% if project_cohort %}
+        &lsquo;<strong>{{ project_cohort.code }}</strong>&rsquo;,
+      {% else %}
+        &lsquo;<strong>[Participation Code]</strong>&rsquo;,
+      {% endif %}
+
+      and follow the on-screen instructions.
+    </p>
+    <p>
+      &ldquo;Please begin.&rdquo;
+    </p>
+  </blockquote>
+
+  <p>Ten minutes before students need to finish, tell them how much time is
+    remaining and that it is okay if they do not have the time to finish
+    everything.
+  </p>
+    <blockquote>
+      <p>
+      &ldquo;We have about ten minutes remaining for the activity. Please
+      continue with the activity, but do not rush. It is okay if you do not
+      have time to finish everything.&rdquo;
+      </p>
+    </blockquote>
+
+<h3>
+  Step 4: Read Script After Student Participation
+</h3>
+  <p>
+    At the end of the activity, ask your students to log out by closing their
+    browser window.
+  </p>
+  <blockquote>
+    <p>
+      &ldquo;We have reached the end of the session. It's okay if you are not
+      totally done with the activity, just close the browser. You should
+      complete the activity as homework. To complete the activity as homework,
+      please go to the website, enter the code
+
+      {% if project_cohort %}
+        &lsquo;<strong>{{ project_cohort.code }}</strong>&rsquo;,
+      {% else %}
+        &lsquo;<strong>[Participation Code]</strong>&rsquo;,
+      {% endif %}
+
+      the website should
+      bring you back to the page you left off at. Please take note of the
+      website and code now.
+    </p>
+    <p>
+      &ldquo;Thank you. The information you have provided may be used to
+      improve students' experiences here and at other schools as well.&rdquo;
+    </p>
+  </blockquote>
+
+<div class="page-break"></div>
+
+<h2 class="anchor" id="Troubleshooting">
+  Troubleshooting
+</h2>
+
+<p>
+  We work hard to minimize the technical problems, but sometimes issues come
+  up. Here are some problems students have experienced in the past and the best
+  ways to solve them.
+</p>
+
+<h3>
+Error Message: Confirm Form Resubmission
+</h3>
+
+  <p>
+    <strong>Problem</strong>: A student clicked the back button on the browser.
+    <br>
+    <strong>Solution</strong>: Click the &ldquo;reload&rdquo; or
+    &ldquo;refresh&rdquo; button. You may also need to click
+    &ldquo;confirm&rdquo; or &ldquo;continue.&rdquo;
+  </p>
+
+<h3>
+Closed Page
+</h3>
+
+  <p>
+    <strong>Problem</strong>: A student closed the browser window.
+    <br>
+    <strong>Solution</strong>: Tell the student to go to the website and sign in
+    again, just like they did the first time. The program will continue where the
+    student left off.
+  </p>
+
+<h3>
+Warning Message or Connection Expired Message
+</h3>
+
+  <p>
+    <strong>Problem</strong>: A student's screen says that the connection
+    expired or a similar warning. <br>
+    <strong>Solution</strong>: Click the &ldquo;reload&rdquo; or
+    &ldquo;refresh&rdquo; button.<br>
+  </p>
+
+<h3>
+Lost Location
+</h3>
+  <p>
+    <strong>Problem</strong>: The survey restarted from the beginning.
+    <br>
+    <strong>Solution</strong>: Tell the student to skip up to the part where they
+    left off. The answers the student previously provided have been saved, but
+    the server lost the page they were on for network reasons.
+  </p>
+
+  <p>
+    <i>Note</i>:
+    Some pages may not allow students to advance until a certain amount of time
+    (about 5 seconds) has passed.
+  </p>
+
+<div class="page-break"></div>
+
+
+<h2 class="anchor" id="Frequently-Asked-Student-Questions-and-Responses">
+Frequently Asked Student Questions and Responses
+</h2>
+
+  <ul class="faq">
+    <li>
+      <strong>
+      Do I have to do this?
+      </strong>
+      <br>
+      Your opinions are important, so while it is not required, I hope that
+      you would at least try.
+    </li>
+    <li>
+      <strong>
+      Why should I do this?
+      </strong>
+      <br>
+      Because all of my students are doing this today, and we will learn
+      important information which will impact you and future students.
+    </li>
+    <li>
+      <strong>
+      Will I get a grade on this?
+      </strong>
+      <br>
+      It’s not graded, but when you provide honest answers, it helps
+      educators to do a better job teaching students in the future.
+    </li>
+    <li>
+      <strong>
+      Why do I have different questions from him/her?
+      </strong>
+      <br>
+      Different students are doing different activities. We have a lot of
+      different activities, but there’s not enough time for everyone to do all of
+      them. You should do the ones you were assigned.
+    </li>
+    <li>
+      <strong>
+      Does spelling and grammar matter?
+      </strong>
+      <br>
+      No, just concentrate on getting your ideas across.
+    </li>
+    <li>
+      <strong>
+      Do I have to share my personal information (name, student ID,
+      etc.)?
+      </strong>
+      <br>
+      Yes, it is necessary in order to participate. Be assured, your personal
+      information will be kept secure and confidential in accordance with the
+    <a href="https://perts.net/privacy">Privacy Policy</a>.
+    </li>
+  </ul>
+  <p>
+    If you have a question that is not answered here, please reach out to the
+    appropriate contact below.
+  </p>
+    <ul>
+      <li>
+      For all school-related issues, please contact your College’s liaison,
+      {{ liaison.name if liaison else "[Liaison Name]" }},
+      {{ liaison.email if liaison else "[Liaison Email]"}}.
+      </li>
+      <li>
+      For non-urgent questions, please email support@perts.net.
+      </li>
+      <li>
+      If there is a time-sensitive problem that you need assistance with, please
+      call (650)241-9056 to speak with a PERTS team member.
+    </li>
+  </ul>
+
+{% endblock %}

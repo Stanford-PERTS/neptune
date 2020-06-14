@@ -1,0 +1,29 @@
+<div class="subnav">
+  <a class="subnav_item" ui-sref="dashboard">
+    <i class="fa fa-home fa-lg"></i>
+  </a>
+  <span class="subnav_item">
+    Organizations
+  </span>
+  <a class="subnav_item" ui-sref="^">
+    {[ organization.name ]}
+  </a>
+  <span class="subnav_item">
+    Users
+  </span>
+</div>
+
+<div class="organization-page">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12">
+        <div>
+          <h3>User Management</h3>
+
+          <table class="table" user-table users="orgUsers()"></table>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

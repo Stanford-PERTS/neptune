@@ -1,0 +1,56 @@
+<ui-card-panel>
+  <h5>Participation During Dates:</h5>
+  <p>
+    <span>Start:</span>
+    <nep-calendar
+      date="$ctrl.startDate"
+      min="$ctrl.participationOpenDate"
+      max="$ctrl.participationCloseDate"
+      date-change="$ctrl.startDateChange(date)"
+    ></nep-calendar>
+    <span>End:</span>
+    <nep-calendar
+      date="$ctrl.endDate"
+      min="$ctrl.participationOpenDate"
+      max="$ctrl.participationCloseDate"
+      date-change="$ctrl.endDateChange(date)"
+    ></nep-calendar>
+    <button
+      class="Button ActionButton"
+      ng-disabled="!$ctrl.dirtyCalendars()"
+      ng-click="$ctrl.resetCalendars()"
+    >
+      Reset Time Range
+    </button>
+  </p>
+  <table>
+    <thead>
+      <tr>
+        <th>% Complete</th>
+        <th ng-repeat="survey in $ctrl.program.surveys">
+          {{::survey.name}}
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="progressMarker in $ctrl.progressMarkers">
+        <td>{{::progressMarker}}%</td>
+        <td ng-repeat="s in $ctrl.program.surveys">
+          {{$ctrl.tableParticipation[$index + 1][progressMarker]}}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <p>
+    <sup>*</sup><em>If anyone on your team tested the program, they may
+    appear in the participation counts above.</em>
+  </p>
+  <div>
+    <button
+      class="waves-effect waves-light btn"
+      ng-click="$ctrl.openDownloadModal()"
+    >
+      Download IDs For Time Range
+    </button>
+  </div>
+</ui-card-panel>

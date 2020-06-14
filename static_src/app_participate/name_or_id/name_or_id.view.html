@@ -1,0 +1,10 @@
+<h3 ng-show="$ctrl.portalMessage">
+  {{ $ctrl.portalMessage }}
+</h3>
+<h3 ng-hide="$ctrl.portalMessage">
+  Enter your name or student ID:
+</h3>
+<div class="input-field">
+  <input id="participant-token" ng-model="$ctrl.token" nep-strip-token
+         type="text" ng-change="$ctrl.setToken({token: $ctrl.token})" required>
+</div>

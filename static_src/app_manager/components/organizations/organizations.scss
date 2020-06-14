@@ -1,0 +1,38 @@
+.Organizations {
+  h1 {
+    font-size: 24px;
+    margin: 0 0 16px 0;
+  }
+}
+
+.OrganizationActionButtons {
+  display: flex;
+
+  /*
+    The following rules allow for the top dividing border to extend all to the
+    edges of the bounding Card component. This is hacky, since means this isn't
+    independant of the parent component, but it works for now!
+   */
+  margin-left: -12px;
+  margin-right: -12px;
+  padding-left: 12px;
+  padding-right: 12px;
+
+  border-top: 2px solid #EAEAEA;
+  /* */
+
+  margin-top: 10px;
+  padding-top: 10px;
+}
+
+.OrganizationActionButtons ui-action-button:not(:last-child) {
+  margin-right: 10px;
+}
+
+.OrganizationActionButtons div {
+  display: flex;
+}
+
+.OrganizationActionButtons div.push-right {
+  margin-left: auto;
+}

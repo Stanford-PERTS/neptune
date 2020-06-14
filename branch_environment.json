@@ -1,0 +1,107 @@
+{
+  "_description": "",
+  "master": {
+    "_description": "",
+    "app.yaml": {
+      "_description": "",
+      "PROJECT_ID": "",
+      "APP_ENGINE_VERSION": "",
+      "HOSTING_DOMAIN": "",
+      "YELLOWSTONE_DOMAIN": "",
+      "RSERVE_DOMAIN": "",
+      "TRITON_DOMAIN": "",
+      "DEPLOYED_BROWSER_API_KEY": "",
+      "LOCALHOST_BROWSER_API_KEY": "",
+      "LOCAL_SQL_DB_NAME": "",
+      "CLOUD_SQL_INSTANCE_ID": "",
+      "CLOUD_SQL_DB_NAME": "",
+      "GCS_UPLOAD_PREFIX": "",
+      "NAMESPACE": "",
+      "SENTRY_URL": "",
+      "INCLUDE_PROFILER": ""
+    },
+    "cron.yaml": {
+      "_description": "",
+      "_default": true,
+      "/cron/rserve/cg_reports": false,
+      "/cron/rserve/daily": false
+    }
+  },
+  "dev": {
+    "_description": "",
+    "app.yaml": {
+      "_description": "",
+      "PROJECT_ID": "",
+      "APP_ENGINE_VERSION": "",
+      "HOSTING_DOMAIN": "",
+      "YELLOWSTONE_DOMAIN": "",
+      "RSERVE_DOMAIN": "",
+      "TRITON_DOMAIN": "",
+      "DEPLOYED_BROWSER_API_KEY": "",
+      "LOCALHOST_BROWSER_API_KEY": "",
+      "LOCAL_SQL_DB_NAME": "",
+      "CLOUD_SQL_INSTANCE_ID": "",
+      "CLOUD_SQL_DB_NAME": "",
+      "GCS_UPLOAD_PREFIX": "",
+      "NAMESPACE": "",
+      "SENTRY_URL": "",
+      "INCLUDE_PROFILER": ""
+    },
+    "cron.yaml": {
+      "_description": "",
+      "_default": false,
+      "/cron/send_pending_email": true
+    }
+  },
+  "dev-*": {
+    "_description": "",
+    "app.yaml": {
+      "_description": "",
+      "PROJECT_ID": "",
+      "APP_ENGINE_VERSION": "",
+      "HOSTING_DOMAIN": "",
+      "YELLOWSTONE_DOMAIN": "",
+      "RSERVE_DOMAIN": "",
+      "TRITON_DOMAIN": "",
+      "DEPLOYED_BROWSER_API_KEY": "",
+      "LOCALHOST_BROWSER_API_KEY": "",
+      "LOCAL_SQL_DB_NAME": "",
+      "CLOUD_SQL_INSTANCE_ID": "",
+      "CLOUD_SQL_DB_NAME": "",
+      "GCS_UPLOAD_PREFIX": "",
+      "NAMESPACE": "",
+      "SENTRY_URL": "",
+      "INCLUDE_PROFILER": ""
+    },
+    "cron.yaml": {
+      "_description": "",
+      "_default": false,
+      "/cron/send_pending_email": true
+    }
+  },
+  "acceptance": {
+    "_description": "",
+    "app.yaml": {
+      "_description": "",
+      "PROJECT_ID": "",
+      "APP_ENGINE_VERSION": "",
+      "HOSTING_DOMAIN": "",
+      "YELLOWSTONE_DOMAIN": "",
+      "RSERVE_DOMAIN": "",
+      "TRITON_DOMAIN": "",
+      "DEPLOYED_BROWSER_API_KEY": "",
+      "LOCALHOST_BROWSER_API_KEY": "",
+      "LOCAL_SQL_DB_NAME": "",
+      "CLOUD_SQL_INSTANCE_ID": "",
+      "CLOUD_SQL_DB_NAME": "",
+      "GCS_UPLOAD_PREFIX": "",
+      "NAMESPACE": "",
+      "SENTRY_URL": "",
+      "INCLUDE_PROFILER": ""
+    },
+    "cron.yaml": {
+      "_description": "",
+      "_default": false
+    }
+  }
+}

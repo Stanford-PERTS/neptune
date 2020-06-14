@@ -1,0 +1,79 @@
+<div id="custom-modal">
+  <div id="overlay" class="default">
+
+      <div class="modal-content">
+        <div class="modal-body">
+          <h2>Email</h2>
+
+          <div class="row">
+            <div class="col m6 nowrap">
+              <label="emailDisplayFormat">Method</label>
+              <select id="emailDisplayFormat" name="emailDisplayFormat" ng-model="emailDisplayFormat" ng-change="formatEmails()">
+                <option value="mandrill">Send Email</option>
+                <option value="tsv">Emails, Names, Organizations (TSV)</option>
+                <option value="csv">Emails Only (CSV)</option>
+              </select>
+            </div>
+
+            <div class="col m6 nowrap" ng-show="emailDisplayFormat === 'mandrill'">
+              <label for="selectedEmailTemplate">Template</label>
+              <select name="selectedEmailTemplate" id="selectedEmailTemplate" ng-model="selectedEmailTemplate" ng-change="selectedEmailTemplateChanged(selectedEmailTemplate)">
+                <option ng-repeat="template in emailTemplates | orderBy: 'publish_name' track by $index " value="{[template.slug]}">{[template.publish_name]}</option>
+              </select>
+            </div>
+          </div>
+
+          <div ng-if="emailDisplayFormat === 'tsv' || emailDisplayFormat === 'csv'">
+            <textarea rows="8">{[ emails ]}</textarea>
+          </div>
+
+          <div ng-if="emailDisplayFormat === 'mandrill'" class="email-preview">
+            <div ng-if="template.templateHtml">
+              <div class="email-preview-header">
+                To: {[template.nameTo]} &lt;{[template.emailTo]}&gt;
+
+                <span ng-show="numberOfEmails > 1" class="email-preview-select-liaison">
+                  <a href ng-click="selectLiaisonPreview(-1)"><i class="fa fa-arrow-left"></i></a>
+                  {[liaisonPreviewIndex + 1]}
+                  <a href ng-click="selectLiaisonPreview(1)"><i class="fa fa-arrow-right"></i></a>
+                </span>
+                <br />
+                Subject: {[template.emailSubject]}
+              </div>
+              <div ng-bind-html="template.templateHtml" class="email-preview-body"></div>
+            </div>
+
+            <!-- Let user know they haven't selected any emails. -->
+            <div ng-if="!numberOfEmails">
+              <div class="center-align">You haven't selected any liaisons.
+              Please close this window and mark the rows you'd like to
+              email.</div>
+            </div>
+            <!-- Let user know they need to select an email template. -->
+            <div ng-if="!template.templateHtml && numberOfEmails">
+              <div class="center-align">Select an Email Template Above</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+
+          {[ numEmailsSent || 0 ]} emails sent
+
+          <span>
+            <a href class="btn btn-default"
+              ng-class="{disabled: uiSendEmails}"
+              ng-show="emailDisplayFormat === 'mandrill' && template.templateHtml"
+              ng-click="sendEmails()">
+              Send {[numberOfEmails]} Email(s)
+            </a>
+          </span>
+
+          <a href class="btn btn-default" ng-click="close()">Close</a>
+        </div>
+      </div>
+
+  </div>
+
+  <div id="fade"></div>
+</div>

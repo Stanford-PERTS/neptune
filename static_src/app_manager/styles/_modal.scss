@@ -1,0 +1,136 @@
+$modal-width: 500px;
+$modal-height: 300px;
+
+#overlay {
+  &.default {
+    position: fixed;
+    overflow: auto;
+    left: 25%;
+    top: 25%;
+    padding: 25px;
+    border: 2px solid $nep-highlight-light;
+    background-color: white;
+    width: 50%;
+    min-height: 50%;
+    max-height: 80%;
+    z-index: 100;
+
+
+    .modal-content {
+      display: flex;
+      min-height: 100%;
+      flex-direction: column;
+
+      .modal-body {
+        // this will cause the body of the modal to take up maximum height
+        // in order to push the footer down
+        flex: 1;
+
+        ul {
+          list-style-type: initial;
+          padding-left: 20px;
+
+          li {
+            list-style-type: initial;
+          }
+        }
+
+        code {
+          color: black;
+          font-weight: bold;
+        }
+      }
+
+      .modal-footer {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+      }
+
+      h2 {
+        font-family: 'Open Sans', sans-serif;
+        font-size: 24px;
+        font-weight: 300;
+        margin: 0;
+      }
+
+      h5 {
+        margin-bottom: 25px;
+        margin-top: 20px;
+      }
+
+      textarea {
+        height: auto;
+      }
+    }
+  }
+
+  &.modal-yesno {
+    .modal-card {
+      position: fixed;
+      z-index: 100;
+
+      width: $modal-width;
+      height: $modal-height;
+
+      // center the modal
+      left: 50%;
+      top: 50%;
+      margin-left: -($modal-width / 2);
+      margin-top: -($modal-height / 2);
+
+      background: white;
+      border-radius: 3px;
+      overflow: hidden;
+
+      display: flex;
+      flex-direction: column;
+    }
+
+    .modal-icon {
+      height: 50%;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      background: $nep-dark;
+      color: white;
+      font-size: 96px;
+
+      &.danger {
+        background: $nep-red;
+      }
+    }
+
+    .modal-body {
+      height: 50%;
+      padding: 10px;
+
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+
+      .modal-heading {
+        font-size: 20px;
+        font-weight: bold;
+      }
+
+      .modal-prompt {
+        text-align: center;
+      }
+    }
+  }
+}
+
+#fade {
+  position: fixed;
+  left: 0;
+  top: 0;
+  background-color: black;
+  opacity: .70;
+  width: 100%;
+  height: 100%;
+  z-index: 90;
+}

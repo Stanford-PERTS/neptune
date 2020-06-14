@@ -1,0 +1,32 @@
+ui-input-select {
+  font-size: 14px;
+}
+
+ui-input-select .InputLabel {
+  margin-bottom: 6px;
+  font-weight: bold;
+}
+
+ui-input-select .InputField select {
+  display: block;
+
+  box-sizing: border-box;
+
+  height: auto;
+  // padding: 8px; // can't add padding to select
+  margin-bottom: 20px;
+
+  border: 1px solid $nep-dark-gray;
+  border-radius: 3px;
+
+  font-size: 14px;
+}
+
+ui-input-select .InputField select:focus:not([readonly]) {
+  border: 1px solid $nep-highlight;
+}
+
+ui-input-select .InputField select:disabled {
+  color: rgba(0, 0, 0, 0.5);
+  border: 1px solid $nep-light-gray;
+}

@@ -1,0 +1,44 @@
+<!-- When user has requested to join an org -->
+
+</div class="program-registration-pending-page">
+  <div class="container">
+    <div class="row">
+      <div class="col s12">
+        <div class="card">
+          <div class="card-stacked">
+            <div class="card-content center-align">
+              <span class="card-title">
+                You&rsquo;ll have to wait.
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col s12">
+        <div class="card">
+          <div class="card-stacked">
+            <div class="card-content">
+              <p>
+                {[ pendingOrg.name ]} is already registered! {[ liaison.name ]}
+                ({[ liaison.email ]}) is the liaison. We'll let them know you'd
+                like to join.
+              </p>
+              <p>&nbsp;</p> <!-- make second paragraph more obvious -->
+              <p>
+                We'll send you an email when you've been approved.
+              </p>
+            </div>
+            <div class="card-action">
+              <a ui-sref="dashboard">Return to Dashboard</a>
+              <a href="/logout">Log Out</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

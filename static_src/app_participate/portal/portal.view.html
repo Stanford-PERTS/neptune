@@ -1,0 +1,105 @@
+<!-- prettier-ignore -->
+
+<div class="container participant-portal">
+
+  <h1>
+    Student sign-in
+    <img src="/static/images/loading.gif"
+         class="spinner" ng-show="$ctrl.mask">
+  </h1>
+
+  <!--
+  <h2 style="font-size: 22px; font-weight: normal; padding: 15px; border: 1px solid gray; border-radius: 5px">
+    <span style="color: red">&#x26A0;</span> PERTS websites will be closed for maintenance from Saturday, December 28th
+    to Sunday, December 29th.
+  </h2>
+  -->
+
+  <form name="participationCodeForm" novalidate
+        ng-submit="$ctrl.submitCode($ctrl.code, {agreeTerms: true})"
+        ng-show="!$ctrl.mask && $ctrl.state === 'portal'">
+    <div class="row">
+      <h3>
+        Enter your participation code:
+      </h3>
+      <div class="input-field">
+        <input id="participation-code" ng-model="$ctrl.code"
+               type="text" nep-strip-code placeholder="code"
+               required>
+        <button type="submit" id="submit-code-button" class="btn"
+                ng-disabled="participationCodeForm.$invalid">
+          Next
+        </button>
+      </div>
+      <p class="error-message">
+        {{$ctrl.codeError}}
+      </p>
+    </div>
+  </form>
+
+  <form name="sessionOrdinalForm" novalidate
+        ng-submit="$ctrl.submitSession($ctrl.session, {agreeTerms: true})"
+        ng-show="!$ctrl.mask && $ctrl.state === 'portal.code'">
+    <div class="row">
+      <h3>
+        Enter your session number:
+      </h3>
+      <div class="input-field">
+        <input id="session-ordinal" ng-model="$ctrl.session"
+               type="number" string-to-number required
+               min="1" max="{{ $ctrl.maxSession }}"
+               placeholder="session">
+        <button id="submit-session-button" type="submit" class="btn"
+                ng-disabled="sessionOrdinalForm.$invalid">
+          Next
+        </button>
+      </div>
+      <p class="error-message">{{$ctrl.sessionError}}</p>
+    </div>
+  </form>
+
+  <form name="tokenForm" novalidate
+        ng-submit="$ctrl.submitToken($ctrl.token, {agreeTerms: true})"
+        ng-show="!$ctrl.mask && $ctrl.state === 'portal.code.session'">
+    <!-- full rules for which portal type values get what component are in
+         projectcohort.py -->
+    <nep-first-mi-last
+      ng-if="$ctrl.participationInfo.portal_type === 'first_mi_last'"
+      set-token="$ctrl.setToken(token)"
+    ></nep-first-mi-last>
+    <nep-name-or-id
+      ng-if="$ctrl.participationInfo.portal_type === 'name_or_id'"
+      set-token="$ctrl.setToken(token)"
+      portal-message="$ctrl.participationInfo.portal_message"
+    ></nep-name-or-id>
+    <nep-email-confirm
+      ng-if="$ctrl.participationInfo.portal_type === 'email_confirm'"
+      set-token="$ctrl.setToken(token)"
+      portal-message="$ctrl.participationInfo.portal_message"
+    ></nep-email-confirm>
+    <button id="submit-token-button" type="submit" class="btn"
+            ng-disabled="tokenForm.$invalid">
+      Next
+    </button>
+    <p class="error-message">{{$ctrl.tokenError}}</p>
+  </form>
+
+  <p class="participation-agreement">
+    By using our services, you agree to our
+    <a href="//www.perts.net/terms-of-use">Terms of Use</a>
+    and
+    <a href="//www.perts.net/privacy">Privacy Policy</a>.
+  </p>
+
+  <form
+    name="ensureAgreementForm"
+    novalidate
+    ng-submit="$ctrl.submitAgreeTerms()"
+    ng-show="!$ctrl.mask && $ctrl.state === 'portal.code.session.token'"
+  >
+    <button id="submit-agreement-button" type="submit" class="btn">
+      OK
+    </button>
+  </form>
+</div>
+<!-- .container -->

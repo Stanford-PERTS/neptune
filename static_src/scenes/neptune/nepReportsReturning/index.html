@@ -1,0 +1,168 @@
+<div class="ContentWrapper">
+  <div class="ContentMain">
+    <div class="ReportsReturning">
+
+      <div class="ReportsTitle">
+        <strong>Returning Organizations</strong>
+      </div>
+
+      <!-- Report Loading Status -->
+      <ui-card ng-if="$ctrl.isLoading()">
+        <div class="ReportsReturningLoading">
+          <!-- Programs -->
+          <div>
+            <i class="fa fa-spinner fa-pulse fa-fw" ng-show="$ctrl.loadingPrograms"></i>
+            <i class="fa fa-check-circle participated" ng-hide="$ctrl.loadingPrograms"></i>
+            <span class="sr-only">Loading...</span>
+            Programs
+          </div>
+
+          <!-- Organizations -->
+          <div>
+            <i class="fa fa-spinner fa-pulse fa-fw" ng-show="$ctrl.loadingOrganizations"></i>
+            <i class="fa fa-check-circle participated" ng-hide="$ctrl.loadingOrganizations"></i>
+            <span class="sr-only">Loading...</span>
+            Organizations
+          </div>
+
+          <!-- Project Cohorts, by Program Label -->
+          <div ng-repeat="program in $ctrl.programs">
+            <i class="fa fa-spinner fa-pulse fa-fw" ng-show="$ctrl.loadingProjectCohorts[program.label]"></i>
+            <i class="fa fa-check-circle participated" ng-hide="$ctrl.loadingProjectCohorts[program.label]"></i>
+            <span class="sr-only">Loading...</span>
+            {{ program.label | uppercase }}
+          </div>
+        </div>
+      </ui-card>
+
+      <div class="ReportsReturning" ng-if="!$ctrl.isLoading()">
+        <!-- Report Legend -->
+        <ui-card>
+          <div class="ReportsReturningLegend">
+            <div><i class="fa fa-circle-o"></i> Not Enrolled</div>
+            <div><i class="fa fa-adjust"></i> Enrolled</div>
+            <div><i class="fa fa-check-circle participated"></i> Participated</div>
+          </div>
+        </ui-card>
+
+        <!-- Report Data -->
+        <ui-selectable-card
+          ng-repeat="organization in $ctrl.organizations" ng-if="$ctrl.displayOrganization(organization)"
+          ng-click="$ctrl.toggle(organization)"
+          selected="organization.selected"
+        >
+          <ui-organization-name>
+            {{ organization.name }}
+          </ui-organization-name>
+          <div class="ReportsReturningLiaison">
+            <!-- Organization Liaison Loading -->
+            <h2 ng-if="!organization.liaison">
+              Liaison loading... <i class="fa fa-spinner fa-pulse fa-fw"></i>
+            </h2>
+            <!-- Organization Liaison -->
+            <h2 ng-if="organization.liaison">
+              {{ organization.liaison.name }} ({{ organization.liaison.email }})
+            </h2>
+          </div>
+          <div>
+            <table class="ReportsReturningTable">
+              <tr ng-repeat="program in $ctrl.programs" ng-if="$ctrl.displayProgramRow(organization, program)">
+                <td>{{ program.label | uppercase }}</td>
+                <td style="width: {{ $ctrl.cohortColumnWidth() }}" ng-repeat="cohort in program.cohorts | orderBy: 'label'">
+                  <i class="fa {{ $ctrl.displayIcon(organization, program, cohort) }}"></i>
+                  {{ cohort.name }}
+                </td>
+              </tr>
+            </table>
+          </div>
+        </ui-selectable-card>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="ContentOptions" ng-if="!$ctrl.isLoading()">
+    <ui-card class="CardOptions">
+      <div class="FilterOptions">
+        <div>Org Rejected? No</div>
+        <div>Cohorts Rejected? No</div>
+      </div>
+    </ui-card>
+
+    <ui-card class="CardOptions">
+      <select
+        ng-model="$ctrl.selected"
+        ng-options="
+          program.name
+          for program in $ctrl.programs
+          track by program.label
+        "
+        ng-change="$ctrl.deselectAll()"
+      >
+        <option value="">Select a Program</option>
+      </select>
+    </ui-card>
+
+    <ui-card class="CardOptions">
+      <div class="FilterOptions">
+        <div>
+          Total:
+          {{ $ctrl.totalOrganizationsEnrolled() }}
+        </div>
+
+        <div ng-show="$ctrl.selected">
+          <div>
+            Returning: {{ $ctrl.returning[$ctrl.selected.label] }}
+            / {{ $ctrl.totalOrganizationsEnrolled() }}
+            ( {{ $ctrl.returning[$ctrl.selected.label] / $ctrl.totalOrganizationsEnrolled() * 100 | number:0 }}% )
+          </div>
+          <div>
+            New: {{ $ctrl.new[$ctrl.selected.label] }}
+          </div>
+        </div>
+      </div>
+    </ui-card>
+
+    <ui-card class="CardOptions">
+      <!-- Batch Controls -->
+      <div class="DashboardBatchControls">
+        <div class="DashboardBatchStats">
+          <div class="ProjectCohortsSelected">
+            Selected:
+            {{ $ctrl.cardsSelected }}
+          </div>
+        </div>
+        <div class="DashboardBatchButtons">
+          <div class="DashboardBatchButtonsItem">
+            <ui-action-button
+              ng-click="$ctrl.selectAllVisible()"
+            >
+              Select Visible
+              <i class="fa fa-check-square-o"></i>
+            </ui-action-button>
+          </div>
+
+          <div class="DashboardBatchButtonsItem">
+            <ui-action-button
+              ng-click="$ctrl.deselectAll()"
+            >
+              Deselect All
+              <i class="fa fa-square-o"></i>
+            </ui-action-button>
+          </div>
+
+          <div class="DashboardBatchButtonsItem">
+            <ui-action-button
+              disabled="$ctrl.cardsSelected === 0"
+              ng-click="$ctrl.openEmailModal()"
+            >
+              Send Email
+              <i class="fa fa-envelope-o"></i>
+            </ui-action-button>
+          </div>
+        </div>
+      </div>
+    </ui-card>
+
+  </div>
+</div>

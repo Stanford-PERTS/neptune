@@ -1,0 +1,320 @@
+{% extends 'print_base.html' %}
+<!-- SEO tags -->
+
+{% set program_name = "Growth Mindset for 9th Graders" %}
+{% set title = "Facilitator Instructions: " + program_name %}
+
+{% block content %}
+
+<div class="no-print message-box">
+  This document is meant to be printed to paper or pdf.
+  <a href="javascript:window.print();" class="perts-button">Print</a>
+</div>
+
+<h1>{{ "" if project_cohort else "Example" }} Facilitator Instructions {{cohort_name}}</h1>
+
+{% if not project_cohort %}
+
+<p style="color: red;">
+  *** Please note that these are example instructions and NOT the instructions
+      you will use for participation. Once your school has selected the
+      administration setting and sign in method, you will receive personalized
+      school-specific instructions on the website ***
+</p>
+
+{% endif %}
+
+<p class="letter-greeting">Dear Facilitator,</p>
+<p>
+  Thank you so much for partnering with us to bring Growth Mindset for 9th
+  Graders to your students! Growth Mindset for 9th Graders will only take an
+  hour total (25&ndash;40 minutes for each of 2 sessions) to deliver to your
+  students and uses the latest evidence-based methods to positively affect
+  students&rsquo; attitudes about school. To learn more about the program, you
+  can visit <a href = "//www.perts.net/ninth-grade-mindset" target = "_blank">
+  perts.net/ninth-grade-mindset</a>.
+</p>
+<p>
+  Instructions on how to deliver this program are written below. On the day of
+  the program, questions may come up, so we&rsquo;ve also included handy
+  troubleshooting and FAQ sections to address students&rsquo; concerns or
+  computer woes. We created these instructions with the goal of making program
+  delivery as easy as possible, so we hope you&rsquo;ll take some time to
+  carefully review these instructions. For additional support, your school
+  liaison is {{ liaison.name if liaison else "[Liaison Name]" }}, {{
+  liaison.email if liaison else "[Liaison Email]"}}.
+</p>
+<p>
+  Thank you again for working with us to bridge the gap between research and
+  practice by translating research findings into practical solutions! Together,
+  let&rsquo;s unmask students&rsquo; true potential.
+</p>
+<p>
+  - The PERTS team
+</p>
+
+<h2>Instructions </h2>
+<p>
+  The first session will take about 25&ndash;40 minutes and the second session
+  will take about 25&ndash;40 minutes. The sessions should be scheduled
+  approximately 1&ndash;4 weeks apart. Please follow the instructions below.
+</p>
+
+<h3>Step 1</h3>
+<p>
+  Please schedule a time to give students access to computers with an Internet
+  connection&mdash;either by bringing them to a computer lab or by requesting a
+  laptop cart for your classroom. There is audio, so please ensure that there
+  is one set of headphones for each student.  Please keep in mind that the
+  program takes 25&ndash;40 minutes for students to complete.
+</p>
+
+<h3>Step 2</h3>
+<p>
+  Read the following script to students before they begin.
+</p>
+<blockquote>
+    <p>
+        &ldquo;Our school is working on a special program with Stanford
+        University. The program will help instructors and administrators at our
+        school better understand how to make school a better place for all
+        students.
+    </p>
+    <p>
+        &ldquo;The activities are designed to help us understand more about the
+        way you think and the way you learn. You will be answering survey
+        questions, reading some short passages, and answering questions about
+        what you read. Your responses will be kept confidential. They will
+        only be used to help our school learn what students experience and
+        how those experiences could be improved. You can learn more at
+        <a href="https://perts.net/privacy">perts.net/privacy</a>.
+    </p>
+    <p>
+        &ldquo;Remember: We will use what we learn to improve students&rsquo;
+        experience here and at other schools as well. So, please read the
+        instructions carefully and do your best to answer all of the questions
+        to the best of your ability.
+    </p>
+    <p>
+        &ldquo;Instructions for this assignment are simple. Participating
+        should only take about 30 minutes. You will have until the end of class
+        to complete the assignment.
+    <p>
+        &ldquo;Finally, it is very important that you not talk to each other or
+        look at each other&rsquo;s answers. That would be a violation of privacy,
+        which will not be allowed.&rdquo;
+    </p>
+</blockquote>
+
+<h3>Step 3</h3>
+<p>
+Write the website address and the participation code for the current session
+where all your students can see it.
+</p>
+
+<p>
+  If this is not possible, you may want to make cards with this information to
+  hand out to your students. It is important to not let students see the
+  website address and participation code until you read the script above so
+  that they pay attention while you are introducing the program.
+</p>
+
+
+<blockquote>
+  <p>
+    Website: <strong>perts.me</strong>
+  </p>
+</blockquote>
+
+<p>Please note that this participation code will only work from
+{{ participation_open_date.strftime('%B %-d, %Y') if participation_open_date else '[Start Date]'}} to
+{{ participation_close_date.strftime('%B %-d, %Y') if participation_close_date else '[End Date]' }}.
+If you are using these instructions after this timeframe, please reach out to
+your liaison for the current participation code before proceeding.
+  </p>
+
+<h4>For session 1</h4>
+<blockquote>
+<p>
+    Session 1 participation code:
+    {% if project_cohort %}
+    <strong>{{ project_cohort.code }} 1</strong>
+    {% else %}
+    <strong>[Participation Code]</strong>
+    {% endif %}
+    </p>
+    </blockquote>
+
+<h4>For session 2</h4>
+<blockquote>
+<p>
+    Session 2 participation code:
+    {% if project_cohort %}
+    <strong>{{ project_cohort.code }} 2</strong>
+    {% else %}
+    <strong>[Participation Code]</strong>
+    {% endif %}
+    </p>
+</blockquote>
+
+
+
+<p>
+Please read the following:
+</p>
+<blockquote>
+    <p>
+      &ldquo;Now open your browser and please go to perts.me. Then enter the
+      participation code
+      and follow the on-screen instructions. Please be aware that as
+      you move through the program, you may want to go back to a previous
+      question. If so, do not use the back arrow on the browser. Instead, use
+      the &ldquo;Go Back&rdquo; link in the upper left corner, just above the
+      questions.
+    </p>
+    <p>
+      &ldquo;Please begin.&rdquo;
+    </p>
+</blockquote>
+
+
+<h3>Step 4</h3>
+<p>
+  Ten minutes before students need to finish, tell them how much time is
+  remaining and that it is okay if they do not have the time to finish
+  everything.
+</p>
+<blockquote>
+    <p>
+      &ldquo;We have about ten minutes remaining for the activity. Please
+      continue with the activity, but do not rush. It is okay if you do not
+      have time to finish everything.&rdquo;
+    </p>
+</blockquote>
+
+
+<h3>Step 5</h3>
+<p>
+At the end of the activity, ask your students to log out by closing their
+browser window.
+</p>
+<blockquote>
+    <p>
+      &ldquo;We have reached the end of the session. It's okay if you are not
+      totally done with the activity, just close the browser.
+    </p>
+    <p>
+      &ldquo;Thank you. The information you have provided may be used to
+      improve students&rsquo; experiences here and at other schools as well.&rdquo;
+    </p>
+</blockquote>
+
+<div class="page-break"></div>
+<h2>Troubleshooting</h2>
+<a class="anchor" id="troubleshooting"></a>
+<p>
+  We work hard to minimize the technical problems, but sometimes issues come
+  up. Here are some problems students have experienced in the past and the best
+  ways to solve them.
+</p>
+<h3>Error Message: Confirm Form Resubmission</h3>
+<p>
+  <strong>Problem</strong>: A student clicked the back button on the browser.
+  <br>
+  <strong>Solution</strong>: Click the &ldquo;reload&rdquo; or
+  &ldquo;refresh&rdquo; button. You may also need to click
+  &ldquo;confirm&rdquo; or &ldquo;continue.&rdquo;
+  <br>
+</p>
+<h3>Closed Page</h3>
+<p>
+  <strong>Problem</strong>: A student closed the browser window.
+  <br>
+  <strong>Solution</strong>: Tell the student to go to the website and sign in
+  again, just like they did the first time. The program will continue where the
+  student left off.
+  <br>
+</p>
+<h3>Warning Message or Connection Expired Message</h3>
+<p>
+  <strong>Problem</strong>: A student's screen says that the connection
+  expired or a similar warning. <br>
+  <strong>Solution</strong>: Click the &ldquo;reload&rdquo; or
+  &ldquo;refresh&rdquo; button.<br>
+</p>
+
+<h3>Lost Location</h3>
+<p>
+  <strong>Problem</strong>: The survey restarted from the beginning.
+  <br>
+  <strong>Solution</strong>: Tell the student to skip up to the part where they
+  left off. The answers the student previously provided have been saved, but
+  the server lost the page they were on for network reasons.
+</p>
+<p>
+  <i>Note</i>: Some pages may not allow students to advance until a certain
+  amount of time (about 5 seconds) has passed.
+</p>
+<div class="page-break"></div>
+<h2>Frequently Asked Student Questions and Responses</h2>
+<ul class="faq">
+  <li>
+    <strong>Do I have to do this?</strong>
+    <br>
+    Your opinions are important, so while it is not required, I hope that
+    you would at least try.
+  </li>
+  <li>
+    <strong>Why should I do this?</strong>
+    <br>
+    Because all of my students are doing this today, and we will learn
+    important information which will impact you and future students.
+  </li>
+  <li>
+    <strong>Will I get a grade on this?</strong>
+    <br>
+    It&rsquo;s not graded, but when you provide honest answers, it helps
+    educators to do a better job teaching students in the future.
+  </li>
+  <li>
+    <strong>Why do I have different questions from him/her?</strong>
+    <br>
+    Different students are doing different activities. We have a lot of
+    different activities, but there&rsquo;s not enough time for everyone to do
+    all of them. You should do the ones you were assigned.
+  </li>
+  <li>
+    <strong>Does spelling and grammar matter?</strong>
+    <br>
+    No, just concentrate on getting your ideas across.
+  </li>
+  <li>
+    <strong>Do I have to share my personal information (name, student ID,
+  etc.)?</strong>
+  <br>
+    Yes, it is necessary in order to participate. Be assured, your personal
+    information will be kept secure and confidential in accordance with the
+    <a href="https://perts.net/privacy">Privacy Policy</a>.
+  </li>
+</ul>
+<p>
+  If you have a question that is not answered here, please reach out to the
+  appropriate contact below.
+</p>
+<ul>
+  <li>
+    For all school-related issues, please contact your school&rsquo;s liaison,
+    {{ liaison.name if liaison else "[Liaison Name]" }},
+    {{ liaison.email if liaison else "[Liaison Email]"}}.
+  </li>
+  <li>
+    For non-urgent questions, please email
+    <a href="mailto:support@perts.net">support@perts.net</a>.
+  </li>
+  <li>
+    If there is a time-sensitive problem that you need assistance with, please
+    call (650)241-9056 to speak with a PERTS team member.
+  </li>
+</ul>
+
+{% endblock %}

@@ -1,0 +1,10 @@
+<div class="card-status">
+  <a href="#" tooltips tooltip-side="left" tooltip-class="tooltip-status"
+     tooltip-template="{{ $ctrl.status.tooltip }}">
+    <div class="chip">
+      <i class="fa fa-power-off"
+         ng-class="{ active: $ctrl.status.participationOpen }"></i>
+      {{ $ctrl.status.label }}
+    </div>
+  </a>
+</div>

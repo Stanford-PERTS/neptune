@@ -1,0 +1,3 @@
+[submodule "gae_server"]
+	path = gae_server
+  url = git@github.com:PERTS/gae_server.git

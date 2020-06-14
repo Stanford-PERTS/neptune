@@ -1,0 +1,392 @@
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// App
+html {
+  font-family: 'Open Sans', sans-serif;
+
+  // Always display scrollbar. Overflow auto sometimes causes jumping when tasks
+  // are expanded/collapsed and the height of the page changes.
+  overflow-y: scroll;
+}
+
+body {
+  background: $nep-light-gray;
+}
+
+// Screen Reader Only
+.sr-only {
+  position: absolute;
+  left: -10000px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+// Address a conflict with ngAnimate that results in a "flickering" / in between
+// state when using ng-hide="someState" and ng-show="someState" where both
+// elements will display at the same time for a bit.
+// https://github.com/angular/angular.js/issues/14015#issuecomment-250589291
+.ng-hide.ng-hide-animate {
+  display: none !important;
+}
+
+.container {
+  max-width: 1100px;
+}
+
+// override materialize
+strong {
+  font-weight: bold;
+}
+
+ul.browser-default {
+  margin: 0 2em 1em 2em;
+
+  li {
+    list-style-type: disc;
+  }
+}
+
+.collapsible-body {
+  background-color: #f8f8f8;
+}
+
+label {
+  color: #666;
+}
+
+// ^^ override materialize
+
+// Button styles
+.btn,
+.btn-large,
+.side-nav a.btn {
+  background-color: $nep-highlight;
+
+  &:hover,
+  &:focus,
+  &.active {
+    background-color: $nep-blue;
+  }
+
+  &.btn-yes {
+    background-color: $nep-green;
+
+    &:hover {
+      background-color: darken($nep-green, 10%);
+    }
+  }
+
+  &.btn-no {
+    background-color: $nep-red;
+
+    &:hover {
+      background-color: darken($nep-red, 25%);
+    }
+  }
+
+  &.btn-cancel {
+    background-color: #ffffff;
+    border: 1px solid $nep-dark-gray;
+    color: $nep-dark-gray;
+  }
+}
+
+// Add `clickable` to elements that should indicate they can be interacted with
+// like an anchor or button, but that don't usually indicate this.
+.clickable {
+  cursor: pointer;
+}
+
+// Status indicators
+.status {
+  border: 2px solid $nep-dark-gray;
+  border-radius: 3px;
+
+  padding: 0 20px;
+
+  &.status-yes {
+    border-color: $nep-green;
+  }
+
+  &.status-no {
+    border-color: $nep-red;
+  }
+}
+
+// Hover styles
+// <span class="hover">
+//   <span class="hover-show">this display on hover</span>
+//   <span class="hover-hide">this disappears on hover</span>
+// </span>
+.hover {
+  white-space: nowrap;
+
+  .hover-show {
+    display: none;
+  }
+
+  &:hover {
+    span.hover-show {
+      display: inline-block;
+    }
+
+    .hover-hide {
+      display: none;
+    }
+  }
+}
+
+// Close the gap between cards
+.card {
+  margin-top: 0px;
+  margin-bottom: 2px;
+}
+
+// Space out card-action buttons
+.card {
+  .card-action {
+    .btn {
+      &:not(:last-child) {
+        margin-right: 10px;
+      }
+    }
+  }
+
+  // for use when you want a card container but don't want any of the other
+  // card structure or stylings
+  .card-clean {
+    width: 100%;
+    padding: 20px;
+
+    .row:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+// Close the gap between rows
+.container {
+  > .row {
+    margin-bottom: 0;
+  }
+}
+
+// "Current Task" badge
+span.badge.new {
+  background-color: $nep-highlight;
+}
+
+.side-nav span.badge.new::before,
+.collapsible span.badge.new::before {
+  background-color: $nep-highlight;
+}
+
+// Checkoint/Task Status Icons
+.fa-circle-o {
+  // make incomplete task icons lighter
+  color: $nep-task-incomplete;
+}
+
+.fa-check-circle-o {
+  // make complete task icon brand color
+  color: $nep-highlight;
+}
+
+// Set a minimum width for 720kb/angular-tooltips directive. There seems to be
+// a bug where the minimum width is very narrow.
+.tooltip-status {
+  min-width: 200px;
+}
+
+// Adjusts preloader to allow it to be placed `inline` with buttons. This only
+// works for `small` preloaders since other sizes have a height that won't play
+// nicely with the height of our buttons.
+.preloader-wrapper.small.inline {
+  // Some left & right margin to give some breathing room from other content.
+  margin-left: 10px;
+  margin-right: 10px;
+  // The bounding box, due to the animation, ends up being larger than what it
+  // appears to be. So we adjust up (margin-top) by 14px and then drop the
+  // visible content down (top) by an equivalent amount.
+  margin-top: -14px;
+  top: 14px;
+}
+
+// Input fields, on focus color
+input:not([type]):focus:not([readonly]),
+input[type='text']:focus:not([readonly]),
+input[type='password']:focus:not([readonly]),
+input[type='email']:focus:not([readonly]),
+input[type='url']:focus:not([readonly]),
+input[type='time']:focus:not([readonly]),
+input[type='date']:focus:not([readonly]),
+input[type='datetime']:focus:not([readonly]),
+input[type='datetime-local']:focus:not([readonly]),
+input[type='tel']:focus:not([readonly]),
+input[type='number']:focus:not([readonly]),
+input[type='search']:focus:not([readonly]),
+textarea.materialize-textarea:focus:not([readonly]) {
+  border-bottom: 1px solid $nep-highlight;
+  box-shadow: 0 1px 0 0 $nep-highlight;
+}
+
+// Radio button colors
+[type='radio']:checked + label:after,
+[type='radio'].with-gap:checked + label:after {
+  background-color: $nep-highlight;
+}
+
+[type='radio']:checked + label:after,
+[type='radio'].with-gap:checked + label:before,
+[type='radio'].with-gap:checked + label:after {
+  border: 2px solid $nep-highlight;
+}
+
+// When labels are left to their natural width, and we use the materialize
+// trick of adding error messages to the content of label:after, then those
+// messages have their width limited to the width of the label. This doesn't
+// make sense, especially because we expect the label to be short and the
+// message to be long.
+.input-field {
+  label {
+    width: 100%;
+  }
+}
+
+label.browser-default {
+  position: relative;
+  top: 0;
+  left: 0;
+  color: inherit;
+
+  select {
+    border: 1px solid #a0a0a0;
+    &:focus {
+      outline: #a0a0a0;
+    }
+  }
+}
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// LoadingBar
+.loading-bar {
+  position: fixed;
+  /* z-index: 100; */
+  top: $navbar-height + 2px;
+
+  width: 100%;
+  min-height: 4px;
+
+  .progress {
+    margin: 0;
+    border-radius: 0;
+  }
+}
+
+.progress {
+  background: $nep-highlight-light;
+
+  .indeterminate {
+    background-color: $nep-highlight;
+  }
+
+  .determinate {
+    background-color: $nep-highlight;
+  }
+}
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// SideNav
+.side-nav {
+  a,
+  .link {
+    height: inherit;
+    line-height: 18px;
+    padding: 8px 24px;
+    display: block;
+  }
+
+  li {
+    line-height: inherit;
+
+    /* side bar button labels are left justified, vertically centered */
+    a {
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  li a i {
+    margin: 0;
+  }
+
+  /* The materializecss rules we have to override here are slightly different */
+  /* than in the normal nav bar, so here are some special rules to align */
+  /* everything */
+  a .notifications-wrapper {
+    i {
+      height: inherit;
+      width: 24px;
+    }
+
+    .notifications-badge {
+      right: 3px;
+    }
+  }
+
+  li.heading {
+    padding: 16px 24px;
+    font-weight: 600;
+    background: $nep-highlight-light;
+  }
+
+  &.side-nav-show {
+    -webkit-transform: translateX(0px);
+    transform: translateX(0px);
+  }
+}
+
+// Form validation related styles
+.valid-form {
+  // By default, error messages will display when a field is invalid and
+  // as soon as it becomes dirty OR touched.
+  .ng-dirty.ng-invalid:not(.touched-only),
+  .ng-touched.ng-invalid:not(.touched-only) {
+    ~ label:after {
+      content: attr(data-error);
+      transform: translateY(-140%);
+      color: #f44336;
+      opacity: 1;
+      font-size: 0.8rem;
+    }
+
+    ~ label.active:after {
+      transform: none;
+    }
+  }
+
+  // Adding the `touched-only` class to an input field will cause error
+  // messages to wait to display until they are invalid and touched.
+  .ng-touched.ng-invalid.touched-only {
+    ~ label:after {
+      content: attr(data-error);
+      transform: translateY(-140%);
+      color: #f44336;
+      opacity: 1;
+      font-size: 0.8rem;
+    }
+
+    ~ label.active:after {
+      transform: none;
+    }
+  }
+}
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// Organization Invitation Form
+
+.organization-invitation {
+  padding: 20px;
+  border: 1px solid $nep-med-gray;
+}

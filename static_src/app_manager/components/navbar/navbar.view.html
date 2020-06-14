@@ -1,0 +1,198 @@
+    <!-- Navbar Display for Wide Screens -->
+    <div class="navbar-fixed">
+      <nav>
+        <div class="nav-wrapper">
+          <a ui-sref="index" class="brand-logo">
+            <img src="/static/images/pertslogo.png" alt="PERTS">
+          </a>
+          <!-- "Hamburger" Menu button displays on narrow screens -->
+          <a ng-click="$ctrl.showMobileNav()" href="#" class="button-navbar button-collapse">
+            <i class="material-icons">menu</i>
+          </a>
+
+          <!-- It's not trivial to link _out_ of an app.
+               Use target="_self".
+               http://stackoverflow.com/questions/20980201/angular-ui-router-link-out-of-app-but-in-the-same-domain#answer-25799503
+          -->
+          <ul class="right hide-on-med-and-down">
+            <!-- User is a super admin. -->
+<!--             <li ng-if="$ctrl.isSuperAdmin">
+            </li>
+ -->
+            <!-- User is Logged In -->
+            <li ng-if="$ctrl.isLoggedIn">
+              <a ui-sref="dashboard" ui-sref-active="active" title="Dashboard" href="/dashboard">
+                <i class="fa fa-lg fa-dashboard" aria-hidden="true"></i>
+                <span>Dashboard</span>
+              </a>
+            </li>
+
+            <li ng-if="$ctrl.isLoggedIn">
+              <a ui-sref="programRegistration" ui-sref-active="active" title="Add Program">
+                <i class="fa fa-lg fa-plus-circle" aria-hidden="true"></i>
+                <span>Add Program</span>
+              </a>
+            </li>
+
+            <li ng-if="$ctrl.isLoggedIn && !$ctrl.isSuperAdmin">
+              <a ng-click="$ctrl.showNotifications()" href="#" class="button-notifications" title="Notifications">
+                <span class="notifications-wrapper">
+                  <i class="fa fa-bell-o fa-lg" aria-hidden="true"></i>
+                  <span class="sr-only">Notifications</span>
+                  <span ng-show="$ctrl.nonzeroActiveNotifications()" class="notifications-badge animate-fadeInOut"></span>
+                </span>
+              </a>
+            </li>
+
+            <li ng-if="$ctrl.isLoggedIn && $ctrl.isSuperAdmin">
+              <a ui-sref="notifications({n:null, cursor: null, order: null})" class="button-notifications" title="Notifications">
+                <span class="notifications-wrapper">
+                  <i class="fa fa-bell-o fa-lg" aria-hidden="true"></i>
+                  <span class="sr-only">Notifications</span>
+                  <span ng-show="$ctrl.nonzeroActiveNotifications()" class="notifications-badge animate-fadeInOut"></span>
+                </span>
+              </a>
+            </li>
+
+            <li ng-if="$ctrl.isLoggedIn">
+              <a ui-sref="user" ui-sref-active="active" title="User Settings">
+                <i class="fa fa-lg fa-id-card" aria-hidden="true"></i>
+                <span class="sr-only">User Settings</span>
+              </a>
+            </li>
+
+            <li ng-if="$ctrl.isLoggedIn">
+              <a ng-click="$ctrl.logout()" title="Log out">
+                <i class="fa fa-lg fa-sign-out" aria-hidden="true"></i>
+                <span>
+                  Log out
+                  <span ng-if="$ctrl.name">
+                    ({{ $ctrl.name | limitTo: 12 }}{{ $ctrl.name.length > 12 ? '&hellip;' : '' }})
+                  </span>
+                </span>
+              </a>
+            </li>
+
+            <!-- User is Logged Out -->
+            <li ng-if="!$ctrl.isLoggedIn">
+              <a ng-click="$ctrl.login()" title="Log in" ui-sref="login" ui-sref-active="active">
+                <i class="fa fa-lg fa-sign-in" aria-hidden="true"></i>
+                <span>Log in</span>
+              </a>
+            </li>
+
+            <!-- We always link people to registration from an orientation
+            page on perts.net. Having a registration link here just allows
+            randoms to get in, which we have to reject. Leaving this here in
+            case we change our recruitment materials and we want to resurrect
+            it.
+            -->
+            <!--
+            <li ng-if="!$ctrl.isLoggedIn">
+              <a href="/register?program=cg17" title="Create an account" ui-sref="register" ui-sref-active="active">
+                <i class="fa fa-lg fa-graduation-cap" aria-hidden="true"></i>
+                <span>Get Started</span>
+              </a>
+            </li>
+            -->
+            <li ng-if="!$ctrl.isLoggedIn">
+              <a href="//www.perts.net/programs" title="Available programs">
+                <i class="fa fa-lg fa-graduation-cap" aria-hidden="true"></i>
+                <span>Get Started</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+    <!-- /Navbar Display for Wide Screens -->
+
+    <!-- Navbar Display for Mobile -->
+    <nav class="side-nav" ng-class="{ 'side-nav-show': $ctrl.isMobileNavActive }" id="mobile-navbar">
+        <!-- It's not trivial to link _out_ of an app.
+             Use target="_self".
+             http://stackoverflow.com/questions/20980201/angular-ui-router-link-out-of-app-but-in-the-same-domain#answer-25799503
+        -->
+      <ul>
+        <!-- User is a super admin. -->
+<!--         <li ng-if="$ctrl.isSuperAdmin">
+        </li>
+ -->
+        <!-- User is Logged In -->
+        <li ng-if="$ctrl.isLoggedIn">
+          <a ng-click="$ctrl.dismiss()" ui-sref="dashboard" ui-sref-active="active" title="Dashboard" href="/dashboard">
+            <i class="fa fa-lg fa-dashboard" aria-hidden="true"></i>
+            <span>Dashboard</span>
+          </a>
+        </li>
+
+        <li ng-if="$ctrl.isLoggedIn">
+          <a ui-sref="programRegistration" ui-sref-active="active" title="Join Program">
+            <i class="fa fa-lg fa-plus-circle" aria-hidden="true"></i>
+            <span>Join Program</span>
+          </a>
+        </li>
+
+        <li ng-if="$ctrl.isLoggedIn && !$ctrl.isSuperAdmin">
+          <a ng-click="$ctrl.showNotifications()" href="#" title="Notifications">
+            <span class="notifications-wrapper">
+              <i class="fa fa-bell-o fa-lg" aria-hidden="true"></i>
+              <span ng-show="$ctrl.nonzeroActiveNotifications()" class="notifications-badge animate-fadeInOut"></span>
+            </span>
+            <span>Notifications</span>
+          </a>
+        </li>
+
+        <li ng-if="$ctrl.isLoggedIn && $ctrl.isSuperAdmin">
+          <a ui-sref="notifications({n:null, cursor: null, order: null})" title="Notifications">
+            <span class="notifications-wrapper">
+              <i class="fa fa-bell-o fa-lg" aria-hidden="true"></i>
+              <span ng-show="$ctrl.nonzeroActiveNotifications()" class="notifications-badge animate-fadeInOut"></span>
+            </span>
+            <span>Notifications</span>
+          </a>
+        </li>
+
+        <li ng-if="$ctrl.isLoggedIn">
+          <a ui-sref="user" ui-sref-active="active" title="User Settings">
+            <i class="fa fa-lg fa-id-card" aria-hidden="true"></i>
+            <span>User Settings</span>
+          </a>
+        </li>
+
+        <li ng-if="$ctrl.isLoggedIn">
+          <a ng-click="$ctrl.logout()" title="Log out">
+            <i class="fa fa-lg fa-sign-out" aria-hidden="true"></i>
+            <span>
+              Log out
+              <span ng-if="$ctrl.name">
+                ({{ $ctrl.name | limitTo: 12 }}{{ $ctrl.name.length > 12 ? '&hellip;' : '' }})
+              </span>
+            </span>
+          </a>
+        </li>
+
+        <li ng-if="!$ctrl.isLoggedIn">
+          <a ng-click="$ctrl.login()" title="Log in">
+            <i class="fa fa-lg fa-sign-in" aria-hidden="true"></i>
+            <span>Log in</span>
+          </a>
+        </li>
+
+        <!-- User is Logged Out -->
+        <li ng-if="!$ctrl.isLoggedIn">
+          <a ng-click="$ctrl.login()" title="Log in" ui-sref="login" ui-sref-active="active">
+            <i class="fa fa-lg fa-sign-in" aria-hidden="true"></i>
+            <span>Log in</span>
+          </a>
+        </li>
+
+        <li ng-if="!$ctrl.isLoggedIn">
+          <a href="/register?program=cg17" title="Log in" ui-sref="register" ui-sref-active="active">
+            <i class="fa fa-lg fa-graduation-cap" aria-hidden="true"></i>
+            <span>Get Started</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+    <!-- /Navbar Display for Mobile -->

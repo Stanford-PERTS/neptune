@@ -1,0 +1,33 @@
+.FilterOptionsOption {
+  height: 26px;
+  width: 50px;
+
+  padding-left: 0;
+  padding-right: 0;
+
+  background: #EAEAEA;
+  color: #4A4A4A;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  border-radius: 0;
+}
+
+ui-filter-options-option.first .FilterOptionsOption {
+  border-radius: 3px 0 0 3px;
+}
+
+ui-filter-options-option.last .FilterOptionsOption {
+  border-radius: 0 3px 3px 0;
+}
+
+/* when active based on <ui-action-button active="true"> */
+.FilterOptionsOption.active,
+.FilterOptionsOption.active:focus {
+  background: #E5F6FD;
+}
+
+.FilterOptionsOption:focus {
+  background: #EAEAEA;
+}

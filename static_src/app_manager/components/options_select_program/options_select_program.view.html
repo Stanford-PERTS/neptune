@@ -1,0 +1,46 @@
+<!-- Program Select -->
+<ui-card
+  class="CardOptions"
+  loading="$ctrl.loading"
+>
+  <select
+    ng-model="$ctrl.selected"
+    ng-options="
+      program.name
+      for program in $ctrl.programs
+      track by program.label
+    "
+    ng-change="$ctrl.changeProgram()"
+  >
+    <option value="">Select a Program</option>
+  </select>
+</ui-card>
+
+<div ng-if="$ctrl.selected">
+  <nep-options-select-cohort
+    program="$ctrl.selected"
+    options="$ctrl.options"
+  ></nep-options-select-cohort>
+
+  <nep-options-select-view
+    options="$ctrl.options"
+  ></nep-options-select-view>
+
+  <nep-options-batch
+    ng-if="!$ctrl.options.view"
+    card-rows="$ctrl.cardRows"
+    options="$ctrl.options"
+    select-all-visible="$ctrl.selectAllVisible()"
+    deselect-all-visible="$ctrl.deselectAllVisible()"
+  ></nep-options-batch>
+
+  <nep-options-select-sort
+    ng-if="!$ctrl.options.view"
+    options="$ctrl.options"
+  ></nep-options-select-sort>
+
+  <ui-filter-options
+    ng-if="!$ctrl.options.view"
+    filters="$ctrl.options.filters"
+  ></ui-filter-options>
+</div>

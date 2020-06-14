@@ -1,0 +1,487 @@
+<div id="custom-modal">
+  <div id="overlay" class="default" style="overflow-y: scroll; height: 80%; top: 10%">
+
+      <div class="modal-content">
+        <div class="modal-body">
+          <div class="row">
+            <div class="col m12">
+
+<form
+  ng-show="!skipSurvey"
+  name="downloadSurveyForm"
+  novalidate
+>
+  <h5>
+    Please answer a few questions first
+  </h5>
+  <p>
+    This will help us keep improving our programs.
+  </p>
+  <p>
+    How will your organization use these completion data? (check all that
+    apply)
+  </p>
+  <p>
+    <input
+      id="use-for-tracking"
+      type="checkbox"
+      name="useForTracking"
+      ng-model="survey.useFor.tracking"
+      ng-required="!anyChecked(survey.useFor)"
+    >
+    <label for="use-for-tracking">To track students&rsquo; participation</label>
+  </p>
+  <p>
+    <input
+      id="use-for-evaluation"
+      type="checkbox"
+      name="useForEvaluation"
+      ng-model="survey.useFor.evaluation"
+      ng-required="!anyChecked(survey.useFor)"
+      ng-change="clearEvaluationResponses(survey.useFor.evaluation)"
+    >
+    <label for="use-for-evaluation">
+      Program evaluation: to assess the impact of this program on student
+      outcomes
+    </label>
+  </p>
+  <p>
+    <input
+      id="use-for-other"
+      type="checkbox"
+      name="useForOther"
+      ng-model="survey.useFor.other"
+      ng-required="!anyChecked(survey.useFor)"
+    >
+    <label for="use-for-other">
+      Something else
+    </label>
+  </p>
+  <div class="input-field" ng-show="survey.useFor.other">
+    <input
+      id="use-for-other-text"
+      class="validate"
+      type="text"
+      name="useForOtherText"
+      ng-model="survey.useFor.otherText"
+      ng-required="survey.useFor.other"
+    >
+    <label for="use-for-other-text">
+      Please describe
+    </label>
+  </div>
+
+  <div ng-show="survey.useFor.evaluation">
+    <h5>About Your Program Evaluation Efforts</h5>
+    <p>
+      PERTS funding is contingent on our ability to keep learning where our
+      programs are most effective and what outcomes they influence. That
+      funding enables us to keep our program free. Learning about your
+      evaluation will help us advance our learning goals and keep our programs
+      free. Thank you for your help!
+    </p>
+    <p>
+      What outcome(s) will your analysis focus on? (check all that apply)
+    </p>
+    <p>
+      <input
+        id="outcomes-unsure"
+        type="checkbox"
+        name="outcomesUnsure"
+        ng-model="survey.evaluation.outcomes.unsure"
+        ng-required="survey.useFor.evaluation &&
+                     !anyChecked(survey.evaluation.outcomes)"
+      >
+      <label for="outcomes-unsure">
+        Not sure
+      </label>
+    </p>
+    <p>
+      <input
+        id="outcomes-gpa"
+        type="checkbox"
+        name="outcomesGpa"
+        ng-model="survey.evaluation.outcomes.gpa"
+        ng-required="survey.useFor.evaluation &&
+                     !anyChecked(survey.evaluation.outcomes)"
+      >
+      <label for="outcomes-gpa">
+        Grade point average
+      </label>
+    </p>
+    <p>
+      <input
+        id="outcomes-course-completion"
+        type="checkbox"
+        name="outcomesCourseCompletion"
+        ng-model="survey.evaluation.outcomes.courseCompletion"
+        ng-required="survey.useFor.evaluation &&
+                     !anyChecked(survey.evaluation.outcomes)"
+      >
+      <label for="outcomes-course-completion">
+        Course completion
+      </label>
+    </p>
+    <p>
+      <input
+        id="outcomes-retention"
+        type="checkbox"
+        name="outcomesRetention"
+        ng-model="survey.evaluation.outcomes.retention"
+        ng-required="survey.useFor.evaluation &&
+                     !anyChecked(survey.evaluation.outcomes)"
+      >
+      <label for="outcomes-retention">
+        Retention (term-to-term or year-to-year)
+      </label>
+    </p>
+    <p>
+      <input
+        id="outcomes-transfer"
+        type="checkbox"
+        name="outcomesTransfer"
+        ng-model="survey.evaluation.outcomes.transfer"
+        ng-required="survey.useFor.evaluation &&
+                     !anyChecked(survey.evaluation.outcomes)"
+      >
+      <label for="outcomes-transfer">
+        Transfer
+      </label>
+    </p>
+    <p>
+      <input
+        id="outcomes-degree-completion"
+        type="checkbox"
+        name="outcomesDegreeCompletion"
+        ng-model="survey.evaluation.outcomes.degreeCompletion"
+        ng-required="survey.useFor.evaluation &&
+                     !anyChecked(survey.evaluation.outcomes)"
+      >
+      <label for="outcomes-degree-completion">
+        Degree completion
+      </label>
+    </p>
+    <p>
+      <input
+        id="outcomes-other"
+        type="checkbox"
+        name="outcomesOther"
+        ng-model="survey.evaluation.outcomes.other"
+        ng-required="survey.useFor.evaluation &&
+                     !anyChecked(survey.evaluation.outcomes)"
+      >
+      <label for="outcomes-other">
+        Something else
+      </label>
+    </p>
+    <div class="input-field" ng-show="survey.evaluation.outcomes.other">
+      <input
+        id="outcomes-other-text"
+        class="validate"
+        type="text"
+        name="outcomesOtherText"
+        ng-model="survey.evaluation.outcomes.otherText"
+        ng-required="survey.useFor.evaluation &&
+                     survey.evaluation.outcomes.other"
+      >
+      <label for="outcomes-other-text">
+        Please describe
+      </label>
+    </div>
+    <p>
+      When assessing impact, what comparison group(s) will you compare to
+      students who completed the program? (check all that apply)
+    </p>
+    <p>
+      <input
+        id="comparison-groups-unsure"
+        type="checkbox"
+        name="comparisonGroupsUnsure"
+        ng-model="survey.evaluation.comparisonGroups.unsure"
+        ng-required="survey.useFor.evaluation &&
+                     !anyChecked(survey.evaluation.comparisonGroups)"
+      >
+      <label for="comparison-groups-unsure">
+        Not sure
+      </label>
+    </p>
+    <p>
+      <input
+        id="comparison-groups-control"
+        type="checkbox"
+        name="comparisonGroupsControl"
+        ng-model="survey.evaluation.comparisonGroups.control"
+        ng-required="survey.useFor.evaluation &&
+                     !anyChecked(survey.evaluation.comparisonGroups)"
+      >
+      <label for="comparison-groups-control">
+        A randomized control group
+      </label>
+    </p>
+    <p>
+      <input
+        id="comparison-groups-incompletes"
+        type="checkbox"
+        name="comparisonGroupsIncompletes"
+        ng-model="survey.evaluation.comparisonGroups.incompletes"
+        ng-required="survey.useFor.evaluation &&
+                     !anyChecked(survey.evaluation.comparisonGroups)"
+      >
+      <label for="comparison-groups-incompletes">
+        Students who were offered the program but did not complete it
+      </label>
+    </p>
+    <p>
+      <input
+        id="comparison-groups-not-offered"
+        type="checkbox"
+        name="comparisonGroupsNotOffered"
+        ng-model="survey.evaluation.comparisonGroups.notOffered"
+        ng-required="survey.useFor.evaluation &&
+                     !anyChecked(survey.evaluation.comparisonGroups)"
+      >
+      <label for="comparison-groups-not-offered">
+        Concurrent data from matched students who were NOT offered the program
+      </label>
+    </p>
+    <p>
+      <input
+        id="comparison-groups-historical"
+        type="checkbox"
+        name="comparisonGroupsHistorical"
+        ng-model="survey.evaluation.comparisonGroups.historical"
+        ng-required="survey.useFor.evaluation &&
+                     !anyChecked(survey.evaluation.comparisonGroups)"
+      >
+      <label for="comparison-groups-historical">
+        Historical data from previous terms
+      </label>
+    </p>
+    <p>
+      <input
+        id="comparison-groups-other"
+        type="checkbox"
+        name="comparisonGroupsOther"
+        ng-model="survey.evaluation.comparisonGroups.other"
+        ng-required="survey.useFor.evaluation &&
+                     !anyChecked(survey.evaluation.comparisonGroups)"
+      >
+      <label for="comparison-groups-other">
+        Something else
+      </label>
+    </p>
+    <div
+      class="input-field"
+      ng-show="survey.evaluation.comparisonGroups.other"
+    >
+      <input
+        id="comparison-groups-other-text"
+        class="validate"
+        type="text"
+        name="comparisonGroupsOtherText"
+        ng-model="survey.evaluation.comparisonGroups.otherText"
+        ng-required="survey.useFor.evaluation &&
+                     survey.evaluation.comparisonGroups.other"
+      >
+      <label for="comparison-groups-other-text">
+        Please describe
+      </label>
+    </div>
+    <p>
+      Please briefly describe the study design or analysis you will use to
+      conduct the evaluation.
+    </p>
+    <div class="input-field">
+      <textarea
+        id="study-design"
+        class="materialize-textarea"
+        ng-model="survey.evaluation.studyDesign"
+        ng-required="survey.useFor.evaluation"
+      ></textarea>
+      <label for="study-design">Our planned study design is&hellip;</label>
+    </div>
+    <p>
+      Who is the best person for us to follow up with to learn about the
+      results of the evaluation?
+    </p>
+    <div class="input-field">
+      <input
+        id="contact-name"
+        class="validate"
+        type="text"
+        name="contactName"
+        ng-model="survey.evaluation.contactName"
+        ng-required="survey.useFor.evaluation"
+      >
+      <label for="contact-name">
+        Name
+      </label>
+    </div>
+    <div class="input-field">
+      <input
+        id="contact-title"
+        class="validate"
+        type="text"
+        name="contactTitle"
+        ng-model="survey.evaluation.contactTitle"
+        ng-required="survey.useFor.evaluation"
+      >
+      <label for="contact-title">
+        Title
+      </label>
+    </div>
+    <div class="input-field">
+      <input
+        id="contact-email"
+        class="validate"
+        type="email"
+        name="contactEmail"
+        ng-model="survey.evaluation.contactEmail"
+        ng-required="survey.useFor.evaluation"
+      >
+      <label for="contact-email">
+        Email
+      </label>
+    </div>
+
+  </div> <!-- </div ng-show="survey.useFor.evaluation"> -->
+
+  <p>
+    Many organizations would like to access individual students&rsquo; survey
+    responses. However, providing such information securely would require
+    significant IT investment. Approximately how much would your organization
+    be willing to pay for access to individual students&rsquo; responses to
+    survey questions?
+  </p>
+  <p>
+    <input
+      id="cost-not-interested"
+      type="radio"
+      name="cost"
+      ng-model="survey.cost"
+      ng-value="'not interested'"
+      required
+    >
+    <label for="cost-not-interested">
+      We are not interested in that information
+    </label>
+  </p>
+  <p>
+    <input
+      id="cost-zero"
+      type="radio"
+      name="cost"
+      ng-model="survey.cost"
+      ng-value="'$0'"
+      required
+    >
+    <label for="cost-zero">
+      $0 - we are interested in that information but could not pay for it
+    </label>
+  </p>
+  <p>
+    <input
+      id="cost-2k"
+      type="radio"
+      name="cost"
+      ng-model="survey.cost"
+      ng-value="'$2000'"
+      required
+    >
+    <label for="cost-2k">
+      Up to $2,000
+    </label>
+  </p>
+  <p>
+    <input
+      id="cost-5k"
+      type="radio"
+      name="cost"
+      ng-model="survey.cost"
+      ng-value="'$5000'"
+      required
+    >
+    <label for="cost-5k">
+      Up to $5,000
+    </label>
+  </p>
+
+</form>
+
+<!-- End: Org Admin Identifier Download Survey -->
+
+              <h5 ng-show="!skipSurvey && downloadSurveyForm.$invalid">
+                Please answer all questions above
+              </h5>
+              <h5 ng-show="!skipSurvey && downloadSurveyForm.$valid">
+                Thank you!
+              </h5>
+
+              <div ng-show="skipSurvey || downloadSurveyForm.$valid">
+                <h5>What Am I Downloading?</h5>
+                <p>
+                  A CSV file—which you can open in a spreadsheet—of identifiers
+                  of participants who <strong>participated</strong> in one or more
+                  modules in the date range
+                  <strong>{[ startDate | date:'shortDate' ]} -
+                  {[ endDate | date:'shortDate' ]}</strong>.
+                </p>
+                <p>
+                  The column <code>token</code> will contain the identifier.
+                  The identifier will be whatever the participant entered when
+                  they began the module (e.g. their name or student ID) or what
+                  your custom portal sent to our system.
+                </p>
+                <p>
+                  The column <code>percent_progress</code> will tell you what
+                  percent of the module the student completed.
+                </p>
+                <ul>
+                  <li>
+                    1: The participant entered the module
+                  </li>
+                  <li>
+                    33: The participant has completed pre-program questions
+                  </li>
+                  <li>
+                    66: The participant has completed the pre-program questions
+                    and the program.
+                  </li>
+                  <li>
+                    100: The participant has completed the program in its
+                    entirety (pre- and post-program questions)
+                  </li>
+                </ul>
+                <p>
+                  The column <code>module</code> will tell you which module
+                  they completed. This is most relevant to programs with more
+                  than one session.
+                </p>
+                <p>
+                  <strong>These data contain individual student identifiers.
+                  Handle them with care!</strong>
+                </p>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <a
+            class="btn"
+            ng-disabled="!skipSurvey && downloadSurveyForm.$invalid"
+            ng-href="{[ href ]}"
+            target="_blank"
+            ng-click="saveSurvey()"
+          >
+            Download
+          </a>
+          <button class="btn btn-default" ng-click="close()">Close</button>
+        </div>
+      </div>
+
+  </div>
+
+  <div id="fade"></div>
+</div>

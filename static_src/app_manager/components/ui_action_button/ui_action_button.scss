@@ -1,0 +1,82 @@
+.Button.ActionButton {
+  height: 26px;
+
+  padding-left: 10px;
+  padding-right: 10px;
+
+  background: #eaeaea;
+  color: #4a4a4a;
+
+  font-size: 13px;
+  font-weight: 600;
+}
+
+ui-action-button.current .Button.ActionButton {
+  background: #4eb7ef;
+  color: #ffffff;
+}
+
+/* when active based on <ui-action-button ui-sref-active="active"> */
+ui-action-button.active .Button.ActionButton {
+  background: #e5f6fd;
+}
+
+/* when active based on <ui-action-button active="true"> */
+.Button.ActionButton.active,
+.Button.ActionButton.active:focus {
+  background: #e5f6fd;
+}
+
+.Button.ActionButton:focus {
+  background: #eaeaea;
+}
+
+/* indication of admin buttons */
+$action-button-admin-indicator-size: 20px;
+
+.Button.ActionButton.admin:after {
+  content: ' ';
+  position: absolute;
+  height: $action-button-admin-indicator-size;
+  width: $action-button-admin-indicator-size;
+  right: -$action-button-admin-indicator-size * 0.6;
+  bottom: -$action-button-admin-indicator-size * 0.6;
+  transform: rotate(45deg);
+  background: #42ade8;
+}
+
+/*
+  uiActionButton status styles
+ */
+ui-action-button {
+  position: relative;
+}
+
+.ActionButtonStatus {
+  position: absolute;
+  top: -4px;
+  right: 0;
+  width: 10px;
+  height: 10px;
+  border: 1px solid #4a4a4a;
+  border-radius: 50%;
+
+  background: #eaeaea;
+}
+
+.ActionButtonStatus.complete,
+.ActionButtonStatus.approved {
+  background: $nep-green;
+}
+
+.ActionButtonStatus.waiting {
+  background: #1dadea;
+}
+
+.ActionButtonStatus.incomplete {
+  background: #d8d8d8;
+}
+
+.ActionButtonStatus.rejected {
+  background: $nep-red;
+}

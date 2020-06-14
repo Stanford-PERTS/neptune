@@ -1,0 +1,28 @@
+<!-- Checkpoint Summary Text -->
+<div class="checkpoint-body">
+  <div ng-bind-html="$ctrl.checkpoint.body_vm"></div>
+</div>
+
+<!-- Tasks -->
+<div class="task-list">
+  <ul class="collapsible popout" data-collapsible="expandable">
+    <nep-task-item
+      ng-repeat="task in $ctrl.parent.tasks |
+        filter: { checkpoint_id_vm: $ctrl.checkpointId }
+        track by $index"
+      task="task"
+      program="$ctrl.parent.program"
+      parent-project-cohort="$ctrl.parent.projectCohort"
+      parent-organization="$ctrl.parent.organization"
+      parent-survey="$ctrl.parent.getSurveys(task.parent_id)"
+      task-complete="$ctrl.parent.updateTask(task)">
+    </nep-task-item>
+  </ul>
+</div>
+
+<!-- Encourage Message -->
+<nep-checkpoints-encourage
+  status="$ctrl.checkpoint.status"
+  disabled="$ctrl.checkpoint === $ctrl.parent.checkpoints.last()"
+  click="$ctrl.gotoNextCheckpoint($ctrl.checkpoint)">
+</nep-checkpoints-encourage>

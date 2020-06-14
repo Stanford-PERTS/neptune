@@ -1,0 +1,104 @@
+// Google Maps
+// ______________________________________________________________
+
+div[nep-place-search] {
+
+  margin: 30px 0;
+
+  // Floating drop-down of autocomplete place suggestions, automatically added
+  // to the bottom of the body. That's why we need to escape the .map-wrapper
+  // nesting with @at-root
+  @at-root .pac-container {
+    font-family: Roboto;
+    // Google gives this a z-indez of 1000, but that's not good enough to
+    // beat a boostrap modal.
+    z-index: 10000;
+  }
+
+  #type-selector {
+    color: #fff;
+    background-color: #4d90fe;
+    padding: 5px 11px 0px 11px;
+  }
+
+  #type-selector label {
+    font-family: Roboto;
+    font-size: 13px;
+    font-weight: 300;
+  }
+  #target {
+    width: 345px;
+  }
+
+  .input-group {
+    margin-bottom: 10px;
+  }
+
+  .input-wrapper input[type=text] {
+    width: 100%;
+  }
+
+  .form-horizontal {
+    margin: 30px auto;
+    text-align: left;
+
+    h5 {
+      margin-bottom: 20px;
+      font-size: 1.2em;
+    }
+  }
+
+  a.create-new {
+    display: block;
+    position: relative;
+    color: white;
+    padding: 6px 10px;
+    background-color: #8b8fb5;
+    text-decoration: none;
+
+    &:hover{ background-color: darken(#8b8fb5, 5)}
+
+    &:after {
+      content: "+";
+      display: block;
+      position: absolute;
+      right: 10px; top: -2px;
+      font-size: 22px;
+      font-weight: bold;
+    }
+  }
+
+  .confirmation {
+    opacity: 0.0;
+    transition: 0.21s ease-in-out;
+
+    p {
+      margin: 45px auto;
+    }
+
+    &.active {
+      opacity: 1.0;
+    }
+  }
+
+  // Google Maps
+  // ______________________________________________________________
+
+  .map-wrapper {
+    position: relative;
+    background-color: #ccc;
+
+    #place-map {
+      width: 100%;
+      height: 300px;
+    }
+
+    .map-busy {
+      position: absolute;
+      width: 100%;
+      height: 10%;
+      top: 40%; left: 0;
+      text-align: center;
+    }
+  }
+}

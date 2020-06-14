@@ -1,0 +1,28 @@
+.program-card {
+  .card {
+    margin-bottom: 2px;
+
+    .organization-users {
+      // Add some whitespace between org name and org users link.
+      margin-left: 10px;
+
+      .hover {
+        // "View Users" hover text is hidden by default.
+        display: none;
+      }
+
+      i:hover ~ .hover {
+        // "View Users" appears when the users icon has hover state.
+        display: inline-block;
+      }
+    }
+  }
+
+  // On smaller screens, card-status will drop down so we want some additional
+  // space between it and above content.
+  @media only screen and (max-width: 993px) {
+    .card-status {
+      margin-top: 10px;
+    }
+  }
+}

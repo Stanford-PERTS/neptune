@@ -1,0 +1,88 @@
+.collapsible.popout {
+  li {
+    box-shadow: none;
+    transition: margin 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
+    &.active {
+      box-shadow: none;
+      margin: 16px 0;
+    }
+  }
+
+  .collapsible-body {
+    border-left: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+
+    &:not(.ng-hide) {
+      display: block;
+    }
+
+    input[type="date"],
+    .date {
+      width: 260px;
+    }
+
+    textarea {
+      background-color: #fff;
+      padding: 10px;
+    }
+  }
+
+  .compiled-task-body {
+    ul, ol {
+      margin: 0 2em 1em 2em;
+      padding-left: 40px;
+    }
+
+    ul li {
+      list-style-type: disc;
+      box-shadow: none;
+    }
+
+    ol li {
+      list-style-type: decimal;
+      box-shadow: none;
+    }
+
+    blockquote.quote {
+      border-left: none;
+      text-indent: 2rem;
+      font-style: italic;
+      color: #555;
+    }
+
+    .radio-table {
+      td {
+        padding-top: 0;
+        padding-bottom: 0;
+
+        &:first-child {
+          width: 33%;
+        }
+
+        input {
+          height: 1rem;
+        }
+      }
+    }
+  }
+}
+
+.btn-instructions {
+  line-height: 33px;
+  margin-left: 14px;
+  white-space: nowrap;
+
+  .btn-instructions {
+    margin-left: 0;
+  }
+
+  &.error {
+    color: $bs-brand-danger;
+    font-weight: 600;
+  }
+}
+
+.btn-instructions-left {
+    margin-right: 10px;
+}

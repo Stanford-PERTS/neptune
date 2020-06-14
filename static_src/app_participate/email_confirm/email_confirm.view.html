@@ -1,0 +1,28 @@
+<h3 ng-show="$ctrl.portalMessage">
+  {{ $ctrl.portalMessage }}
+</h3>
+<h3 ng-hide="$ctrl.portalMessage">
+  Enter your school email address:
+</h3>
+<div class="input-field">
+  <input
+    id="participant-token-initial"
+    type="email"
+    ng-model="$ctrl.tokenInitial"
+    required
+  >
+  <span class="invalid-message invalid-email">Invalid email address</span>
+</div>
+<h3>Please re-enter your email address:</h3>
+<div class="input-field">
+  <input
+    id="participant-token"
+    type="email"
+    ng-model="$ctrl.token"
+    data-match="$ctrl.tokenInitial"
+    ng-change="$ctrl.setToken({token: $ctrl.token})"
+    required
+  >
+  <span class="invalid-message invalid-email">Invalid email address.</span>
+  <span class="invalid-message invalid-match">Emails don&rsquo;t match.</span>
+</div>

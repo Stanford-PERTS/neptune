@@ -1,0 +1,57 @@
+<div class="container participant-portal">
+  <h1>
+    <img
+      src="/static/images/loading.gif"
+      class="spinner"
+      ng-show="$ctrl.mask"
+    />
+  </h1>
+
+  <div id="error-message" ng-if="$ctrl.accessDeniedReason">
+    <p
+      ng-show="$ctrl.accessDeniedReason === 'cohort closed'"
+      data-test="cohort closed"
+    >
+      This program is only available between {{ $ctrl.openDate | date:'MMMM d,
+      yyyy' }} and {{ $ctrl.communicatedCloseDate | date:'MMMM d, yyyy' }}.
+    </p>
+    <p
+      ng-show="$ctrl.accessDeniedReason === 'survey not ready'"
+      data-test="survey not ready"
+    >
+      Your administrators haven&rsquo;t finished setting up this survey.
+      We&rsquo;re very sorry, but it isn&rsquo;t available.
+    </p>
+    <p
+      ng-show="$ctrl.accessDeniedReason === 'survey done'"
+      data-test="survey done"
+    >
+      You&rsquo;ve already completed this survey.
+    </p>
+    <p
+      ng-show="$ctrl.accessDeniedReason === 'code cookie missing'"
+      data-test="code cookie missing"
+    >
+      We couldn&rsquo;t find your information. You may need to
+      <strong>enable cookies</strong> and try again.
+    </p>
+    <p
+      ng-show="$ctrl.accessDeniedReason === 'misconfigured'"
+      data-test="misconfigured"
+    >
+      There&rsquo;s a problem with this survey. We&rsquo;ll fix it as soon as we
+      can.
+    </p>
+    <p ng-show="$ctrl.accessDeniedReason === 'not found'" data-test="not found">
+      We couldn&rsquo;t find your information.
+    </p>
+    <p
+      ng-show="$ctrl.accessDeniedReason === 'unexpected error'"
+      data-test="unexpected error"
+    >
+      Something&rsquo;s not right. We&rsquo;ll fix it as soon as we can.
+    </p>
+  </div>
+
+  <ui-view name="presurveyPage" ng-hide="$ctrl.mask"></ui-view>
+</div>

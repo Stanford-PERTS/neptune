@@ -1,0 +1,10 @@
+import 'app_participate/email_confirm/email_confirm.component.js';
+import 'app_participate/first_mi_last/first_mi_last.component.js';
+import 'app_participate/name_or_id/name_or_id.component.js';
+import 'app_participate/portal/portal.component.js';
+import 'app_participate/offline_notification/offline.component.js';
+import 'app_participate/presurvey/presurvey.component.js';
+import 'app_participate/presurvey_consent/presurvey_consent.component.js';
+import 'app_participate/presurvey_ies_check/presurvey_ies_check.component.js';
+import 'app_participate/presurvey_preview_agreement/presurvey_preview_agreement.component.js';
+import 'app_participate/presurvey_skip_check/presurvey_skip_check.component.js';

@@ -1,0 +1,28 @@
+<!-- div id="custom-modal & div id="overlay" required by ModalService -->
+<div id="custom-modal">
+  <!-- overriding the default modal styles with model-yesno class -->
+  <div id="overlay" class="modal-yesno">
+      <div class="modal-card">
+        <div class="modal-icon" ng-class="{ danger: options.danger }">
+          <i ng-hide="options.danger" class="fa fa-question-circle-o"></i>
+          <i ng-show="options.danger" class="fa fa-exclamation-triangle"></i>
+        </div>
+
+        <div class="modal-body">
+          <div class="modal-heading">Are you sure?</div>
+          <div class="modal-prompt">
+            {[ prompt ]}
+          </div>
+          <div class="modal-buttons">
+            <a href class="btn btn-cancel" ng-click="closeModal(false)">No</a>
+            <a href class="btn btn-default" ng-click="closeModal(true)">
+              Yes
+              <i ng-show="options.danger" class="fa fa-exclamation-triangle"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+  </div>
+
+  <div id="fade"></div>
+</div>

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="generator" content="pandoc">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>{{ organization_name }}</title>
+    <link rel="stylesheet" href="https://neptune.perts.net/static/css/jurassic.css" />
+    <link rel="stylesheet" href="https://neptune.perts.net/static/css/ep.css" />
+    <link rel="stylesheet" href="/static/css/jquery.dataTables-1.10.20.min.css" />
+    <script src="/static/js/jquery-3.4.1.min.js"></script>
+    <script src="/static/js/jquery.dataTables-1.10.20.min.js"></script>
+    <script src="/static/js/moment-2.10.6-moment-with-locales.js"></script>
+    <script src="/static/js/report_polyfill.js"></script>
+    <script src="/static/js/report_organization.js"></script>
+
+    <script>
+      $(function() {
+        var orgId = '{{ id }}';
+        // Global PERTS object defined by report_organization.js
+        PERTS.buildTable(window.location, orgId);
+      });
+    </script>
+
+    <style>
+      .ggplot {
+        border: 1px solid black;
+        padding: 10px;
+      }
+
+      .truncate {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 200px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="header">
+      <div id="angled-bar"></div>
+      <img
+        src="https://www.perts.net/static/images/pertslogo.png"
+        class="perts-logo"
+      >
+    </div>
+    <!-- gives a nice white background to the logo when over content -->
+    <div id="header-lower-layer"></div>
+    <div class="main-container">
+      <div style="text-align: center">
+        <h1 class="super title">
+          Copilot Community Report
+        </h1>
+        <h1 class="title">
+          {{ organization_name }}
+        <h1 class="sub title">{{ report_date }}</h1>
+      </div>
+
+      <h2>Participation Summary</h2>
+      <p>
+        At least <span class="min-good-ppn"></span>% of students should be
+        surveyed each cycle.
+      </p>
+
+      <table id="participation-summary-table" class="display" style="width: 100%">
+        <thead>
+          <tr>
+            <th></th>
+            <th colspan="4">Current or Most Recent Cycle</th>
+            <th>Previous Cycle</th>
+          </tr>
+
+          <tr>
+            <th><span class="team_term"></span></th>
+            <th><span class="captain_term"></span></th>
+            <th>Cycle #</th>
+            <th>Days Left</th>
+            <th>Participation</th>
+            <th>Participation</th>
+          </tr>
+
+        </thead>
+        <tbody><!-- jQuery inserts data here --></tbody>
+        <tfoot>
+          <tr>
+            <td colspan="6">
+              <span class="empty-indicator"></span> means that today falls
+              outside any schedule
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+
+      <h2>Change Over Time by Measure and <span class="team_term"></span></h2>
+
+      {% for item in items %}
+        {#
+          N.B. learning conditions have human-readable dash-case identifiers
+          like "teacher-caring". The dataset calls these `item_id` while the
+          config calls them `label`.
+        #}
+        {% set lc_label = item['item_id'].replace('_', '-') %}
+        {% if lc_label in config['learning_conditions'] %}
+          {# This is how things are supposed to work. #}
+          {% set lc_name = config['learning_conditions'][lc_label]['name'] %}
+        {% else %}
+          {#
+            To support legacy datasets from early 2020 when "item ids" actually
+            contained question-level identifiers, rather than learning
+            conditions.
+          #}
+          {% set lc_name = item['label'] %}
+        {% endif %}
+
+        <div class="learning-condition-section">
+
+          <h3>Measure: {{ lc_name }}</h3>
+
+          {% for base_64_data in item['team_by_week_plots'] %}
+            <figure class="ggplot">
+              <img src="data:image/png;base64,{{ base_64_data }}">
+            </figure>
+          {% endfor %}
+
+          <h3>
+            Change from First to Last Observation by
+            <span class="team_term"></span> and Group
+          </h3>
+
+          <table class="display-table text-table">
+            <thead>
+              <tr>
+                {% for col in item['delta_table']['columns'] %}
+                  <th>{{ col }}</th>
+                {% endfor %}
+              </tr>
+            </thead>
+            <tbody>
+              {% for row in item['delta_table']['rows'] %}
+                <tr>
+                  {% for col in item['delta_table']['columns'] %}
+                    {% if col == 'Project' %}
+                      <td>
+                        <a
+                          href="//copilot.perts.net/teams/{{ row['team_id'] }}/reports"
+                        >{{ row[col] }}</a>
+                      </td>
+                    {% else %}
+                      <td>{{ row[col] }}</td>
+                    {% endif %}
+                  {% endfor %}
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+
+        </div>
+      {% endfor %}
+
+    </div> <!-- end .main-container -->
+
+  </body>
+</html>

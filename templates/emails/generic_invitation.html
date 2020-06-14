@@ -1,0 +1,35 @@
+{% extends 'base_email.html' %}
+
+{% block content %}
+
+<p>
+  You've been invited to join PERTS!
+</p>
+
+<p>
+  To confirm your new account, please
+  {# autoescaping is on; turn it off for ampersands in this href #}
+  <a href="{{link|safe}}">click here</a>,
+  or use the following URL:
+</p>
+
+<pre>
+  {{ link }}  {# ampersands autoescaped for display #}
+</pre>
+
+<p>
+  Please note that <strong>your link will expire in 48 hours</strong>, so
+  let&rsquo;s get you set up right away!
+</p>
+
+<p>
+  If you have any questions, you may contact us at
+  <a href="mailto:{{ contact_email_address }}">{{ contact_email_address }}</a>.
+</p>
+
+<p>
+  Yours Truly,<br>
+  The PERTS Team
+</p>
+
+{% endblock %}

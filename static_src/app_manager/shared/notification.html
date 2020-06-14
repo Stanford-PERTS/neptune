@@ -1,0 +1,14 @@
+<div class="notification-wrapper"
+     ng-class="{dismissed: notification.dismissed}">
+  <i class="fa fa-close" ng-click="dismiss()"></i>
+  <div class="notification-inner">
+    <p class="date">{[ notification.created | date:'longDate' ]}</p>
+    <p class="body">
+      {[ notification.body ]}
+      <a class="view-button neptune-btn" ng-click="view()" ng-disabled="busy"
+         ng-if="notification.viewable">
+        View
+      </a>
+    </p>
+  </div>
+</div>

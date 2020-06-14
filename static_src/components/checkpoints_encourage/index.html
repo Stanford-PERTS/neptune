@@ -1,0 +1,20 @@
+<div class="checkpoint-encourage right-align">
+
+    <span ng-show="!$ctrl.disabled"
+          class="checkpoint-encourage-text btn-instructions-left">
+      <span ng-show="$ctrl.status !== 'incomplete'">
+        You've completed all the tasks above
+      </span>
+
+      <span ng-show="$ctrl.status === 'incomplete'">
+        Please complete the tasks above
+      </span>
+    </span>
+
+    <a ng-show="!$ctrl.disabled"
+       ng-click="$ctrl.click()"
+       class="checkpoint-encourage-btn waves-effect waves-light btn">
+      Next Step
+    </a>
+
+</div>

@@ -1,0 +1,6 @@
+<div class="checkpoint-summary">
+  <a ng-href="/projects/{[ project.short_uid ]}">
+    {[ project.program_name ]} @ {[ organization.name ]}
+  </a>
+  <span ng-repeat="c in checkpoints" class="checkpoint {[ c.status ]}"></span>
+</div>

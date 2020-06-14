@@ -1,0 +1,26 @@
+.program-card {
+  .card-image {
+    padding-top: 42px;
+    padding-right: 30px;
+
+    .chip {
+      img {
+        border-radius: 50%;
+      }
+
+      i {
+        float: left;
+        margin: 4px 8px 0 -3px;
+        font-size: 18pt;
+
+        &.active {
+          color: $nep-highlight;
+        }
+      }
+    }
+  }
+
+  .tooltip-status {
+    min-width: 300px;
+  }
+}

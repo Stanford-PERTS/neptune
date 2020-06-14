@@ -1,0 +1,155 @@
+###############################################################################
+##                                                                           ##
+##                          !!  DO NOT EDIT !!                               ##
+##                                                                           ##
+##  instead, edit branch_environment.json, and then generate app.yaml by     ##
+##  running `python gae_server/branch_environment.py` at the command line.   ##
+##                                                                           ##
+###############################################################################
+
+env_variables:
+  # Versions are separate run times with different code in the same app, in
+  # contact with the same datastore. One version at a time is set as the
+  # default, which is what you get when you don't specify a version in the URL.
+  # You can target a specific version with a URL like this: >
+  # acceptance.mindsetkit.appspot.com The names for the versions are taken from
+  # DTAP terminology:
+  # http://en.wikipedia.org/wiki/Development,_testing,_acceptance_and_production
+  PROJECT_ID: ${PROJECT_ID}
+  APP_ENGINE_VERSION: ${APP_ENGINE_VERSION}
+  DEVELOPMENT_PROJECT_ID: 'neptune-dev'
+  CURRENTLY_TESTING: 'false'
+  HOSTING_DOMAIN: ${HOSTING_DOMAIN}
+  YELLOWSTONE_DOMAIN: ${YELLOWSTONE_DOMAIN}
+  TRITON_DOMAIN: ${TRITON_DOMAIN}
+  RSERVE_DOMAIN: ${RSERVE_DOMAIN}
+  DEPLOYED_BROWSER_API_KEY: ${DEPLOYED_BROWSER_API_KEY}
+  LOCALHOST_BROWSER_API_KEY: ${LOCALHOST_BROWSER_API_KEY}
+  LOCAL_SQL_DB_NAME: ${LOCAL_SQL_DB_NAME}
+  LOCAL_SQL_TEST_DB_NAME: 'neptune_test'
+  LOCAL_SQL_USER: 'neptune'
+  LOCAL_SQL_PASSWORD: 'neptune'
+  CLOUD_SQL_INSTANCE_ID: ${CLOUD_SQL_INSTANCE_ID}
+  CLOUD_SQL_DB_NAME: ${CLOUD_SQL_DB_NAME}
+  GCS_UPLOAD_PREFIX: ${GCS_UPLOAD_PREFIX}  # Must begin with a slash or be ''
+  NAMESPACE: ${NAMESPACE}
+  SENTRY_URL: ${SENTRY_URL}
+  INCLUDE_PROFILER: ${INCLUDE_PROFILER}
+
+###############################################################################
+##                                                                           ##
+##                    !!  EDIT ONLY IN TEMPLATE  !!                          ##
+##                                                                           ##
+##  Only edit the following if this is the app.yaml.template file; then      ##
+##  generate app.yaml by running `python branch_environment.py` at the       ##
+##  command line.                                                            ##
+##                                                                           ##
+###############################################################################
+
+runtime: python27
+api_version: 1
+threadsafe: true
+
+includes:
+- lib/mapreduce/include.yaml
+
+handlers:
+
+- url: /static
+  static_dir: static
+  secure: always
+  # Allow cross-domain requests for these resources.
+  # Specifically needed for js on qualtrics to download audio files.
+  # # https://developers.google.com/appengine/docs/python/config/appconfig#cors_support
+  http_headers:
+    Access-Control-Allow-Origin: '*'
+
+- url: /silk/js
+  static_dir: silk/js
+  secure: always
+  # This MAY be required for getting qualtrics.js from Qualtrics. But don't
+  # turn it on until it's clear that's necessary.
+  # # Allow cross-domain requests for these resources.
+  # # https://developers.google.com/appengine/docs/python/config/appconfig#cors_support
+  # http_headers:
+  #   Access-Control-Allow-Origin: '*'
+
+- url: /silk/css
+  static_dir: silk/css
+  secure: always
+
+- url: /loaderio-a59718d3417d5c247f533de7a3742b90/?
+  static_files: static/loaderio-a59718d3417d5c247f533de7a3742b90.txt
+  upload: static/loaderio-a59718d3417d5c247f533de7a3742b90\.txt
+
+- url: /gae_mini_profiler/static
+  static_dir: gae_mini_profiler/static
+- url: /gae_mini_profiler/.*
+  script: gae_mini_profiler.main.application
+
+- url: /neptune-privacy
+  script: redirector.application
+  secure: always
+
+- url: /robots\.txt
+  static_files: static/robots.txt
+  upload: robots\.txt
+
+# Basic browserconfig.xml file for crawlers
+- url: /browserconfig\.xml
+  static_files: static/browserconfig.xml
+  upload: browserconfig\.xml
+
+- url: /favicon\.ico
+  static_files: static/images/favicon.ico
+  upload: static/images/favicon\.ico
+  secure: always
+
+- url: /_ah/pipeline.*
+  script: mapreduce.lib.pipeline.handlers._APP
+  login: admin
+
+- url: /(cron|task|map).*
+  script: wsgi.application
+  # Make sure that the big bad internet can't hit our cron or task URLs.
+  # https://developers.google.com/appengine/docs/python/config/cron#Python_app_yaml_Securing_URLs_for_cron
+  login: admin
+  secure: always
+
+- url: /.*
+  script: wsgi.application
+  secure: always
+
+libraries:
+- name: webapp2
+  version: latest
+- name: jinja2
+  version: latest
+- name: MySQLdb
+  version: latest
+- name: pycrypto
+  version: latest
+- name: pytz
+  version: latest
+
+skip_files:
+- ^(.*/)?#.*#$
+- ^(.*/)?.*~$
+- ^(.*/)?.*\.py[co]$
+- ^(.*/)?.*/RCS/.*$
+- ^(.*/)?\..*$
+# SDK files
+- datastore.db
+- sdk_logs
+- logs.db
+- logs.db-journal
+- search_indexes
+- xsrf
+# Cypress
+- cypress
+# This is a memory-profiling library for python. Intended to be used locally
+# so it's skipped on deploy. We do NOT want to skip the whole lib folder though
+# b/c it has things like passlib in it.
+- ^.*lib/pympler$
+- ^.*bower\_components$
+- ^.*node\_modules$

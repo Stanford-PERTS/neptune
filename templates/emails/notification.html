@@ -1,0 +1,29 @@
+{% extends 'base_email.html' %}
+
+{% block content %}
+
+<p>
+  There's been activity on your PERTS account.
+</p>
+
+<p>
+  {{ body }}
+</p>
+
+<p>
+  You can see these changes
+  {# autoescaping is on; turn it off for ampersands in this href #}
+  <a href="{{domain}}{{link|safe}}">here</a>,
+  or use the following URL:
+</p>
+
+<pre>
+  {{domain}}{{link}}  {# ampersands autoescaped for display #}
+</pre>
+
+<p>
+    Yours Truly,<br>
+    The PERTS Team
+</p>
+
+{% endblock %}

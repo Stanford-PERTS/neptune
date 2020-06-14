@@ -1,0 +1,44 @@
+{% extends 'base_email.html' %}
+
+{% block content %}
+
+{# This is the unusual case where a user has been invited and
+   sent a link to set their password OR they went through the initial phase of
+   registration to get a link, but in either case didn't USE that link.
+   Instead, they attempt to register with the email address that
+   has already been set up for them. #}
+
+<p>
+  You've already started the process to join
+  {% if program_label %}
+    {{ program_name }}!
+  {% else %}
+    PERTS!
+  {% endif %}
+</p>
+<p>
+  To finish the process and confirm your account,
+  {# autoescaping is on; turn it off for ampersands in this href #}
+  <a href="{{link}}{{query_string|safe}}">click here</a> or use the following URL:
+</p>
+
+<pre>
+  {{link}}{{query_string}}  {# ampersands autoescaped for display #}
+</pre>
+
+<p>
+  Please note that <strong>your link will expire in 48 hours</strong>, so
+  let&rsquo;s get you set up right away!
+</p>
+
+<p>
+  If you have any questions, please contact us at
+  <a href="mailto:{{ contact_email_address }}">{{ contact_email_address }}</a>.
+</p>
+
+<p>
+  Yours Truly,<br>
+  The PERTS Team
+</p>
+
+{% endblock %}

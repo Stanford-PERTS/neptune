@@ -1,0 +1,9 @@
+#!/bin/bash
+
+# Run with every `git checkout`.
+# The goal is to change all out branch-dependent environment variables
+# automatically with every change of branch.
+
+printf "Neptune post-checkout hook running...\n"
+python gae_server/branch_environment.py
+

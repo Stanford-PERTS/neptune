@@ -1,0 +1,40 @@
+ui-project-cohort-actions {
+  display: flex;
+  flex-wrap: wrap;
+
+  /*
+    The following rules allow for the top dividing border to extend all to the
+    edges of the bounding Card component. This is hacky, since means this isn't
+    independant of the parent component, but it works for now!
+   */
+  margin-left: -12px;
+  margin-right: -12px;
+  padding-left: 12px;
+  padding-right: 12px;
+
+  border-top: 2px solid #eaeaea;
+  /* */
+
+  margin-top: 10px;
+  padding-top: 10px;
+}
+
+ui-project-cohort-actions ui-action-button {
+  margin-bottom: 10px;
+}
+
+ui-project-cohort-actions ui-action-button:not(:last-child) {
+  margin-right: 10px;
+}
+
+ui-project-cohort-actions div {
+  display: flex;
+}
+
+@media (min-width: 1180px) {
+  // In order to play nicely with flex-wrap: wrap rule above, we don't want to
+  // push admin buttons to the right when the screen is too narrow.
+  ui-project-cohort-actions div.push-right {
+    margin-left: auto;
+  }
+}

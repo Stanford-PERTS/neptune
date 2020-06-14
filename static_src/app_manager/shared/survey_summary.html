@@ -1,0 +1,28 @@
+<div class="survey-summary-wrapper checkpoint-summary">
+  <div>
+    <a ng-href="/surveys/{[survey.short_uid]}">
+      {[ ::survey.name ]}
+    </a>
+    <span ng-repeat="c in checkpoints" class="checkpoint {[c.status]}"></span>
+  </div>
+  <div>
+    <table class="table">
+      <thead>
+        <tr>
+          <th></th>
+          <th>#</th>
+          <th>% done of expected</th>
+          <th>% done of started</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="marker in participation">
+          <td>{[ ::marker.name ]}</td>
+          <td>{[ ::marker.n ]}</td>
+          <td>{[ ::displayPercent(marker.n, expectedParticipants) ]}</td>
+          <td>{[ ::displayPercent(marker.n, participation[0].n) ]}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

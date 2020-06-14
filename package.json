@@ -1,0 +1,119 @@
+{
+  "name": "neptune",
+  "version": "1.2.255",
+  "engines": {
+    "node": "12.16.1"
+  },
+  "license": "UNLICENSED",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/PERTS/neptune.git"
+  },
+  "scripts": {
+    "cleandeps": "rm -rf node_modules",
+    "postinstall": "cp git_hooks/* .git/hooks/",
+    "prestart": "npm run dirs:clean && npm run dirs:create:dev && npm run copy:assets:dev",
+    "start": "NODE_ENV=development node node_modules/.bin/webpack-dev-server --port 8888 --content-base static",
+    "prebuild:neptune": "npm run dirs:clean && npm run dirs:create:build && npm run copy:assets:build && npm run copy:html:build:neptune",
+    "webpack:neptune": "NODE_ENV=production node node_modules/.bin/webpack",
+    "build:neptune": "npm run webpack:neptune",
+    "prebuild:participate": "npm run dirs:clean && npm run dirs:create:build && npm run copy:assets:build && npm run copy:html:build:participate",
+    "webpack:participate": "APP=participate NODE_ENV=production node node_modules/.bin/webpack",
+    "build:participate": "npm run webpack:participate",
+    "prebuild": "npm run dirs:clean && npm run dirs:create:build && npm run copy:assets:build && npm run copy:html:build:neptune && npm run copy:html:build:participate",
+    "build": "npm run webpack:neptune && npm run webpack:participate",
+    "dirs:clean": "rm -rf static/* && rm -rf templates/dist/*",
+    "dirs:create:dev": "mkdir -p static && mkdir -p templates/dist",
+    "dirs:create:build": "mkdir -p static && mkdir -p templates/dist",
+    "copy:assets:dev": "cp -R static_src/assets/* static",
+    "copy:assets:build": "cp -R static_src/assets/* static/",
+    "copy:html:build:neptune": "cp static_src/neptune.html templates/dist/neptune.html",
+    "copy:html:build:participate": "cp static_src/participate.html templates/dist/participate.html",
+    "server": "dev_appserver.py . -A=neptune-dev --port=8080 --admin_port=8008 --storage_path=.gae_sdk --enable_console=yes --enable_host_checking=no  --support_datastore_emulator=true",
+    "server:mysql": "mysql.server start",
+    "test": "NODE_PATH=static_src jest static_src --watch --env=jsdom",
+    "test:CI": "NODE_PATH=static_src jest static_src --env=jsdom",
+    "test:pre-push": "NODE_PATH=static_src CI=true jest static_src --env=jsdom && cypress run --config video=false,baseUrl=http://localhost:8080",
+    "test:cypress": "NODE_PATH=static_src cypress open"
+  },
+  "babel": {
+    "presets": [
+      "@babel/preset-env"
+    ],
+    "plugins": [
+      "angularjs-annotate"
+    ]
+  },
+  "browserslist": [
+    "last 2 versions",
+    "> 1%"
+  ],
+  "jest": {
+    "roots": [
+      "static_src"
+    ],
+    "transform": {
+      "^.+\\.jsx?$": "babel-jest",
+      "^.+\\.scss$": "./jest.pre.scss.js"
+    },
+    "moduleNameMapper": {
+      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/jest.pre.assetsTransformer.js",
+      "\\.(css|less)$": "<rootDir>/jest.pre.assetsTransformer.js",
+      "\\.(htm|html)$": "<rootDir>/jest.pre.assetsTransformer.js"
+    },
+    "setupFilesAfterEnv": [
+      "./jest.init.js"
+    ]
+  },
+  "dependencies": {
+    "@babel/core": "7.4.3",
+    "@babel/preset-env": "7.4.3",
+    "@uirouter/angularjs": "1.0.15",
+    "angucomplete-alt": "3.0.0",
+    "angular": "1.7.9",
+    "angular-cookies": "1.7.1",
+    "angular-mocks": "1.6.10",
+    "angular-modal-service": "0.13.0",
+    "angular-resource": "1.6.10",
+    "angular-tooltips": "1.2.2",
+    "autoprefixer": "9.5.1",
+    "babel-eslint": "10.0.1",
+    "babel-loader": "8.0.5",
+    "babel-plugin-angularjs-annotate": "0.10.0",
+    "crypto-js": "3.1.9-1",
+    "css-loader": "2.1.1",
+    "eslint": "4.19.1",
+    "eslint-config-prettier": "2.9.0",
+    "eslint-plugin-babel": "5.0.0",
+    "eslint-plugin-prettier": "2.6.0",
+    "file-loader": "1.1.11",
+    "html-loader": "0.5.5",
+    "html-webpack-plugin": "3.2.0",
+    "install": "0.11.0",
+    "jest": "24.7.1",
+    "jquery": "3.4.1",
+    "lodash": "4.17.15",
+    "materialize-css": "1.0.0",
+    "mini-css-extract-plugin": "0.4.0",
+    "moment": "2.22.1",
+    "ng-file-upload": "12.2.13",
+    "node-sass": "4.13.1",
+    "optimize-css-assets-webpack-plugin": "5.0.1",
+    "parse-link-header": "1.0.1",
+    "postcss-loader": "3.0.0",
+    "sass-loader": "8.0.2",
+    "style-loader": "0.20.3",
+    "uglifyjs-webpack-plugin": "2.2.0",
+    "urijs": "1.19.1",
+    "webpack": "4.29.6",
+    "webpack-cli": "3.3.0"
+  },
+  "devDependencies": {
+    "capitalize": "^2.0.3",
+    "cypress": "4.0.2",
+    "db-migrate": "^0.11.6",
+    "db-migrate-mysql": "^2.1.1",
+    "faker": "^4.1.0",
+    "webpack-dev-server": "3.1.14"
+  }
+}

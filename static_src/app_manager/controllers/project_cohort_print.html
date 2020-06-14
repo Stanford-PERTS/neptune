@@ -1,0 +1,21 @@
+<div class="no-print">
+  <button class="neptune-btn" onclick="window.print()">Print This Page</button>
+</div>
+<div ng-repeat="m in displayCheckpointMetas">
+  <div nep-checkpoints-summary-item
+      role="presentation"
+      class="{[ m.className ]}"
+      nextTask="{[ m.nextTask ]}"
+      title="{[ ::m.checkpoint.name ]}"
+      short-uid="{[ ::m.checkpoint.short_uid ]}"
+      parent-id="{[ ::m.checkpoint.parent_id ]}"
+      icon="{[ ::m.icon ]}"
+      icon-flip="{[ ::m.iconFlip ]}"
+      icon-top-offset="{[ ::m.iconTopOffset ]}"
+      icon-left-offset="{[ ::m.iconLeftOffset ]}">
+  </div>
+  <div ng-repeat="task in tasksByDisplayCheckpoint[m.checkpoint.uid]"
+       task="task" display-mode="print">
+  </div>
+</div>
+

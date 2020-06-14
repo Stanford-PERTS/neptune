@@ -1,0 +1,53 @@
+<div class="Dashboard">
+  <div class="ContentWrapper">
+    <div class="ContentMain">
+
+      <ui-loading-card ng-show="$ctrl.loading"></ui-loading-card>
+
+      <!-- SUPER ADMIN -->
+      <div ng-if="$ctrl.isSuperAdmin">
+        <ui-view
+          name="DashboardPrompt"
+          ng-show="!$ctrl.loading"
+        ></ui-view>
+
+        <ui-view
+          name="DashboardMain"
+          ng-hide="$ctrl.loading"
+
+          card-rows="$ctrl.cardRows"
+          options="$ctrl.options"
+
+          change-selected="$ctrl.changeSelected(params)"
+          update-selected-count="$ctrl.updateSelectedCount()"
+          query="$ctrl.query(params)"
+        ></ui-view>
+      </div>
+
+      <!-- ORG ADMIN -->
+      <div ng-if="!$ctrl.isSuperAdmin">
+        <nep-dashboard-main
+          ng-hide="$ctrl.loading"
+
+          card-rows="$ctrl.cardRows"
+          options="$ctrl.options"
+
+          query="$ctrl.query(params)"
+        ></nep-dashboard-main>
+      </div>
+
+      <ui-view name="ProjectCohortPanel"></ui-view>
+    </div>
+
+    <div class="ContentOptions">
+      <nep-dashboard-options
+        card-rows="$ctrl.cardRows"
+        options="$ctrl.options"
+
+        reset-dashboard="$ctrl.resetDashboard()"
+        select-all-visible="$ctrl.selectAllVisible()"
+        deselect-all-visible="$ctrl.deselectAllVisible()"
+      ></nep-dashboard-options>
+    </div>
+  </div>
+</div>

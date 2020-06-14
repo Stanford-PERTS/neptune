@@ -1,0 +1,74 @@
+<div class="hide-on-med-and-down">
+  <div class="program-card container">
+    <div class="col s12">
+
+      <div class="card horizontal">
+        <div class="card-stacked">
+
+          <div class="card-content">
+            <span class="card-title">{{ $ctrl.programTitle }}</span>
+            <p>
+              {{ $ctrl.organization.name }}
+
+              <span class="organization-users" ng-if="$ctrl.organization.short_uid">
+                <a href="/organizations/{{ $ctrl.organization.short_uid }}/users">
+                  <i class="fa fa-users"></i>
+                  <span class="hover">View Users</span>
+                </a>
+              </span>
+            </p>
+          </div>
+
+          <div class="card-action" ng-if="$ctrl.projectCohortSref">
+            <a class="btn" ui-sref="projectCohorts({ projectCohortId: $ctrl.projectCohortSref })">View Program</a>
+          </div>
+
+        </div>
+
+        <div class="card-image">
+          <nep-program-status ng-if="$ctrl.displayProgramStatus"
+                              project-cohort-status="$ctrl.projectCohortStatus">
+          </nep-program-status>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="hide-on-large-only show-on-medium-and-down">
+  <div class="program-card container">
+    <div class="col s12">
+
+      <div class="card horizontal">
+        <div class="card-stacked">
+
+          <div class="card-content">
+            <span class="card-title">{{ $ctrl.programTitle }}</span>
+            <p>
+              {{ $ctrl.organization.name }}
+
+              <span class="organization-users" ng-if="$ctrl.organization.short_uid">
+                <a href="/organizations/{{ $ctrl.organization.short_uid }}/users">
+                  <i class="fa fa-users"></i>
+                  <span class="hover">View Users</span>
+                </a>
+              </span>
+            </p>
+
+            <nep-program-status ng-if="$ctrl.displayProgramStatus"
+                                project-cohort-status="$ctrl.projectCohortStatus">
+            </nep-program-status>
+          </div>
+
+          <div class="card-action" ng-if="$ctrl.projectCohortSref">
+            <a class="btn" ui-sref="projectCohorts({ projectCohortId: $ctrl.projectCohortSref })">View Program</a>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

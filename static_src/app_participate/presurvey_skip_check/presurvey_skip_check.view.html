@@ -1,0 +1,40 @@
+<div ng-hide="$ctrl.mask">
+  <div class="row">
+    <h3>
+      Did you already do session 1?
+    </h3>
+  </div>
+  <form name="skipForm" novalidate ng-submit="$ctrl.submit($ctrl.theyDid1)">
+    <div class="row">
+      <div class="input-field">
+        <label>
+          <input
+            type="radio"
+            ng-model="$ctrl.theyDid1"
+            ng-value="true"
+            data-test="theyDid1-true"
+            required="$ctrl.theyDid1 !== undefined"
+          />
+          Yes
+        </label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="input-field">
+        <label>
+          <input
+            type="radio"
+            ng-model="$ctrl.theyDid1"
+            ng-value="false"
+            data-test="theyDid1-false"
+            required="$ctrl.theyDid1 !== undefined"
+          />
+          No
+        </label>
+      </div>
+    </div>
+    <button type="submit" class="btn" ng-disabled="skipForm.$invalid">
+      Next
+    </button>
+  </form>
+</div>

@@ -1,0 +1,106 @@
+.Card {
+  margin-bottom: 16px;
+  padding: 12px 12px 12px 12px;
+
+  // Mininimum height to give space to loading animation even on cards that
+  // don't have any content.
+  min-height: 40px;
+
+  background: #ffffff;
+
+  border-top: 4px solid #4a4a4a;
+  border-radius: 3px;
+
+  box-shadow: 1px 1px 1px 0px rgba(74, 74, 74, 0.5);
+
+  position: relative;
+  overflow: hidden;
+
+  z-index: 20;
+
+  .loading {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    height: 100%;
+    width: 100%;
+
+    z-index: 30;
+    background: rgba(#ffffff, 0.92);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+}
+
+.Card.closed {
+  border-top: 4px solid $nep-red;
+}
+
+.Card.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.Card.disabled .CardSelect {
+  pointer-events: auto;
+}
+
+.Card h1 {
+  margin: 0; // TODO MCSS
+
+  font-size: 24px;
+  color: $nep-dark-gray;
+}
+
+.Card h2 {
+  font-size: 16px;
+  font-weight: normal;
+  color: $nep-dark-gray;
+  margin: 0;
+
+  line-height: 22px; // TODO MCSS
+}
+
+// Project Cohort cards have their own padding-bottom to make the action
+// buttons display nicely. See ui_project_cohort_actions.scss.
+ui-project-cohort-card .Card {
+  padding-bottom: 0;
+}
+
+.CardOptions .Card {
+  padding: 0;
+  margin-bottom: 10px;
+
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.CardOptions .Card select {
+  font-size: 13px;
+  font-weight: bold;
+
+  border: 0;
+}
+
+.CardOptions .Card select:focus {
+  outline: 0;
+}
+
+.CardOptions .Card input {
+  font-size: 13px;
+  font-weight: bold;
+  margin: 0; // TODO MCSS
+  padding-left: 8px;
+  padding-right: 8px;
+  border-bottom: 0; // TODO MCSS
+}
+
+.CardOptions .Card input:focus {
+  border-bottom: 0; // TODO MCSS
+  box-shadow: none; // TODO MCSS
+}

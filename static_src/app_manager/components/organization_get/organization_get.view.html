@@ -1,0 +1,18 @@
+<div class="Dashboard Organizations">
+  <div class="ContentWrapper">
+    <div class="ContentMain">
+
+      <nep-organization-card
+        loading="$ctrl.loading"
+        organization="$ctrl.organization"
+      ></nep-organization-card>
+
+      <ui-view
+        name="panel"
+        ng-if="$ctrl.organization"
+        organization-id="$ctrl.organization.uid"
+      ></ui-view>
+
+    </div>
+  </div>
+</div>

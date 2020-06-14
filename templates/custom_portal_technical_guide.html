@@ -1,0 +1,268 @@
+{% extends 'print_base.html' %}
+
+
+{% block content %}
+
+{% set code = project_cohort.code %}
+{% set url_code = code | replace(' ', '-') %}
+
+
+<style>
+  code {
+    color: inherit;
+  }
+</style>
+
+<div class="no-print message-box">
+  This document is meant to be printed to paper or pdf.
+  <a href="javascript:window.print();" class="perts-button">Print</a>
+</div>
+
+<h1>PERTS Custom Portal Technical Guide</h1>
+
+
+<p>
+  Your organization has chosen to implement a PERTS program with the help of
+  your organization&rsquo;s internal network authorization. This is simple to
+  do and will mean greatly improved accuracy and usability for participants. It
+  involves creating a server-side http request handler which is available at a
+  URL you specify.
+</p>
+
+<h2>Participation Code</h2>
+<p>
+  <strong>WARNING</strong>: failure to read this carefully could invalidate your
+  program results!
+</p>
+<p>
+  You&rsquo;ll need your organization&rsquo;s <em>participation code</em> to
+  test the portal. Your participation code is <code>{{code}}</code>.
+  <strong>However, this code will not work</strong> before your colleagues
+  complete the program&rsquo;s setup tasks and participation opens.
+</p>
+<p>
+  Until then, you&rsquo;ll need to use the <em>testing code</em>, which is
+  <code>testing only {{code}}</code>. Do <em>not</em> give this
+  code to students or other participants because the program will not collect
+  data when participants enter this way. <strong>Distributing the testing code
+  could result in losing all your participant&rsquo;s data</strong>!
+</p>
+
+<h2>Logistical Outline</h2>
+
+<ol>
+    <li>
+      You&rsquo;ll need to tell PERTS about the URL of the portal you are
+      building. If you have access to the Dashboard you can enter the URL in
+      the <strong>Custom Portal URL​</strong> task in the <strong>Prepare To
+      Participate</strong> step. If you don&rsquo;t have access to the
+      Dashboard, please inform your organization&rsquo;s PERTS liaison that
+      they must enter this value.
+    </li>
+    <li>
+      You can test the integration of your portal with PERTS by visiting
+      <a href="https://www.perts.me">perts.me</a> and entering the testing code,
+      which is given above.
+    </li>
+</ol>
+<h2>Technical Outline</h2>
+<ol>
+  <li>
+    PERTS program participants (either students or faculty at your
+    organization) will enter their participation code at
+    <strong>perts.me</strong>
+  </li>
+  <li>
+    We&rsquo;ll use the participation code to tie participants to your
+    organization and then forward them to <strong>a URL you specify during
+    program setup​</strong>. The script you build will need to reside at this
+    URL.
+  </li>
+  <li>
+    We&rsquo;ll append two query string parameters to your URL:
+    <code>code</code> and <code>session</code>. Save these for step 7.
+    <strong>If for any reason these values are missing​</strong>, please have
+    them default to <code>__missing_code__</code> or
+    <code>__missing_session__</code>, respectively. See the test cases,
+    below, for a full examples.
+  </li>
+  <li>
+    You&rsquo;ll need to take whatever actions are required to authenticate
+    the user on your local network, like a displaying a screen with a
+    username and password form.
+  </li>
+  <li>
+    Establish a reference to the user&rsquo;s identity from your
+    organization&rsquo;s perspective, whether that&rsquo;s a network ID, an
+    email address, a user ID, or some other unique identifier. We&rsquo;ll
+    call it the &ldquo;token&rdquo;. <strong>Exactly what token is used is
+    important for the integrity of your organization&rsquo;s data. Make sure
+    to coordinate with your colleagues on this matter so everyone understands
+    what student identifiers will be sent to PERTS</strong>.
+  </li>
+  <li>
+    Make sure to encode/escape the token for use in a URL, if necessary. For
+    instance, in JavaScript this is done with
+    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/encodeURIComponent">encodeURIComponent()</a>
+    and in PHP with
+    <a href="https://secure.php.net/manual/en/function.urlencode.php">urlencode()</a>.
+  </li>
+  <li>
+    Finally you&rsquo;ll need to redirect them to a PERTS URL, which is
+    constructed like this:
+  </li>
+</ol>
+<pre><code>https://neptune.perts.net/participate/portal/{code}​/{session}​/{token}
+</code></pre>
+<p>
+  Here&rsquo;s an example with the values &ldquo;{{url_code}}&rdquo;,
+  &ldquo;1&rdquo;, and &ldquo;87759&rdquo; filled in.
+</p>
+<pre><code>https://neptune.perts.net/participate/portal/{{url_code}}/1/87759
+</code></pre>
+
+<div class="page-break"></div>
+
+<h2>Test Cases</h2>
+
+<h3>Typical case</h3>
+<p>
+  Given that your organization sets up a page at example.com/perts-redirect,
+  and the user is a student with the network id &ldquo;87759&rdquo;, a visitor
+  arriving at this URL:
+</p>
+<pre><code>http://www.example.com/perts-redirect?code={{url_code}}&amp;session=1
+</code></pre>
+<p>
+  Should result in them ultimately arriving at this URL:
+</p>
+<pre><code>https://neptune.perts.net/participate/portal/{{url_code}}/1/87759
+</code></pre>
+<h3>Missing code parameter</h3>
+<p>
+  Suppose a similar example, but the code is missing.
+</p>
+<pre><code>http://www.example.com/perts-redirect?session=1
+</code></pre>
+<p>
+  The custom portal should result in the user ultimately arriving at this URL:
+</p>
+<pre><code>https://neptune.perts.net/participate/portal/__missing_code__/1/87759
+</code></pre>
+<h3>Missing session parameter</h3>
+<p>
+  Suppose a similar example, but the session is missing.
+</p>
+<pre><code>http://www.example.com/perts-redirect?code={{url_code}}
+</code></pre>
+<p>
+  The custom portal should result in the user ultimately arriving at this URL:
+</p>
+<pre><code>https://neptune.perts.net/participate/portal/{{url_code}}/__missing_session__/87759
+</code></pre>
+<h3>Troubleshooting</h3>
+<h4>
+  &ldquo;The custom portal URL has not been set. Please contact your program
+  administrator.&rdquo;
+</h4>
+<p>
+  Your custom portal&rsquo;s URL must be entered in the PERTS Dashboard. If you
+  have access to the Dashboard you can enter the URL in the <strong>Custom
+  Portal URL​</strong> task in the <strong>Prepare To Participate</strong> step.
+  If you don&rsquo;t have access to the Dashboard, please inform your
+  organization&rsquo;s PERTS liaison that they must enter this value.
+</p>
+
+<div class="page-break"></div>
+
+<h2>Example Script</h2>
+
+<p>
+  The following is a demonstration php script that encodes all the rules above,
+  except for how the user&rsquo;s token is determined. You may adapt this for
+  your own purposes.
+</p>
+
+<!-- This is a really long code block, allow it to break over a page. -->
+<pre style="page-break-inside: auto"><code class="php">&lt;?php
+
+# Custom Portal Code Sample
+# ----------------------------------------------------------------------------
+#
+# The purpose of this script is to demonstrate how institutions should
+# handle a PERTS program participant and correctly return them to PERTS.
+#
+# If your institution can run php scripts, you can adapt this sample by
+# completing the function `get_network_id()` below. Otherwise this
+# should provide a description of the logic necessary for implementation in
+# another language.
+#
+# Inputs
+# ------
+#
+# $code    string Provided in the query string of the request, set as
+#                 '__missing_code__' if not present, which also logs
+#                 an error.
+# $session string Provided in the query string of the request
+#                 '__missing_session__' if not present, which also logs
+#                 an error.
+# $token   string Drawn from institution's sign in system.
+#
+# Outputs
+# ------
+#
+# None. Rather script redirects to a PERTS-controlled URL containing the
+# three inputs.
+# ----------------------------------------------------------------------------
+
+/**
+* Capture PERTS-supplied query string parameters or log an error
+* if it is missing or falsey.
+*
+* @param string $key
+* @return string
+*/
+function get_param($key) {
+  if (isset($_REQUEST[$key]) &amp;&amp; $_REQUEST[$key]) {
+    $value = $_REQUEST[$key];
+  } else {
+    error_log(&quot;Incoming URL missing '&quot;.$key.&quot;' parameter in query string.&quot;);
+    # This value will signal PERTS to attempt to handle the error.
+    $value = '__missing_'.$key.'__';
+  }
+  return $value;
+}
+
+$code = get_param('code');
+$session = get_param('session');
+
+/**
+* Retrieve student's institutional network id.
+* Exact implementation depends on institution's network.
+* YOU MUST ADAPT THIS FUNCTION FOR YOUR ENVIRONMENT.
+*
+* @return string The user's id on this organization's network.
+*/
+function get_network_id() {
+  return $_SERVER['WEBAUTH_USER']; // example only!
+}
+
+$token = get_network_id();
+
+# Make sure the network id / token has been set and is well formed.
+if (!isset($token) || !is_string($token) || $token == '') {
+  throw new Exception(&quot;Network id invalid.&quot;);
+}
+
+# Build the destination URL.
+$base_url = 'https://neptune.perts.net/participate/portal';
+$url_token = urlencode($token);
+$redirect_url = implode('/', array($base_url, $code, $session, $url_token));
+
+# Redirect the user to PERTS with the network id.
+header('Location: '.$redirect_url);
+
+?&gt;
+</code></pre>
+
+{% endblock %}

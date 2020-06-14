@@ -1,0 +1,39 @@
+<div class="row">
+  <h3>
+    Enter your name:
+  </h3>
+</div>
+<div class="row">
+  <div class="input-field">
+    <label>
+      First name
+      <input id="first-name" ng-model="$ctrl.firstName" nep-strip-name
+             type="text" placeholder="first name" required
+             ng-change="$ctrl.updateToken()">
+    </label>
+  </div>
+  <div class="input-field inline">
+    <label>
+      Middle initial
+      <input id="middle-initial" ng-model="$ctrl.middleInitial"
+             type="text" maxlength="1" nep-strip-name
+             ng-required="!$ctrl.noMiddleName"
+             ng-disabled="$ctrl.noMiddleName"
+             ng-change="$ctrl.updateToken()">
+    </label>
+    <label>
+      <input id="no-middle-name" ng-model="$ctrl.noMiddleName"
+             type="checkbox"
+             ng-change="$ctrl.middleInitial = ''; $ctrl.updateToken()">
+      I don't have a middle name
+    </label>
+  </div>
+  <div class="input-field">
+    <label>
+      Full last name, including any hyphenation
+      <input id="last-name" ng-model="$ctrl.lastName" nep-strip-name
+             type="text" placeholder="last name" required
+             ng-change="$ctrl.updateToken()">
+    </label>
+  </div>
+</div>

@@ -1,0 +1,74 @@
+<div class="reset-password-page">
+  <div class="container">
+    <div class="row">
+      <div class="col s12">
+        <div class="card">
+          <div class="card-stacked">
+            <div class="card-content center-align">
+              <span ng-if="!program" class="card-title">
+                Reset your password
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col s12">
+        <div class="card">
+          <div class="card-stacked">
+            <div class="card-content">
+
+              <div ng-show="mode == 'emailForm'">
+                <p>
+                  Enter the email address you used when you joined
+                  and we’ll send you instructions to reset your password.
+                </p>
+                <form class="valid-form" ng-submit="submit()"
+                      name="resetPasswordForm" novalidate>
+                  <div class="row">
+                    <div class="input-field col s12">
+                      <input type="email" ng-model="email"
+                             id="email" name="email" required class="touched-only">
+                      <label for="email" data-error="Invalid email address">
+                        Email
+                      </label>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col s12">
+                      <button type="submit"
+                              class="waves-effect waves-light btn"
+                              ng-disabled="resetPasswordForm.$invalid">
+                        Send Reset Instructions
+                      </button>
+
+                      <div class="preloader-wrapper inline small active" ng-show="busy">
+                        <div class="spinner-layer spinner-blue-only">
+                          <div class="circle-clipper left">
+                            <div class="circle"></div>
+                          </div><div class="gap-patch">
+                            <div class="circle"></div>
+                          </div><div class="circle-clipper right">
+                            <div class="circle"></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+
+              <div ng-show="mode == 'checkEmail'">
+                <p>
+                  We have sent an email to {[ email ]} to reset your password. Please
+                  click the link in the email to complete the process.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,67 @@
+ui-input-textarea {
+  font-size: 14px;
+}
+
+ui-input-textarea .InputLabel {
+  margin-bottom: 6px;
+  font-weight: bold;
+}
+
+ui-input-textarea .InputField textarea {
+  box-sizing: border-box;
+
+  height: auto;
+  padding: 8px;
+
+  border: 1px solid $nep-dark-gray;
+  border-radius: 3px;
+
+  font-size: 14px;
+}
+
+ui-input-textarea .InputField input:not([type]):focus:not([readonly]),
+ui-input-textarea .InputField input[type=text]:focus:not([readonly]),
+ui-input-textarea .InputField input[type=password]:focus:not([readonly]),
+ui-input-textarea .InputField input[type=email]:focus:not([readonly]),
+ui-input-textarea .InputField input[type=url]:focus:not([readonly]),
+ui-input-textarea .InputField input[type=time]:focus:not([readonly]),
+ui-input-textarea .InputField input[type=date]:focus:not([readonly]),
+ui-input-textarea .InputField input[type=datetime]:focus:not([readonly]),
+ui-input-textarea .InputField input[type=datetime-local]:focus:not([readonly]),
+ui-input-textarea .InputField input[type=tel]:focus:not([readonly]),
+ui-input-textarea .InputField input[type=number]:focus:not([readonly]),
+ui-input-textarea .InputField input[type=search]:focus:not([readonly]),
+ui-input-textarea .InputField textarea:focus:not([readonly]) {
+  border: 1px solid $nep-highlight;
+  box-shadow: none;
+}
+
+ui-input-textarea .InputField input:not([type]):disabled,
+ui-input-textarea .InputField input:not([type])[readonly="readonly"],
+ui-input-textarea .InputField input[type=text]:disabled,
+ui-input-textarea .InputField input[type=text][readonly="readonly"],
+ui-input-textarea .InputField input[type=password]:disabled,
+ui-input-textarea .InputField input[type=password][readonly="readonly"],
+ui-input-textarea .InputField input[type=email]:disabled,
+ui-input-textarea .InputField input[type=email][readonly="readonly"],
+ui-input-textarea .InputField input[type=url]:disabled,
+ui-input-textarea .InputField input[type=url][readonly="readonly"],
+ui-input-textarea .InputField input[type=time]:disabled,
+ui-input-textarea .InputField input[type=time][readonly="readonly"],
+ui-input-textarea .InputField input[type=date]:disabled,
+ui-input-textarea .InputField input[type=date][readonly="readonly"],
+ui-input-textarea .InputField input[type=datetime]:disabled,
+ui-input-textarea .InputField input[type=datetime][readonly="readonly"],
+ui-input-textarea .InputField input[type=datetime-local]:disabled,
+ui-input-textarea .InputField input[type=datetime-local][readonly="readonly"],
+ui-input-textarea .InputField input[type=tel]:disabled,
+ui-input-textarea .InputField input[type=tel][readonly="readonly"],
+ui-input-textarea .InputField input[type=number]:disabled,
+ui-input-textarea .InputField input[type=number][readonly="readonly"],
+ui-input-textarea .InputField input[type=search]:disabled,
+ui-input-textarea .InputField input[type=search][readonly="readonly"],
+ui-input-textarea .InputField textarea:disabled,
+ui-input-textarea .InputField textarea[readonly="readonly"] {
+  color: rgba(0, 0, 0, 0.5);
+  border: 1px solid $nep-light-gray;
+}

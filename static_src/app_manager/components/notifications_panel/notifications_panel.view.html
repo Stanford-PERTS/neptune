@@ -1,0 +1,43 @@
+<ul id="notifications" class="side-nav right-aligned Notifications" ng-class="{ 'side-nav-show': $ctrl.isNotificationsActive }">
+  <li class="heading"><i class="fa fa-bell-o"></i> Notifications</li>
+
+  <li class="NotificationItem" ng-repeat="notification in $ctrl.activeNotifications">
+    <div class="NotificationItemHeader">
+      <div class="NotificationItemSubject">
+        {{ ::notification.subject }}
+      </div>
+      <div class="NotificationDismissButton">
+        <a href ng-click="$ctrl.dismiss(notification)">
+          <i class="fa fa-trash-o"></i>
+        </a>
+      </div>
+    </div>
+    <div class="NotificationItemBody">
+      <span ng-hide="notification.viewable">
+        {{ ::notification.body }}
+      </span>
+      <span ng-show="notification.viewable">
+        <a href="{{ ::notification.link }}" ng-click="$ctrl.dismiss(notification); $ctrl.closePanel();">
+          {{ ::notification.body }}
+        </a>
+      </span>
+      <div class="NotificationItemFooter">
+        <div class="NotificationViewButton" ng-show="notification.viewable">
+          <a href="{{::notification.link}}" ng-click="$ctrl.dismiss(notification); $ctrl.closePanel();">
+            View
+          </a>
+        </div>
+
+        <div class="NotificationDismissButton">
+          <a href ng-click="$ctrl.dismiss(notification)">
+            <i class="fa fa-lg fa-trash-o"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </li>
+
+  <li ng-show="$ctrl.activeNotifications.length === 0">
+    <em class="link">You have no notifications.</em>
+  </li>
+</ul>

@@ -1,0 +1,55 @@
+.Reports {
+  .ReportsReturning {
+    width: 100%;
+
+    .ReportsTitle {
+      margin-bottom: 12px;
+    }
+
+    .ReportsReturningLiaison {
+      margin-bottom: 12px;
+    }
+
+    .participated {
+      color: $bs-brand-success;
+    }
+
+    .ReportsReturningLoading {
+      i {
+        min-width: 20px;
+        text-align: center;
+      }
+    }
+
+    .ReportsReturningLoading,
+    .ReportsReturningLegend {
+      display: flex;
+      flex-direction: row;
+
+      div {
+        flex-grow: 1;
+      }
+    }
+
+    .ReportsReturningTable {
+      td {
+        padding: 5px;
+      }
+
+      tr {
+        margin-bottom: 5px;
+      }
+
+      tr:nth-child(odd) {
+        background-color: $nep-light-gray;
+      }
+    }
+  }
+
+  .FilterOptions {
+    padding: 8px;
+
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

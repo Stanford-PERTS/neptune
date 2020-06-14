@@ -1,0 +1,174 @@
+<div class="container checkpoint-body">
+  <div class="row">
+    <div class="col s12">
+      <p>
+        Welcome! We&rsquo;re excited you&rsquo;re here. This page will help you
+        find and register your organization in our system.
+      </p>
+    </div>
+  </div>
+</div>
+
+<div class="task-list program-registration container">
+  <ul class="collapsible popout" data-collapsible="expandable">
+    <li class="task-item cp-1 active">
+      <div class="collapsible-header active">
+        <i class="fa fa-circle-o"></i>
+          Register Organization
+      </div>
+      <div class="collapsible-body" style="display: block;">
+
+
+
+<div ng-if="availableOrgs.length !== 0 || involvedPcs.length !== 0">
+  <div class="row">
+    <div class="col s12">
+      <p>
+        Please choose to register for {[ program.name ]} either with one
+        of your existing organizations or with a new one.
+      </p>
+      <h4>Choose Existing</h4>
+      <div ng-if="availableOrgs.length > 0">
+        <select ng-model="selectedOrg" class="browser-default"
+                ng-options="org as org.name for org in availableOrgs"
+                ng-change="availableOrgChange()">
+        </select>
+        <br>
+        <a class="waves-effect waves-light btn"
+           ng-click="addExistingOrganization(selectedOrg)"
+           ng-disabled="!selectedOrg || busy">
+          Register This Organization For {[ cohortName ]}
+          <i
+            ng-class="{
+              'fa': true,
+              'fa-angle-right': !busy,
+              'fa-spinner': busy,
+              'fa-spin': busy
+            }"
+          ></i>
+        </a>
+        <span clas="btn-instructions" ng-show="selectedOrg">
+          Click the button start {[ program.name ]} at this organization.
+        </span>
+      </div>
+      <div ng-if="availableOrgs.length === 0">
+        <p>
+          All of your organizations are already involved in
+          {[ program.name ]}.
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="row project-cohorts" ng-if="involvedPcs.length > 0">
+    <div class="col s12">
+      <p ng-if="availableOrgs.length > 0">
+        By the way, these organizations are already involved in
+        {[ programTitle ]}:
+      </p>
+      <ul>
+        <li ng-repeat="pc in involvedPcs">
+          <a ui-sref="dashboard.tasks({ projectCohortId: pc.short_uid })">
+            {[ orgsById[pc.organization_id].name ]}
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="divider"></div>
+</div>
+
+<div class="row">
+  <div class="col s12">
+    <h4 ng-if="availableOrgs.length !== 0 || involvedPcs.length !== 0">
+      Create New
+    </h4>
+    <h4 ng-if="availableOrgs.length === 0 && involvedPcs.length === 0">
+      Find your organization
+    </h4>
+    <p class="body-wrapper">
+      Type the name of your organization into the box below and we'll look it
+      up. We'll fill in all the details for you.
+    </p>
+  </div>
+</div>
+
+<div nep-organization-search
+     on-org-change="validate(org, orgIsValid, invalidMessage)">
+</div>
+
+<div class="row valign-wrapper">
+  <div class="col s12 button-wrapper valign">
+
+    <!-- Normal registration of new orgs. -->
+    <div ng-show="!orgSelected || orgIsNew">
+      <p>
+        <a class="waves-effect waves-light btn"
+           ng-click="addNewOrganization(organization)"
+           ng-disabled="!orgSelected || busy">
+          Register This Organization For {[ cohortName ]}
+          <i
+            ng-class="{
+              'fa': true,
+              'fa-angle-right': !busy,
+              'fa-spinner': busy,
+              'fa-spin': busy
+            }"
+          ></i>
+        </a>
+
+        <span ng-show="!orgSelected" class="btn-instructions">
+          Please choose an organization.
+        </span>
+
+        <span ng-show="orgSelected" class="btn-instructions">
+          Click the button to register this organization.
+        </span>
+      </p>
+    </div>
+
+    <!-- Not allowed to register something you already have. -->
+    <div ng-show="orgSelected && !orgIsNew && alreadyAssociated">
+      <p>
+        <a class="waves-effect waves-light btn" disabled>
+          Register This Organization For {[ cohortName ]}
+        </a>
+
+        <span class="btn-instructions error">
+          You're already part of this organization.
+        </span>
+      </p>
+    </div>
+
+    <!-- Request to join exisiting. -->
+    <div ng-show="orgSelected && !orgIsNew && !alreadyAssociated">
+      <p>
+        <a
+          class="waves-effect waves-light btn"
+          ng-click="joinOrganization(organization)"
+          ng-disabled="busy"
+        >
+          Request Access
+          <i
+            ng-class="{
+              'fa': true,
+              'fa-angle-right': !busy,
+              'fa-spinner': busy,
+              'fa-spin': busy
+            }"
+          ></i>
+        </a>
+
+        <span class="btn-instructions">
+          Click the button to request access to this program.
+        </span>
+      </p>
+    </div>
+
+  </div>
+</div>
+
+
+      </div>
+    </li>
+  </ul>
+</div>

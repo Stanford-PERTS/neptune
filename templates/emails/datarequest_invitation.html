@@ -1,0 +1,34 @@
+{% extends 'base_email.html' %}
+
+{% block content %}
+
+<p>
+  You've been invited to upload data to PERTS's Data Wizard!
+</p>
+
+<p><strong>{{ data_request['title'] }}</strong></p>
+
+<p>{{ data_request['description'] }}</p>
+
+<p>
+  To confirm your new account and access the Data Wizard
+  {# autoescaping is on; turn it off for ampersands in this href #}
+  <a href="{{link|safe}}">click here</a>,
+  or use the following URL:
+</p>
+
+<pre>
+  {{ link }}  {# ampersands autoescaped for display #}
+</pre>
+
+<p>
+    If you have any questions, you may contact us at
+    <a href="mailto:{{ contact_email_address }}">{{ contact_email_address }}</a>.
+</p>
+
+<p>
+    Yours Truly,<br>
+    The PERTS Team
+</p>
+
+{% endblock %}

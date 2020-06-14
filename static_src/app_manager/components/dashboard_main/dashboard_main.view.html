@@ -1,0 +1,70 @@
+<div
+  class="ProjectCohortList"
+  ng-if="!$ctrl.$state.includes('dashboard.query') || $ctrl.sufficientCardOptionsSpecified()"
+>
+  <div
+    ng-repeat="
+      cardRow in $ctrl.cardRows
+      | orderBy: $ctrl.options.orderBy
+      | filter: $ctrl.selectedCards as filteredCardRows
+    "
+  >
+    <ui-project-cohort-card
+      project-cohort="cardRow"
+      update-selected-count="$ctrl.updateSelectedCount()"
+      toggle-admin-panel="$ctrl.toggleAdminPanel(projectCohort, panelName)"
+      close-admin-panel="$ctrl.closeAdminPanel()"
+    ></ui-project-cohort-card>
+  </div>
+</div>
+
+<!-- Program Statistics View -->
+<nep-program-statistics
+  ng-if="$ctrl.options.view === 'statistics'"
+  program="$ctrl.options.program"
+  project-data-rows="$ctrl.cardRows"
+></nep-program-statistics>
+
+<!-- Advanced View -->
+<nep-dashboard-advanced
+  ng-if="$ctrl.options.view === 'advanced'"
+  program="$ctrl.options.program"
+></nep-dashboard-advanced>
+
+<!-- -->
+<ui-program-select-prompt-card
+  ng-if="$ctrl.options.view !== 'advanced' && $ctrl.$state.includes('dashboard.query') && !$ctrl.sufficientCardOptionsSpecified()"
+>
+</ui-program-select-prompt-card>
+
+<!-- No Matches | Super Admin -->
+<ui-info-card
+  ng-show="
+    $ctrl.isSuperAdmin
+    && $ctrl.options.cardsMatching.length === 0
+    && !$ctrl.options.view
+    && $ctrl.options.program
+    && $ctrl.options.cohort
+  "
+>
+  <div><i class="fa fa-3x fa-circle-o"></i></div>
+
+  <div>There are no cohorts matching your chosen options.</div>
+</ui-info-card>
+
+<!-- No Matches | Org Admin -->
+<ui-card
+  ng-show="
+    !$ctrl.isSuperAdmin
+    && $ctrl.options.cardsMatching.length === 0
+  "
+>
+  <ui-card-title>Dashboard</ui-card-title>
+  <p>You aren't enrolled in a program yet.</p>
+
+  <ui-card-actions>
+    <a class="btn" ui-sref="programRegistration">
+      View Available Programs
+    </a>
+  </ui-card-actions>
+</ui-card>

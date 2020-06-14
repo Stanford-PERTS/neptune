@@ -1,0 +1,287 @@
+<div class="Dashboard">
+  <div class="ContentWrapper">
+
+    <div class="ContentMain">
+      <!-- Prompt to Select a Program -->
+      <ui-info-card ng-show="$ctrl.showSelectProgramPrompt()">
+        <div><i class="fa fa-3x fa-rocket"></i></div>
+        <div>Select a Program<br />or Search for an Organization</div>
+      </ui-info-card>
+
+      <!-- Loading -->
+      <ui-info-card ng-show="$ctrl.loading">
+        <div><i class="fa fa-3x fa-hourglass-o"></i></div>
+        <div>Loading...</div>
+      </ui-info-card>
+
+      <!-- No Matches | Super Admin -->
+      <ui-info-card
+        ng-show="
+          $ctrl.showCohortsNoMatches() &&
+          filteredProjectCohorts.length === 0
+        "
+      >
+        <div><i class="fa fa-3x fa-rocket"></i></div>
+
+        <div>There are no matching cohorts.</div>
+      </ui-info-card>
+
+      <!-- No Matches | Org Admin -->
+      <ui-card
+        ng-show="
+          $ctrl.showCohortNoEnrolled() &&
+          filteredProjectCohorts.length === 0
+        "
+      >
+        <ui-card-title>Dashboard</ui-card-title>
+        <p>You aren't enrolled in a program yet.</p>
+
+        <ui-card-actions>
+          <a class="btn" ui-sref="programRegistration">
+            View Available Programs
+          </a>
+        </ui-card-actions>
+      </ui-card>
+
+      <!-- Project Cohort List View -->
+      <!--
+        For scoping reasons, ProjectCohortList cannot be broken out into its
+        own component. This would not allow us to utilize custom ng-repeat
+        filtering or ng-repeat named filtering without a lot of additional work.
+      -->
+      <div class="ProjectCohortList" ng-show="$ctrl.showCohortList()">
+        <div
+          ng-repeat="pc in $ctrl.projectDataRows
+          | orderBy: $ctrl.selected.orderBy
+          | filter: $ctrl.selectedFilter as filteredProjectCohorts"
+        >
+          <ui-project-cohort-card
+            project-cohort="pc"
+            update-selected-count="$ctrl.updateSelectedCount()"
+            toggle-admin-panel="$ctrl.toggleAdminPanel(projectCohort, panelName)"
+            close-admin-panel="$ctrl.closeAdminPanel()"
+          ></ui-project-cohort-card>
+
+          <nep-organization
+            ng-if="pc.adminPanel === 'organization'"
+            project-cohort-id="pc.projectCohort.short_uid"
+          ></nep-organization>
+
+          <nep-organization-users
+            ng-if="pc.adminPanel === 'organizationUsers'"
+            project-cohort-id="pc.projectCohort.short_uid"
+          ></nep-organization-users>
+
+          <nep-project-cohort-notes
+            ng-if="pc.adminPanel === 'notes'"
+            project-cohort-id="pc.projectCohort.short_uid"
+          ></nep-project-cohort-notes>
+        </div>
+      </div>
+
+      <!-- Single Project Cohort -->
+      <div ng-show="$ctrl.projectCohortId">
+        <ui-view name="ProjectCohortPanel"><ui-view>
+      </div>
+
+      <!-- Associated (Request Access) Organizations -->
+      <div ng-show="$ctrl.showAssociatedOrganizations()">
+        <ui-card
+          ng-repeat="org in $ctrl.assc_organizations"
+        >
+          <h1>{{ org.name }}</h1>
+          <p>You have requested access to this organization and are awaiting
+            approval.</p>
+        </ui-card>
+      </div>
+
+      <!-- Program Statistics View -->
+      <nep-program-statistics
+        ng-if="$ctrl.showView('statistics')"
+        program="$ctrl.selected.program"
+        project-data-rows="$ctrl.projectDataRows"
+      ></nep-program-statistics>
+
+      <!-- Advanced View -->
+      <nep-dashboard-advanced
+        ng-if="$ctrl.showView('advanced')"
+        program="$ctrl.selected.program"
+      ></nep-dashboard-advanced>
+    </div>
+
+    <!-- Sidebar / Content Options | Org Admins -->
+    <div class="ContentOptions" ng-if="!$ctrl.isSuperAdmin && $ctrl.projectCohortId">
+      <ui-project-cohort-closed></ui-project-cohort-closed>
+    </div>
+
+    <!-- Sidebar / Content Options | Super Admins -->
+    <div class="ContentOptions" ng-show="$ctrl.isSuperAdmin">
+      <!-- Organization Search | All -->
+      <ui-card
+        class="CardOptions"
+        ng-if="!$ctrl.selected.program"
+        loading="$ctrl.loadingOrganizations"
+      >
+        <angucomplete-alt id="org-search"
+          placeholder="Search organizations (all)"
+          pause="300"
+          selected-object="$ctrl.orgSearchChangeAll"
+          local-data="$ctrl.organizations"
+          local-search="$ctrl.orgSearchAll"
+          title-field="name"
+          clear-selected="true"
+          minlength="1"
+          input-class="form-control form-control-small">
+        </angucomplete-alt>
+      </ui-card>
+
+      <!-- Organization Search | Program Limited -->
+      <ui-card class="CardOptions" ng-if="$ctrl.selected.program">
+        <angucomplete-alt id="org-search"
+          placeholder="Search organizations (program)"
+          pause="300"
+          input-changed="$ctrl.inputChanged"
+          selected-object="$ctrl.orgSearchChange"
+          local-data="$ctrl.projectDataRows"
+          local-search="$ctrl.orgSearch"
+          title-field="project.organization_name"
+          clear-selected="true"
+          minlength="1"
+          input-class="form-control form-control-small">
+        </angucomplete-alt>
+      </ui-card>
+
+      <ui-card class="CardOptions" ng-show="$ctrl.selected.view === 'search'">
+        <p class="center-align">
+          <a href ng-click="$ctrl.orgSearchClear()">Clear Organization</a>
+        </p>
+      </ui-card>
+
+      <!-- Program Select -->
+      <ui-card
+        class="CardOptions"
+        ng-show="$ctrl.showSelectProgram()"
+      >
+        <select
+          ng-model="$ctrl.selected.program"
+          ng-options="
+            program.name
+            for program in $ctrl.programs
+            track by program.label
+          "
+          ng-change="$ctrl.changeSelectedProgram()"
+        >
+          <option value="">Select a Program</option>
+        </select>
+      </ui-card>
+
+      <!-- Cohort Select -->
+      <ui-card
+        class="CardOptions"
+        ng-show="$ctrl.showSelectCohort()"
+      >
+        <select
+          ng-model="$ctrl.selected.cohort"
+          ng-options="
+            cohort.options_text
+            for cohort in $ctrl.cohorts
+            track by cohort.label"
+          ng-change="$ctrl.changeSelectedCohort()"
+        >
+          <option value="">Select a Cohort</option>
+        </select>
+      </ui-card>
+
+      <!-- View Select -->
+      <ui-card class="CardOptions"
+        ng-show="$ctrl.showSelectView()"
+      >
+        <select ng-model="$ctrl.selected.view">
+          <option value="list">Cohorts List View</option>
+          <option value="statistics">Program Statistics View</option>
+          <option value="advanced">Advanced View</option>
+        </select>
+      </ui-card>
+
+      <!-- Batch Controls -->
+      <ui-card class="CardOptions"
+        ng-show="$ctrl.showListOptions()"
+      >
+        <div class="DashboardBatchControls">
+          <div class="DashboardBatchStats">
+            <div class="ProjectCohortsMatches">
+              Matches:
+              {{ filteredProjectCohorts.length }}
+            </div>
+            <div class="ProjectCohortsSelected">
+              Selected:
+              {{ $ctrl.projectDataRowsSelected }}
+            </div>
+          </div>
+          <div class="DashboardBatchButtons">
+            <div class="DashboardBatchButtonsItem">
+              <ui-action-button
+                ng-click="$ctrl.selectAllVisible(filteredProjectCohorts)"
+              >
+                Select Visible
+                <i class="fa fa-check-square-o"></i>
+              </ui-action-button>
+            </div>
+
+            <div class="DashboardBatchButtonsItem">
+              <ui-action-button
+                ng-click="$ctrl.deselectAllVisible(filteredProjectCohorts)"
+              >
+                Deselect Visible
+                <i class="fa fa-square-o"></i>
+              </ui-action-button>
+            </div>
+
+            <div class="DashboardBatchButtonsItem">
+              <ui-action-button
+                disabled="$ctrl.projectDataRowsSelected === 0"
+                ng-click="$ctrl.approveParticipation()"
+              >
+                Approve Participation
+                <i class="fa fa-thumbs-o-up"></i>
+              </ui-action-button>
+            </div>
+
+            <div class="DashboardBatchButtonsItem">
+              <ui-action-button
+                disabled="$ctrl.projectDataRowsSelected === 0"
+                ng-click="$ctrl.openEmailModal()"
+              >
+                Send Email
+                <i class="fa fa-envelope-o"></i>
+              </ui-action-button>
+            </div>
+          </div>
+        </div>
+      </ui-card>
+
+      <!-- Results Sort -->
+      <ui-card class="CardOptions"
+        ng-show="$ctrl.showListOptions()"
+      >
+        <select ng-model="$ctrl.selected.orderBy">
+          <option value="project.organization_name">&#8681; Organization Name</option>
+          <option value="-project.organization_name">&#8679; Organization Name</option>
+          <option value="project.organization_status">&#8681; Organization Status</option>
+          <option value="-project.organization_status">&#8679; Organization Status</option>
+          <option value="projectCheckpoint.status">&#8681; Terms of Use/Program Status</option>
+          <option value="-projectCheckpoint.status">&#8679; Terms of Use/Program Status</option>
+          <option value="project.last_active">&#8681; Last Active</option>
+          <option value="-project.last_active">&#8679; Last Active</option>
+        </select>
+      </ui-card>
+
+      <!-- Results Filter -->
+      <ui-card class="CardOptions" ng-show="$ctrl.showListOptions()">
+        <ui-filter-options filters="$ctrl.selected.filters"></ui-filter-options>
+      </ui-card>
+
+    </div>
+
+  </div>
+</div>

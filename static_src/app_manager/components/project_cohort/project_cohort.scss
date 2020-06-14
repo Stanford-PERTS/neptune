@@ -1,0 +1,9 @@
+// Using 993px as the breakpoint since Materialize uses that as the breakpoint
+// where it begins showing collapsed menus for small screens.
+@media only screen and (min-width: 993px) {
+  .fixed {
+    position: fixed;
+    z-index: 966;
+    width: 100%;
+  }
+}

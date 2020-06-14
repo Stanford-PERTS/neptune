@@ -1,0 +1,16 @@
+.checkpoint-encourage {
+  padding: 1em;
+
+  background: #ffffff;
+
+  .row {
+    min-height: 36px;
+    margin-bottom: 0;
+  }
+}
+
+nep-notifications-panel {
+  .close {
+    cursor: pointer;
+  }
+}

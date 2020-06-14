@@ -1,0 +1,13 @@
+<!-- Results Sort -->
+<ui-card class="CardOptions">
+  <select ng-model="$ctrl.options.orderBy">
+    <option value="project.organization_name">&#8681; Organization Name</option>
+    <option value="-project.organization_name">&#8679; Organization Name</option>
+    <option value="organization.status">&#8681; Organization Status</option>
+    <option value="-organization.status">&#8679; Organization Status</option>
+    <option value="projectCheckpoint.status">&#8681; Terms of Use/Program Status</option>
+    <option value="-projectCheckpoint.status">&#8679; Terms of Use/Program Status</option>
+    <option value="project.last_active">&#8681; Last Active</option>
+    <option value="-project.last_active">&#8679; Last Active</option>
+  </select>
+</ui-card>

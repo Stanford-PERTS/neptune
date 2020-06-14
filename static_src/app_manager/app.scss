@@ -1,0 +1,70 @@
+@import 'styles/colors';
+@import 'styles/variables';
+
+@import 'styles/main';
+@import 'styles/modal';
+
+@import 'components/calendar/calendar';
+@import 'components/checkpoints/checkpoints';
+@import 'components/checkpoints_encourage/checkpoints_encourage';
+@import 'components/dashboard/email_modal';
+@import 'components/footer/footer';
+@import 'components/navbar/navbar';
+@import 'components/notifications_panel/notifications_panel';
+@import 'components/organizations/organizations.scss';
+@import 'components/organization_users/organization_users';
+@import 'components/place_search/place_search';
+@import 'components/program_card/program_card';
+@import 'components/program_statistics/program_statistics';
+@import 'components/program_status/program_status';
+@import 'components/project_cohort/project_cohort';
+@import 'components/project_cohort_notes/project_cohort_notes';
+@import 'components/project_cohort_participation/project_cohort_participation';
+@import 'components/task_item/task_item';
+@import 'components/task_list/task_list';
+@import 'components/dashboard/dashboard';
+
+@import 'components/ui_button/ui_button';
+/* include ActionButton styles after Button styles */
+@import 'components/ui_action_button/ui_action_button';
+@import 'components/ui_card/ui_card';
+@import 'components/ui_card_actions/ui_card_actions';
+@import 'components/ui_card_panel/ui_card_panel';
+@import 'components/ui_card_title/ui_card_title';
+@import 'components/ui_filter_options/ui_filter_options';
+@import 'components/ui_filter_options/ui_filter_options_option/ui_filter_options_option';
+@import 'components/ui_info_card/ui_info_card';
+@import 'components/ui_input_error/ui_input_error';
+@import 'components/ui_input_success/ui_input_success';
+@import 'components/ui_input_select/ui_input_select';
+@import 'components/ui_input_text/ui_input_text';
+@import 'components/ui_input_textarea/ui_input_textarea';
+@import 'components/ui_organization_name/ui_organization_name';
+@import 'components/ui_project_cohort_actions/ui_project_cohort_actions';
+@import 'components/ui_project_cohort_card/ui_project_cohort_card';
+@import 'components/ui_project_cohort_name/ui_project_cohort_name';
+@import 'components/ui_project_cohort_status/ui_project_cohort_status';
+@import 'components/ui_project_cohort_status/ui_project_cohort_status_bar/ui_project_cohort_status_bar';
+@import 'components/ui_project_cohort_status/ui_project_cohort_status_button/ui_project_cohort_status_button';
+@import 'components/ui_selectable_card/ui_selectable_card';
+
+.index-page {
+  .card .card-content p {
+    margin: 20px 0;
+  }
+}
+
+.set-password-page {
+  .card {
+    .card-content {
+      p {
+        margin-bottom: 1em;
+      }
+    }
+  }
+}
+
+.div-flex {
+  display: flex;
+  align-items: center;
+}

@@ -1,0 +1,74 @@
+.navbar-fixed {
+  height: $navbar-height;
+}
+
+nav {
+  height: inherit;
+
+  background: #ffffff;
+
+  box-shadow: none; // remove materialize box-shadow
+  border-bottom: 2px solid $nep-med-gray;
+
+  .brand-logo {
+    // Don't allow the click area to grow outside the navbar-height.
+    overflow-y: hidden;
+
+    img {
+      height: inherit;
+      padding: 14px;
+    }
+  }
+
+  .fa-lg {
+    // reset font-awesome setting
+    vertical-align: 0;
+  }
+
+  a {
+    height: $navbar-height;
+    line-height: $navbar-height;
+
+    i {
+      height: $navbar-height;
+      line-height: $navbar-height;
+    }
+  }
+
+  li {
+    height: $navbar-height;
+
+    margin-left: 2px;
+
+    background: $nep-light-gray;
+
+    a {
+      color: $nep-dark-gray;
+      border-bottom: 2px solid $nep-highlight;
+
+      &:hover, &.active {
+        background: $nep-highlight-light;
+      }
+    }
+  }
+
+  // Hamburger icon for accessing the mobile menu
+  a.button-collapse {
+    color: $nep-highlight;
+  }
+
+  // Dropdown menu items
+  .dropdown-content {
+    // Materialize adds an inline style, so !important is only way to override.
+    width: 200px !important;
+    margin-top: $navbar-height;
+    overflow-x: hidden;
+
+    a {
+      color: $nep-dark-gray;
+      height: $navbar-height;
+      line-height: $navbar-height;
+      padding: 0 15px;
+    }
+  }
+}

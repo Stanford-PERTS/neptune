@@ -1,0 +1,63 @@
+.ContentWrapper {
+  display: flex;
+  margin: 16px 20px;
+}
+
+.ContentMain {
+  width: 100%;
+  max-width: 900px;
+  // minimum needed to display project cohort card content
+  min-width: 450px;
+  margin-right: 16px;
+}
+
+.ContentOptions {
+  width: 320px;
+  min-width: 320px;
+
+  // Keep positioned to top when scrolling
+  position: -webkit-sticky;
+  position: sticky;
+  top: 92px;
+
+  // Fix sticky to work with flex
+  align-self: flex-start;
+}
+
+.ContentOptions select {
+  display: block;
+}
+
+.DashboardBatchControls {
+  padding: 8px;
+}
+
+.DashboardBatchStats {
+  display: flex;
+  > div {
+    margin-right: 10px;
+    margin-bottom: 5px;
+  }
+}
+
+.DashboardBatchButtons {
+  > div {
+    float: left;
+    margin-right: 10px;
+    margin-bottom: 10px;
+  }
+}
+
+.angucomplete-dropdown {
+  padding: 0 8px 8px 8px;
+}
+
+.angucomplete-title {
+  padding: 5px;
+  cursor: pointer;
+}
+
+.angucomplete-title:hover,
+.angucomplete-selected-row .angucomplete-title {
+  background: $nep-highlight-light;
+}

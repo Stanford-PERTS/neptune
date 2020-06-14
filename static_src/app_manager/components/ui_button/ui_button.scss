@@ -1,0 +1,94 @@
+.Button {
+  position: relative;
+
+  height: 38px;
+
+  border: 0;
+  border-radius: 3px;
+
+  padding: 5px 30px;
+
+  background: #3FAEEB;
+  color: #FFFFFF;
+
+  box-shadow: 1px 1px 1px 0px rgba(74,74,74,0.5);
+
+  font-size: 14px;
+
+  /*
+    This right/bottom margin, is needed to make up for the movement that occurs
+    when the button is clicked.
+  */
+  margin: 0 1px 1px 0;
+
+  /*
+    Make children clip to border-radius. This clips the loading indicator so
+    that it respects the border-radius of the button.
+   */
+  /* https://stackoverflow.com/questions/3714862/forcing-child-to-obey-parents-curved-borders-in-css */
+  overflow: hidden;
+}
+
+.Button.block {
+  display: block;
+  width: 100%;
+}
+
+.Button.danger {
+  background-color: #EB5454;
+}
+
+.Button.passive {
+  color: #93cceb;
+  border: 1px solid #93cceb;
+  background-color: white;
+}
+
+.Button:active {
+  margin: 1px 0 0 1px;
+  box-shadow: none;
+}
+
+.Button[disabled],
+.Button:disabled {
+  background: #CACACA;
+  color: #4A4A4A;
+}
+
+.Button:focus {
+  background: #3FAEEB; // TODO MCSS
+
+  /*
+    This isn't good for accessibility. TODO: Add alternative focus styles to
+    provide a way to determine which input is focused.
+    http://www.outlinenone.com/
+  */
+  outline: 0;
+}
+
+/* Async Waiting Animation */
+/* WebKit */
+@-webkit-keyframes progress-bar-stripes {
+  from  { background-position: 40px 0; }
+  to    { background-position: 0 0; }
+}
+
+/* Spec and IE10+ */
+@keyframes progress-bar-stripes {
+  from  { background-position: 40px 0; }
+  to    { background-position: 0 0; }
+}
+
+.Button.loading > .ButtonLoadingIndicator {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+
+  height: 4px;
+  background: #4A4A4A;
+
+  background-image: linear-gradient(45deg,rgba(255,255,255,.15) 25%,transparent 25%,transparent 50%,rgba(255,255,255,.15) 50%,rgba(255,255,255,.15) 75%,transparent 75%,transparent);
+  background-size: 40px 40px;
+  animation: progress-bar-stripes 1s linear infinite;
+}

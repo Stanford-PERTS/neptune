@@ -1,0 +1,235 @@
+<li class="task-item cp-1" ng-class="{active: $ctrl.task.isExpanded}">
+  <div class="collapsible-header" ng-class="{active: $ctrl.task.isExpanded}"
+       ng-click="$ctrl.toggleExpanded();">
+    <i ng-show="$ctrl.task.isComplete"
+       class="fa fa-check-circle-o"></i>
+    <i ng-show="!$ctrl.task.isComplete && !$ctrl.task.isForbidden"
+       class="fa fa-circle-o"></i>
+    <i ng-show="$ctrl.task.isForbidden && !$ctrl.task.isComplete"
+       class="fa fa-check-circle-o amber-text"></i>
+    {{ $ctrl.task.name }}
+
+    <span ng-show="$ctrl.task.isCurrent"
+          class="new badge next-task-marker"
+          data-badge-caption="">Current Task</span>
+  </div>
+
+  <div class="collapsible-body slide" ng-show="$ctrl.task.isExpanded">
+    <div class="compiled-task-body" nep-bind-markup="$ctrl.task.body"></div>
+
+    <div class="controls" ng-if="!$ctrl.task.disabled && !$ctrl.task.isDataHidden">
+      <!-- Status Task -->
+      <nep-task-type-status ng-if="$ctrl.task.data_type === 'status'">
+      </nep-task-type-status>
+
+      <!-- Task TextArea Field -->
+      <form ng-if="$ctrl.task.data_type === 'textarea'"
+            name="textareaForm">
+        <textarea ng-disabled="$ctrl.task.isForbidden || $ctrl.isClosed"
+                  ng-model="$ctrl.task.attachment"
+                  ng-change="$ctrl.validateInputForm(textareaForm)"
+                  required
+                  maxlength="5000" rows="2">
+        </textarea>
+      </form>
+
+      <!-- Task Input Field -->
+      <!-- Form and input names allow access in $ctrl.validateInputForm() -->
+      <form ng-if="$ctrl.task.data_type.includes('input') &&
+                   $ctrl.task.data_type != ('input:date')"
+            name="inputForm" novalidate>
+        <input type="{{ $ctrl.inputType || 'text' }}"
+               placeholder="{{ $ctrl.placeholder || 'Enter your answer here' }}"
+               ng-model="$ctrl.task.attachment"
+               ng-change="$ctrl.validateInputForm(inputForm)"
+               ng-disabled="$ctrl.task.isForbidden || $ctrl.isClosed"
+               required>
+      </form>
+
+      <!-- Task Date Field -->
+      <form ng-if="$ctrl.task.data_type == ('input:date')"
+            name="inputForm" novalidate>
+        <input
+               class="date"
+               moment-picker="$ctrl.task.attachmentFormatted"
+               ng-value="$ctrl.task.attachmentFormatted"
+               change="$ctrl.dateChange()"
+
+               format="l"
+               start-view="month"
+               min-view="month"
+               max-view="month"
+
+               placeholder="{{ $ctrl.placeholder || 'Enter date' }}"
+               ng-disabled="$ctrl.task.isForbidden || $ctrl.isClosed"
+               required>
+      </form>
+
+      <!-- Task Radio Input -->
+      <form ng-if="$ctrl.task.data_type.includes('radio')">
+        <p ng-repeat="opt in $ctrl.task.select_options track by $index">
+            <input type="radio"
+                   name="{{$ctrl.task.uid}}"
+                   id="{{$id}}"
+                   ng-model="$ctrl.task.attachment"
+                   ng-value="opt.value"
+                   ng-disabled="opt.disabled || $ctrl.isClosed"
+                   ng-change="$ctrl.button.setDisabled(false)">
+            <label for="{{$id}}" nep-bind-markup="opt.label"></label>
+            <span ng-if="opt.disabled">Invitation not yet accepted.</span>
+        </p>
+      </form>
+
+      <form ng-if="$ctrl.task.data_type == 'file'">
+        <!-- File Upload Errors -->
+        <blockquote ng-show="$ctrl.inputError === 'maxSize'">
+          The maximum file size allowed is {{ $ctrl.inputErrorParam }}. Please
+          try again with a smaller file.
+        </blockquote>
+
+        <!-- File Needs Revisions -->
+        <blockquote ng-show="$ctrl.task.attachmentParsed.status === 'rejected'">
+          The file you submitted needs revisions. Your PERTS Account Manager
+          will provide you with additional details. Once your revisions are made
+          you can resubmit here using the Upload button.
+        </blockquote>
+
+        <!-- File Upload Inputs -->
+        <div class="file-field input-field" ng-if="!$ctrl.task.isForbidden">
+          <div class="btn" ng-class="{disabled: $ctrl.isClosed}">
+            <span>Upload</span>
+            <input type="file"
+                   ngf-select="$ctrl.uploadFile($file, $invalidFiles)"
+                   ngf-max-size="10MB"
+                   ng-disabled="$ctrl.isClosed">
+          </div>
+          <div class="file-path-wrapper">
+            <input class="file-path-validate"
+                   type="text"
+                   ng-disabled="$ctrl.isClosed"
+                   placeholder="Upload your commitment letter (2 or more pages)">
+           </div>
+        </div>
+
+        <!-- File Upload In Progress -->
+        <div class="progress" ng-show="$ctrl.task.attachmentStatus == 'uploading'">
+          <div class="determinate" style="width: {{ $ctrl.task.attachmentProgress }}%"></div>
+        </div>
+
+        <!-- File Upload Success -->
+        <p ng-show="$ctrl.task.attachmentStatus == 'success'">
+          Uploaded File:
+          <!-- the task attachment is a reference to a file on GCS -->
+          <a
+            ng-if="$ctrl.task.attachmentParsed.gcs_path"
+            href="/api/tasks/{{$ctrl.task.uid}}/attachment"
+            target="_blank"
+          >
+            {{ $ctrl.task.attachmentParsed.filename }}
+          </a>
+          <!-- the task attachment is a reference to a neptune dataset -->
+          <a
+            ng-if="$ctrl.task.attachmentParsed.link"
+            ng-href="{{$ctrl.task.attachmentParsed.link}}"
+            target="_blank"
+          >
+            {{ $ctrl.task.attachmentParsed.filename }}
+          </a>
+        </p>
+      </form>
+
+      <p ng-if="$ctrl.task.data_type != 'file' && !$ctrl.task.isForbidden">
+        <!-- Task Action Button -->
+        <a class="waves-effect waves-light btn btn-task"
+           ng-class="{disabled: ($ctrl.button.isDisabled)}"
+           ng-click="$ctrl.button.click()">
+          {{ $ctrl.button.text }}
+        </a>
+
+        <span class="btn-instructions" ng-if="!$ctrl.isClosed">
+          <!-- Let user know their selection has been saved, after saving. -->
+          <!-- For buttons. -->
+          <span class="btn-instructions"
+                ng-show="$ctrl.task.data_type === 'button' &&
+                         $ctrl.button.isDisabled">
+            Saved.
+          </span>
+
+          <!-- For non-buttons. -->
+          <span class="btn-instructions"
+                ng-show="$ctrl.task.data_type !== 'button' &&
+                         $ctrl.button.isDisabled &&
+                         $ctrl.task.attachment &&
+                         !$ctrl.inputError">
+            Saved.
+          </span>
+
+          <!-- Let user know they can make another selection, after saving. -->
+          <!-- For cases where they haven't made an incorrect selection. -->
+          <span class="btn-instructions"
+                ng-show="$ctrl.task.data_type !== 'button' &&
+                         $ctrl.button.isDisabled &&
+                         $ctrl.task.attachment &&
+                         !$ctrl.task.isForbidden &&
+                         !$ctrl.inputError &&
+                         !$ctrl.task.attachment.includes('incorrect')">
+            You may change your selection at any time.
+          </span>
+
+          <!-- Let user know they have made an incorrect selection. -->
+          <!-- For quiz questions. -->
+          <span class="btn-instructions error"
+                ng-show="$ctrl.inputType === 'quiz' &&
+                         $ctrl.task.attachment.includes('incorrect')">
+            The option selected is not correct. Please try again.
+          </span>
+
+          <!-- Let user know they have made an incorrect selection. -->
+          <!-- For responses, slightly different wording than quiz questions. -->
+          <span class="btn-instructions error"
+                ng-show="$ctrl.inputType === 'conditional' &&
+                         $ctrl.task.attachment.includes('incorrect')">
+            When ready, select a different option to complete this task.
+          </span>
+
+          <!-- Prompt user to make a selection, if none made yet. -->
+          <span class="btn-instructions error"
+                ng-show="$ctrl.task.data_type.includes('radio') &&
+                         !$ctrl.task.attachment">
+            Please make a selection.
+          </span>
+
+          <!-- Error, input required -->
+          <span class="btn-instructions error"
+                ng-show="$ctrl.inputError === 'required'">
+            Please enter a value.
+          </span>
+
+          <span class="btn-instructions error"
+                ng-show="$ctrl.inputError === 'insufficient participation'">
+            Please have some participants complete the module.
+          </span>
+
+          <!-- Error, invalid url -->
+          <span class="btn-instructions error"
+                ng-show="$ctrl.inputError === 'url'">
+            Please enter a full URL beginning with "http".
+          </span>
+
+          <!-- Error, invalid number -->
+          <span class="btn-instructions error"
+                ng-show="$ctrl.inputError === 'number'">
+            Please enter a valid number.
+          </span>
+
+          <!-- Error, invalid email -->
+          <span class="btn-instructions error"
+                ng-show="$ctrl.inputError === 'email'">
+            Please enter a valid email address.
+          </span>
+        </span>
+      </p>
+
+    </div> <!-- /.controls -->
+  </div>
+</li>

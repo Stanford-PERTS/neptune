@@ -1,0 +1,79 @@
+// third-party styles
+@import '~angular-tooltips/lib/angular-tooltips.scss';
+
+// global styles
+@import 'neptune/colors';
+@import 'neptune/variables';
+@import 'neptune/main';
+@import 'neptune/modal';
+
+// legacy files
+@import 'app_manager/components/dashboard/dashboard.scss';
+@import 'app_manager/components/dashboard/email_modal.scss';
+@import 'app_manager/components/navbar/navbar.scss';
+@import 'app_manager/components/notifications_panel/notifications_panel.scss';
+@import 'app_manager/components/organization_users/organization_users.scss';
+@import 'app_manager/components/organizations/organizations.scss';
+@import 'app_manager/components/place_search/place_search.scss';
+@import 'app_manager/components/program_statistics/program_statistics.scss';
+@import 'app_manager/components/program_status/program_status.scss';
+@import 'app_manager/components/project_cohort/project_cohort.scss';
+@import 'app_manager/components/project_cohort_notes/project_cohort_notes.scss';
+@import 'app_manager/components/project_cohort_participation/project_cohort_participation.scss';
+@import 'app_manager/components/project_cohort_reports/project_cohort_reports.scss';
+@import 'app_manager/components/project_cohort_tasks/project_cohort_tasks.scss';
+@import 'app_manager/components/task_item/task_item.scss';
+@import 'app_manager/components/task_list/task_list.scss';
+@import 'app_manager/components/ui_action_button/ui_action_button.scss';
+@import 'app_manager/components/ui_button/ui_button.scss';
+@import 'app_manager/components/ui_card/ui_card.scss';
+@import 'app_manager/components/ui_card_actions/ui_card_actions.scss';
+@import 'app_manager/components/ui_card_panel/ui_card_panel.scss';
+@import 'app_manager/components/ui_card_title/ui_card_title.scss';
+@import 'app_manager/components/ui_filter_options/ui_filter_options.scss';
+@import 'app_manager/components/ui_filter_options/ui_filter_options_option/ui_filter_options_option.scss';
+@import 'app_manager/components/ui_info_card/ui_info_card.scss';
+@import 'app_manager/components/ui_input_error/ui_input_error.scss';
+@import 'app_manager/components/ui_input_select/ui_input_select.scss';
+@import 'app_manager/components/ui_input_success/ui_input_success.scss';
+@import 'app_manager/components/ui_input_text/ui_input_text.scss';
+@import 'app_manager/components/ui_input_textarea/ui_input_textarea.scss';
+@import 'app_manager/components/ui_organization_name/ui_organization_name.scss';
+@import 'app_manager/components/ui_project_cohort_actions/ui_project_cohort_actions.scss';
+@import 'app_manager/components/ui_project_cohort_card/ui_project_cohort_card.scss';
+@import 'app_manager/components/ui_project_cohort_name/ui_project_cohort_name.scss';
+@import 'app_manager/components/ui_project_cohort_status/ui_project_cohort_status.scss';
+@import 'app_manager/components/ui_project_cohort_status/ui_project_cohort_status_bar/ui_project_cohort_status_bar.scss';
+@import 'app_manager/components/ui_project_cohort_status/ui_project_cohort_status_button/ui_project_cohort_status_button.scss';
+@import 'app_manager/components/ui_selectable_card/ui_selectable_card.scss';
+
+// component imports
+@import 'scenes/neptune/nepNotifications/index.scss';
+@import 'scenes/neptune/nepReports/index.scss';
+@import 'scenes/neptune/nepReportsReturning/index.scss';
+@import 'scenes/neptune/nepFooter/index.scss';
+@import 'components/checkpoints/index.scss';
+@import 'components/checkpoints_encourage/index.scss';
+@import 'components/organization/dupe_org_modal.scss';
+
+// TODO move into component style files
+.index-page {
+  .card .card-content p {
+    margin: 20px 0;
+  }
+}
+
+.set-password-page {
+  .card {
+    .card-content {
+      p {
+        margin-bottom: 1em;
+      }
+    }
+  }
+}
+
+.div-flex {
+  display: flex;
+  align-items: center;
+}

@@ -1,0 +1,27 @@
+<div class="checkpoints" ng-class="{ container: $ctrl.isProgramRegistrationRoute }">
+    <div class="tabs-container">
+
+      <a class="tab-arrow" id="tab-arrow-left">&lt;</a>
+
+      <ul class="nep-tabs tabs-fixed-width">
+        <li class="tab"
+        ng-if="checkpoint.isVisible"
+        ng-repeat="checkpoint in $ctrl.checkpoints track by $index">
+          <a id="checkpoint_{{checkpoint.short_uid}}" ui-sref-active="active" ui-sref=".checkpoints({checkpointId: checkpoint.short_uid})"
+            ng-class="{ 'mock-active': $ctrl.isProgramRegistrationRoute && checkpoint.parent_id.indexOf('Organization') !== -1 }">
+            Step {{ checkpoint.step }}
+            <i ng-show="checkpoint.status_vm == 'incomplete'" class="fa fa-circle-o"></i>
+            <i ng-show="checkpoint.status_vm == 'complete'" class="fa fa-check-circle-o"></i>
+            <i ng-show="checkpoint.status_vm == 'waiting'" class="fa fa-check-circle-o"></i>
+            <br>
+            <nep-checkpoints-icon ng-if="checkpoint.parent_id" checkpoint="checkpoint"></nep-checkpoints-icon>
+            <br>
+            {{ checkpoint.name }}
+          </a>
+        </li>
+      </ul>
+
+      <a class="tab-arrow" id="tab-arrow-right">&gt;</a>
+
+    </div>
+</div>
